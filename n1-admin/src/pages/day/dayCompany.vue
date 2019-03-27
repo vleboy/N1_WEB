@@ -3,7 +3,7 @@
     <div class="nowList">
       <div class="top">
         <p class="title">
-         <!--  当前用户列表---{{this.identity}} -->
+          当前用户列表---
           <RadioGroup v-model="source" class="radioGroup" type="button" @on-change="changeSource">
             <Radio label="0" v-if="permission.includes('正式数据')">正式</Radio>
             <Radio label="1">测试</Radio>
