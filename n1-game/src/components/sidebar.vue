@@ -12,12 +12,6 @@
                 <MenuItem name="gameHallConfig" >
                 <span>游戏大厅管理</span>
                 </MenuItem>
-                <MenuItem name="propList" >
-                <span>道具列表</span>
-                </MenuItem>
-                <MenuItem name="packageList" >
-                <span>礼包列表</span>
-                </MenuItem>
             </Menu>
         </Sider>
     </div>
