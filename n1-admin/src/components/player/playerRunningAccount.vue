@@ -37,11 +37,12 @@ $
             <Icon type="arrow-down-b" v-if="!isShowSearch"></Icon>
             <Icon type="arrow-up-b" v-else></Icon>
           </Button>
+          <Button type="primary" size="large" @click="searchData(true)" style="margin-right:1rem">搜索</Button>
           <Button type="primary" @click="exportData">导出数据</Button>
         </Col>
       </Row>
-      <Row v-if="isShowSearch">
-        <div class="from-search">
+      <Row v-if="isShowSearch" class="adFilter">
+        <div class="from-search" style="margin-right:2rem">
           类型：
           <RadioGroup v-model="radioType" type="button">
             <Radio label="">全部</Radio>
@@ -61,10 +62,7 @@ $
             <Radio label="-1">本次发生金额（出）</Radio>
           </RadioGroup>
         </div>
-        <div class="form-button">
-          <Button type="primary" size="large" @click="searchData(true)">筛选</Button>
-          <Button type="primary" size="large" @click="searchData(false)">重置</Button>
-        </div>
+        
       </Row>
     </div>
     <div class="-p-table">
@@ -479,6 +477,9 @@ $
 </script>
 
 <style scpoed type="text/less" lang="less">
+  .adFilter {
+    display: flex
+  }
   .p-playerAccount {
     .-p-base {
       .-b-form {
