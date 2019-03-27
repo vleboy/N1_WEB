@@ -2,8 +2,20 @@ $
 <template>
   <div class="p-playerAccount">
     <div class="-p-base">
+      <Row style="margin-bottom: 1rem">
+        <div class="from-search">
+          <RadioGroup v-model="companyInfo" type="button" @on-change="changeCompany">
+            <Radio v-for="(item,index) of companyList" :key="index" :label="item.company">{{item.company}}</Radio>
+          </RadioGroup>
+        </div>
+        <div class="from-search">
+          <RadioGroup v-model="radioInfo" type="button">
+            <Radio v-for="(item,index) of gameTypeList" :key="index" :label="item.code">{{item.name}}</Radio>
+          </RadioGroup>
+        </div>
+      </Row>
       <Row class="-b-form">
-        <Col span="17">
+        <Col span="12">
           <DatePicker
             :editable='false'
             :transfer='true'
@@ -13,21 +25,14 @@ $
             @on-change="changeDate"
             placeholder="选择日期范围" style="width: 300px">
           </DatePicker>
-          <DatePicker
-            v-model="monthDate"
-            :transfer='true'
-            type="month"
-            @on-change="changeMonth"
-            placeholder="按月选择" style="width:100px">
-          </DatePicker>
-          最近：
-          <RadioGroup v-model="radioTime" @on-change="changeTime()" type="button">
-            <Radio label="1">1周</Radio>
-            <Radio label="2">1个月</Radio>
-            <Radio label="3">1年</Radio>
-          </RadioGroup>
         </Col>
-        <Col span="7" class="text-right">
+        <Col span="12" class="text-right fr">
+        <div style="margin-right:1rem;width: 50rem;">
+            <Input v-model="sn" placeholder="请输入流水号"></Input>
+          </div>
+          <div style="margin-right:1rem;width: 50rem;">
+            <Input v-model="betId" placeholder="请输入交易号"></Input>
+          </div>
           <Button @click="isShowSearch = !isShowSearch" type="text">高级筛选
             <Icon type="arrow-down-b" v-if="!isShowSearch"></Icon>
             <Icon type="arrow-up-b" v-else></Icon>
@@ -36,28 +41,6 @@ $
         </Col>
       </Row>
       <Row v-if="isShowSearch">
-        <div class="from-search">
-          <div class="-search-input">
-            流水号：<Input v-model="sn" placeholder="请输入流水号" style="width: 70%;"></Input>
-          </div>
-        </div>
-        <div class="from-search">
-          <div class="-search-input">
-            交易号：<Input v-model="betId" placeholder="请输入交易号" style="width: 70%;"></Input>
-          </div>
-        </div>
-        <div class="from-search">
-          厂商：
-          <RadioGroup v-model="companyInfo" type="button" @on-change="changeCompany">
-            <Radio v-for="(item,index) of companyList" :key="index" :label="item.company">{{item.company}}</Radio>
-          </RadioGroup>
-        </div>
-        <div class="from-search">
-          游戏：
-          <RadioGroup v-model="radioInfo" type="button">
-            <Radio v-for="(item,index) of gameTypeList" :key="index" :label="item.code">{{item.name}}</Radio>
-          </RadioGroup>
-        </div>
         <div class="from-search">
           类型：
           <RadioGroup v-model="radioType" type="button">
@@ -565,6 +548,10 @@ $
     }
     .text-right {
       text-align: right;
+    }
+    .fr {
+      display: flex;
+      justify-content: flex-end;
     }
   }
 </style>
