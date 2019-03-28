@@ -744,7 +744,7 @@ export default {
       }
     },
     reload() {
-      //this.init();
+      this.init();
     },
     addGame() {
       let gamelist = this.gameList;
