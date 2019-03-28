@@ -11,7 +11,7 @@
           </td>
           <td>
             <Row>
-              <Col span="10">代理管理员密码 :
+              <Col span="12">代理管理员密码 :
               <span v-if="showPass">{{agentDetail.password}}</span>
               <span v-else>********</span>
               </Col>
