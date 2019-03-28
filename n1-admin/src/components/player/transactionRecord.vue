@@ -509,6 +509,8 @@ export default {
           code: "",
           name: "全部"
         });
+        console.log(this.gameTypeList);
+        
         this.radioInfo = "";
       });
     },
