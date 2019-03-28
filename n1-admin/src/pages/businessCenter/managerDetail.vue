@@ -17,43 +17,31 @@
           <Form label-position="left" :label-width="100">
             <Row>
               <Col span="8">
-              <FormItem label="线路商ID">
-                {{ lineDetail.displayId}}
-              </FormItem>
+                <FormItem label="线路商ID">{{ lineDetail.displayId}}</FormItem>
               </Col>
               <Col span="8">
-              <FormItem label="上级线路商">
-                {{lineDetail.parentDisplayName}}
-              </FormItem>
+                <FormItem label="上级线路商">{{lineDetail.parentDisplayName}}</FormItem>
               </Col>
               <Col span="8">
-              <FormItem label="线路商前缀">
-                {{lineDetail.suffix}}
-              </FormItem>
+                <FormItem label="线路商前缀">{{lineDetail.suffix}}</FormItem>
               </Col>
             </Row>
             <Row>
               <Col span="8">
-              <FormItem label="创建时间">
-                {{dayjs(lineDetail.createdAt).format("YYYY-MM-DD HH:mm:ss")}}
-              </FormItem>
+                <FormItem label="管理员账号">{{ lineDetail.uname}}</FormItem>
               </Col>
               <Col span="8">
-              <FormItem label="最后登录时间">
-                {{dayjs(lineDetail.updatedAt).format("YYYY-MM-DD HH:mm:ss")}}
-              </FormItem>
+                <FormItem
+                  label="最后登录时间"
+                >{{dayjs(lineDetail.updatedAt).format("YYYY-MM-DD HH:mm:ss")}}</FormItem>
+              </Col>
+              <Col span="8">
+                <FormItem label="上次登录IP">{{lineDetail.lastIP}}</FormItem>
               </Col>
             </Row>
             <Row>
               <Col span="8">
-              <FormItem label="管理员账号">
-                {{ lineDetail.uname}}
-              </FormItem>
-              </Col>
-              <Col span="8">
-              <FormItem label="上次登录IP">
-                {{lineDetail.lastIP}}
-              </FormItem>
+                <FormItem label="创建时间">{{dayjs(lineDetail.createdAt).format("YYYY-MM-DD HH:mm:ss")}}</FormItem>
               </Col>
             </Row>
           </Form>
@@ -62,43 +50,47 @@
       <Panel name="2">
         配置信息
         <div slot="content">
-          <Form ref='basicform' :model="basic" label-position="left" :label-width="100">
+          <Form ref="basicform" :model="basic" label-position="left" :label-width="100">
             <Row>
               <Col span="8">
-              <Checkbox class="browser" :disabled='edit' v-model="isTest">测试号</Checkbox>
+                <Checkbox class="browser" :disabled="edit" v-model="isTest">测试号</Checkbox>
+              </Col>
+               <Col span="8">
+                <FormItem label="管理员密码" v-if="edit">
+                  <Row>
+                    <Col span="6">
+                      <span v-if="showPass">{{lineDetail.password}}</span>
+                      <span v-else>********</span>
+                    </Col>
+                    <Col span="6" v-if="permission.includes('查看密码')">
+                      <span class="password" @click="showPass=!showPass" v-if="!showPass">显示</span>
+                      <span class="password" @click="showPass=!showPass" v-else>隐藏</span>
+                    </Col>
+                  </Row>
+                </FormItem>
+                <FormItem label="管理员密码" prop="password" v-else>
+                  <Row>
+                    <Col span="10">
+                      <Input v-model="basic.password" placeholder="6~16位,包含字母、数字及符号中任意三种组合"></Input>
+                    </Col>
+                  </Row>
+                </FormItem>
               </Col>
               <Col span="8">
-              <FormItem label="备注" v-if="edit">
-                {{lineDetail.remark}}
-              </FormItem>
-              <FormItem label="备注" prop="remark" v-else>
-                <Row>
-                  <Col span="20">
-                  <Input v-model="basic.remark" type="textarea" :maxlength='200' :rows="1" placeholder="请输入备注,最多不超过200个字符"></Input>
-                  </Col>
-                </Row>
-              </FormItem>
-              </Col>
-              <Col span="8">
-              <FormItem label="管理员密码" v-if="edit">
-                <Row>
-                  <Col span="6">
-                  <span v-if="showPass">{{lineDetail.password}}</span>
-                  <span v-else>********</span>
-                  </Col>
-                  <Col span="6" v-if="permission.includes('查看密码')">
-                  <span class="password" @click="showPass=!showPass" v-if="!showPass">显示</span>
-                  <span class="password" @click="showPass=!showPass" v-else>隐藏</span>
-                  </Col>
-                </Row>
-              </FormItem>
-              <FormItem label="管理员密码" prop="password" v-else>
-                <Row>
-                  <Col span="10">
-                  <Input v-model="basic.password" placeholder="6~16位,包含字母、数字及符号中任意三种组合"></Input>
-                  </Col>
-                </Row>
-              </FormItem>
+                <FormItem label="备注" v-if="edit">{{lineDetail.remark}}</FormItem>
+                <FormItem label="备注" prop="remark" v-else>
+                  <Row>
+                    <Col span="20">
+                      <Input
+                        v-model="basic.remark"
+                        type="textarea"
+                        :maxlength="200"
+                        :rows="1"
+                        placeholder="请输入备注,最多不超过200个字符"
+                      ></Input>
+                    </Col>
+                  </Row>
+                </FormItem>
               </Col>
             </Row>
           </Form>
@@ -107,18 +99,37 @@
       <Panel name="3">
         游戏信息
         <div slot="content">
-          <Form ref='gameList' :model="gameForm" :label-width="110" v-if="!edit" :rules="gameValidate">
+          <Form
+            ref="gameList"
+            :model="gameForm"
+            :label-width="110"
+            v-if="!edit"
+            :rules="gameValidate"
+          >
             <FormItem prop="ownGame">
               <Row>
                 <Col span="3">
-                <Select v-model="gameForm.gameType" placeholder="请选择" @on-change="selectCompany">
-                  <Option v-for="item in gameType" :value="item.company" :key="item.company">{{ item.company }}</Option>
-                </Select>
+                  <Select v-model="gameForm.gameType" placeholder="请选择" @on-change="selectCompany">
+                    <Option
+                      v-for="item in gameType"
+                      :value="item.company"
+                      :key="item.company"
+                    >{{ item.company }}</Option>
+                  </Select>
                 </Col>
                 <Col span="3">
-                <Select v-model="gameForm.gamelist" placeholder="请选择" @on-change="selectGame" :label-in-value='true'>
-                  <Option v-for="item in gameList" :value="item.code" :key="item.name">{{ item.name }}</Option>
-                </Select>
+                  <Select
+                    v-model="gameForm.gamelist"
+                    placeholder="请选择"
+                    @on-change="selectGame"
+                    :label-in-value="true"
+                  >
+                    <Option
+                      v-for="item in gameList"
+                      :value="item.code"
+                      :key="item.name"
+                    >{{ item.name }}</Option>
+                  </Select>
                 </Col>
               </Row>
             </FormItem>
@@ -126,27 +137,37 @@
               <label slot="label">{{game}}商家占成(%)</label>
               <Row>
                 <Col span="4">
-                <Tooltip :content="tipContent">
-                  <Input v-model="gameForm.balance" placeholder="请输入0.00~100.00之间的数字"></Input>
-                </Tooltip>
+                  <Tooltip :content="tipContent">
+                    <Input v-model="gameForm.balance" placeholder="请输入0.00~100.00之间的数字"></Input>
+                  </Tooltip>
                 </Col>
                 <Col span="2">
-                <span class="add" @click="addGame">添加</span>
+                  <span class="add" @click="addGame">添加</span>
                 </Col>
               </Row>
             </FormItem>
           </Form>
-          <Table :columns="columns1" :data="gameDetail" width='500' class="table" size="small"></Table>
+          <Table :columns="columns1" :data="gameDetail" width="500" class="table" size="small"></Table>
         </div>
       </Panel>
     </Collapse>
     <div class="finance">
       <h2>
         财务信息
-        <span style="color:#20a0ff;cursor:pointer;fontSize:1rem" @click="getWaterfallList">(点击查询)</span>
-        </h2>
+        <span
+          style="color:#20a0ff;cursor:pointer;fontSize:1rem"
+          @click="getWaterfallList"
+        >(点击查询)</span>
+      </h2>
       <Table :columns="columns" :data="showData" size="small"></Table>
-      <Page :total="total" class="page" show-elevator :page-size='pageSize' show-total @on-change="changepage"></Page>
+      <Page
+        :total="total"
+        class="page"
+        show-elevator
+        :page-size="pageSize"
+        show-total
+        @on-change="changepage"
+      ></Page>
     </div>
     <div class="next">
       <h2>下级线路商列表</h2>
@@ -157,48 +178,55 @@
       <Table :columns="columns3" :data="ownedbusiness" size="small"></Table>
     </div>
     <Spin size="large" fix v-if="spinShow">
-      <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
+      <Icon type="load-c" size="18" class="demo-spin-icon-load"></Icon>
       <div>加载中...</div>
     </Spin>
-    <Modal v-model="modal" @on-ok="ok" id="plusModal" @on-cancel='cancel'>
-      <h2 v-if='plus'>加点操作</h2>
+    <Modal v-model="modal" @on-ok="ok" id="plusModal" @on-cancel="cancel">
+      <h2 v-if="plus">加点操作</h2>
       <h2 v-else>减点操作</h2>
-      <Row class-name='modalrow'>
-        <Col span="4" v-if='plus'>增加点数</Col>
+      <Row class-name="modalrow">
+        <Col span="4" v-if="plus">增加点数</Col>
         <Col span="4" v-else>减少点数</Col>
         <Col span="16">
-        <Tooltip :content="tooltip" @on-popper-show="focus" placement="top" :disabled='disabled'>
-          <Input v-model="point" placeholder="请输入点数" :disabled='disabled'></Input>
-        </Tooltip>
+          <Tooltip :content="tooltip" @on-popper-show="focus" placement="top" :disabled="disabled">
+            <Input v-model="point" placeholder="请输入点数" :disabled="disabled"></Input>
+          </Tooltip>
         </Col>
       </Row>
-      <Row class-name='modalrow'>
+      <Row class-name="modalrow">
         <Col span="4">起始账户</Col>
         <Col span="16">
-        <Select v-model="select" v-if='plus' @on-change='changeOption'>
-          <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
-        </Select>
-        <p v-else>【线路商】{{uname}}</p>
+          <Select v-model="select" v-if="plus" @on-change="changeOption">
+            <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          </Select>
+          <p v-else>【线路商】{{uname}}</p>
         </Col>
       </Row>
-      <Row v-if="plus" class-name='modalrow'>
+      <Row v-if="plus" class-name="modalrow">
         <Col span="4">增加账户</Col>
         <Col span="16">
-        <p>【线路商】{{uname}}</p>
+          <p>【线路商】{{uname}}</p>
         </Col>
       </Row>
-      <Row v-else class-name='modalrow'>
+      <Row v-else class-name="modalrow">
         <Col span="4">转入账户</Col>
         <Col span="16">
-        <Select v-model="select" @on-change='changeOption'>
-          <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
-        </Select>
+          <Select v-model="select" @on-change="changeOption">
+            <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          </Select>
         </Col>
       </Row>
-      <Row class-name='textrow'>
+      <Row class-name="textrow">
         <Col span="4">备注</Col>
         <Col span="16">
-        <textarea v-model="note" id="textRow" placeholder="注明备注,如没有可不填" rows="6" autocomplete="off" maxlength="180"></textarea>
+          <textarea
+            v-model="note"
+            id="textRow"
+            placeholder="注明备注,如没有可不填"
+            rows="6"
+            autocomplete="off"
+            maxlength="180"
+          ></textarea>
         </Col>
       </Row>
     </Modal>
@@ -805,13 +833,13 @@ export default {
           render: (h, params) => {
             let row = params.row;
             if (row.fromLevel > row.toLevel) {
-              return h("span","减点");
+              return h("span", "减点");
             } else {
-              return h("span","加点");
+              return h("span", "加点");
             }
           }
         },
-         {
+        {
           title: "交易前余额",
           key: "oldBalance",
           render: (h, params) => {
@@ -879,7 +907,7 @@ export default {
     };
   },
   created() {
-    this.init();
+    /* this.init(); */
   },
   computed: {
     total() {
@@ -887,11 +915,13 @@ export default {
     },
     permission() {
       return JSON.parse(localStorage.getItem("userInfo")).subRolePermission;
-    },
+    }
   },
   watch: {
     $route(to, from) {
       if (to.name == "dealerDetail") {
+        //console.log('in magager');
+        this.spinShow = true;
         this.init();
       }
     }
@@ -907,9 +937,9 @@ export default {
     },
     passwordLevel(password) {
       let Modes = 0;
-      let len=password.length;
-      if(len<6||len>16){
-        return 0
+      let len = password.length;
+      if (len < 6 || len > 16) {
+        return 0;
       }
       for (let i = 0; i < password.length; i++) {
         Modes |= CharMode(password.charCodeAt(i));
@@ -1021,12 +1051,12 @@ export default {
       if (password == "") {
         this.$Message.warning("密码不能为空");
         return;
-      }else{
-         if (this.passwordLevel(password) < 2) {
-         return  this.$Message.warning({
-          content: "密码中必须包含6-16位由字母、数字、符号中至少两种组成"
-        });
-       }
+      } else {
+        if (this.passwordLevel(password) < 2) {
+          return this.$Message.warning({
+            content: "密码中必须包含6-16位由字母、数字、符号中至少两种组成"
+          });
+        }
       }
       //  else {
       //   let testReg = /^[a-zA-Z0-9@_#$%^&*!.~-]{6,16}$/;
@@ -1053,8 +1083,8 @@ export default {
       updateManagers(userId, params).then(res => {
         if (res.code == 0) {
           this.$Message.success("修改成功");
-        }else{
-          this.resetPass()
+        } else {
+          this.resetPass();
         }
         this.spinShow = false;
       });
@@ -1133,27 +1163,26 @@ export default {
       } else {
         this.$Message.warning("占成为0-100数字");
       }
-    }, 
-    resetPass(){
+    },
+    resetPass() {
       let userId = this.$route.query.userId;
-      oneManagers(userId).then(res=>{
+      oneManagers(userId).then(res => {
         this.lineDetail = res.payload;
         this.isTest = res.payload.isTest == 1 ? true : false;
         this.gameDetail = res.payload.gameList;
-      })
+      });
     },
     async getWaterfallList() {
       let userId = this.$route.query.userId;
       let req1 = getWaterfall(userId);
       this.spinShow = true;
-      let waterfall = await this.axios.all([req1])
+      let waterfall = await this.axios.all([req1]);
       this.spinShow = false;
-  
-      this.showData = waterfall[0].payload
 
+      this.showData = waterfall[0].payload;
     },
     async init() {
-      this.showData = []
+      this.showData = [];
       this.spinShow = true;
       let userId = this.$route.query.userId;
       let parent = this.$route.query.parent;
@@ -1165,12 +1194,12 @@ export default {
       let req3 = companySelect({ parent });
       let req4 = childList(userId, "10"); //线路商
       let req5 = childList(userId, "100"); //商户
-      let [
-        managers,
-        company,
-        lineChild,
-        ownBusiness
-      ] = await this.axios.all([req2, req3, req4, req5]);
+      let [managers, company, lineChild, ownBusiness] = await this.axios.all([
+        req2,
+        req3,
+        req4,
+        req5
+      ]);
       this.spinShow = false;
       if (managers && managers.code == 0) {
         this.lineDetail = managers.payload;

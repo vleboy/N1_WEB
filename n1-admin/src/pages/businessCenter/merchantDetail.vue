@@ -55,16 +55,16 @@
               <Col span="8">
                 <FormItem label="上次登录IP">{{merchantDetail.lastIP}}</FormItem>
               </Col>
-              <Col span="8">
+              <!-- <Col span="8">
                 <FormItem label="商户线路号">{{merchantDetail.msn}}</FormItem>
-              </Col>
-            </Row>
-            <Row>
+              </Col>-->
               <Col span="8">
                 <FormItem
                   label="上次登录时间"
                 >{{dayjs(merchantDetail.loginAt).format("YYYY-MM-DD HH:mm:ss")}}</FormItem>
               </Col>
+            </Row>
+            <Row>
               <Col span="8">
                 <FormItem
                   label="创建时间"
@@ -74,10 +74,14 @@
           </Form>
         </div>
       </Panel>
-      <Panel name="2">配置信息
+      <Panel name="2">
+        配置信息
         <div slot="content">
           <Form :model="basic" label-position="left" :label-width="100">
             <Row>
+              <Col span="8">
+                <Checkbox class="browser" :disabled="edit" v-model="isTest">测试号</Checkbox>
+              </Col>
               <Col span="8">
                 <FormItem label="管理员密码" v-if="edit">
                   <Row>
@@ -100,13 +104,17 @@
                 </FormItem>
               </Col>
               <Col span="8">
-                <Checkbox class="browser" :disabled="edit" v-model="isTest">测试号</Checkbox>
-              </Col>
-              <Col span="8">
-                <Checkbox class="browser" :disabled="edit" v-model="defaultBrower">是否在系统浏览器中打开</Checkbox>
+                <FormItem label="商户白名单" v-if="edit">{{merchantDetail.loginWhiteList}}</FormItem>
+                <FormItem label="商户白名单" v-else>
+                  <Row>
+                    <Col span="10">
+                      <Input v-model="basic.loginWhiteList"></Input>
+                    </Col>
+                  </Row>
+                </FormItem>
               </Col>
             </Row>
-            <Row>
+            <!-- <Row>
               <Col span="8">
                 <FormItem label="商户官网地址" v-if="edit">{{merchantDetail.frontURL}}</FormItem>
                 <FormItem label="商户官网地址" v-else>
@@ -137,9 +145,9 @@
                   </Row>
                 </FormItem>
               </Col>
-            </Row>
+            </Row>-->
             <Row>
-              <Col span="8">
+              <!-- Col span="8">
                 <FormItem label="商户客服地址" v-if="edit">{{merchantDetail.feedbackURL}}</FormItem>
                 <FormItem label="商户客服地址" v-else>
                   <Row>
@@ -148,17 +156,7 @@
                     </Col>
                   </Row>
                 </FormItem>
-              </Col>
-              <Col span="8">
-                <FormItem label="商户白名单" v-if="edit">{{merchantDetail.loginWhiteList}}</FormItem>
-                <FormItem label="商户白名单" v-else>
-                  <Row>
-                    <Col span="10">
-                      <Input v-model="basic.loginWhiteList"></Input>
-                    </Col>
-                  </Row>
-                </FormItem>
-              </Col>
+              </Col>-->
               <Col span="8">
                 <FormItem label="备注" v-if="edit">{{merchantDetail.remark}}</FormItem>
                 <FormItem label="备注" prop="remark" v-else>
@@ -176,7 +174,7 @@
                 </FormItem>
               </Col>
             </Row>
-            <Row>
+            <!--  <Row>
               <Col span="8">
                 <FormItem label="LOGO">
                   <img :src="merchantDetail.launchImg.logo[0]" alt="oo" class="logo">
@@ -232,11 +230,12 @@
                   </Select>
                 </FormItem>
               </Col>
-            </Row>
+            </Row>-->
           </Form>
         </div>
       </Panel>
-      <Panel name="3">游戏信息
+      <Panel name="3">
+        游戏信息
         <div slot="content">
           <Form
             ref="gameList"
@@ -289,7 +288,8 @@
           <Table :columns="columns1" :data="gameDetail" width="500" class="table" size="small"></Table>
         </div>
       </Panel>
-      <Panel name="4">免转钱包
+      <Panel name="4">
+        免转钱包
         <div slot="content">
           <Form :model="transfer" label-position="left" :label-width="100">
             <Row>
@@ -305,8 +305,12 @@
       </Panel>
     </Collapse>
     <div class="finance">
-      <h2>财务信息
-        <span style="color:#20a0ff;cursor:pointer;fontSize:1rem" @click="getWaterfallList">(点击查询)</span>
+      <h2>
+        财务信息
+        <span
+          style="color:#20a0ff;cursor:pointer;fontSize:1rem"
+          @click="getWaterfallList"
+        >(点击查询)</span>
       </h2>
       <Table :columns="columns" :data="showData" size="small"></Table>
       <Page
@@ -586,12 +590,13 @@ export default {
       uploadActionName: ""
     };
   },
-  created() {
+  /* created() {
     this.init();
-  },
+  }, */
   watch: {
     $route(to, from) {
       if (to.name == "merchantDetail") {
+        //console.log('in merchantDetail');
         this.spinShow = true;
         this.init();
       }
@@ -627,7 +632,7 @@ export default {
     },
     handlePage() {
       console.log(1);
-      
+
       // 初始化显示，小于每页显示条数，全显，大于每页显示条数，取前每页条数显示
       if (this.total < this.pageSize) {
         this.showData = this.waterfall;
@@ -724,7 +729,7 @@ export default {
       }
     },
     reload() {
-      this.init();
+      //this.init();
     },
     addGame() {
       let gamelist = this.gameList;
@@ -834,19 +839,18 @@ export default {
       let userId = this.$route.query.userId;
       let req1 = getWaterfall(userId);
       this.spinShow = true;
-      let waterfall = await this.axios.all([req1])
+      let waterfall = await this.axios.all([req1]);
       this.spinShow = false;
       /* if (waterfall && waterfall.code == 0) {
         this.waterfall = waterfall.payload;
         console.log(this.waterfall);
       } */
       //console.log(waterfall[0].payload);
-      
-      this.showData = waterfall[0].payload
 
+      this.showData = waterfall[0].payload;
     },
     async init() {
-      this.showData = []
+      this.showData = [];
       this.spinShow = true;
       let userId = this.$route.query.userId;
       let parent = this.$route.query.parent;
@@ -856,8 +860,7 @@ export default {
       this.isedit = true;
       let req2 = oneMerchants(userId);
       let req3 = companySelect({ parent });
-      let [merchant, company] = await this.axios.all([req2, req3
-      ]);
+      let [merchant, company] = await this.axios.all([req2, req3]);
       this.spinShow = false;
       if (merchant && merchant.code == 0) {
         this.merchantDetail = merchant.payload;
