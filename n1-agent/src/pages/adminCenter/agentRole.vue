@@ -344,7 +344,7 @@ export default {
               }
             ]
           },
-          {
+          /* {
             title: "游戏中心",
             expand: true,
             checked: false,
@@ -354,7 +354,7 @@ export default {
                 checked: false
               }
             ]
-          },
+          }, */
           //  {
           //   title: "运营中心",
           //   expand: true,

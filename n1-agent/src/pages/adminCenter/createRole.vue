@@ -262,7 +262,7 @@ export default {
             //     }
             //   ]
             // },
-             {
+             /* {
               title: "游戏中心",
               expand: true,
               children: [
@@ -270,7 +270,7 @@ export default {
                   title: "包房代理游戏配置"
                 }
               ]
-            },
+            }, */
             {
               title: "管理员中心",
               expand: true,

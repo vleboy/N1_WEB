@@ -38,9 +38,9 @@ export const menuOpen = function (name) {
     openName = ["logCenter"];
   } else if (name == "playList") {
     openName = ["playerCenter"];
-  } else if (name == 'gameConfig') {
+  } /* else if (name == 'gameConfig') {
     openName = ['gameCenter']
-  } else if (name == 'adminList' || name == 'agentRole') {
+  } */ else if (name == 'adminList' || name == 'agentRole') {
     openName = ['adminCenter']
   } else if (name == "board") {
     openName = ["board"];

@@ -216,13 +216,13 @@
                     <MenuItem name="agentRole" v-if='permission.includes("代理角色列表")'>代理角色列表</MenuItem>
                 </Submenu>
 
-                <Submenu name="gameCenter" v-if="level==0">
+                <!-- <Submenu name="gameCenter" v-if="level==0">
                     <template slot="title">
                         <Icon type="gear-b"></Icon>
                         游戏中心
                     </template>
                     <MenuItem name="gameConfig" v-if='permission.includes("包房代理游戏配置")'>包房代理游戏配置</MenuItem>
-                </Submenu>
+                </Submenu> -->
                   <!-- <Submenu name="opreateCenter" v-if="level==0">
                     <template slot="title">
                         <Icon type="social-usd"></Icon>
