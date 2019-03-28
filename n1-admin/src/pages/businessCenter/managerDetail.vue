@@ -246,6 +246,21 @@ import dayjs from "dayjs";
 import { thousandFormatter } from "@/config/format";
 import _ from "lodash";
 export default {
+  beforeRouteEnter(to, from, next) {
+    /* console.log(this, 'beforeRouteEnter'); // undefined
+    console.log(to, '组件独享守卫beforeRouteEnter第一个参数');
+    console.log(from, '组件独享守卫beforeRouteEnter第二个参数');
+    console.log(next, '组件独享守卫beforeRouteEnter第三个参数'); */
+    next(vm => {
+      //因为当钩子执行前，组件实例还没被创建
+      // vm 就是当前组件的实例相当于上面的 this，所以在 next 方法里你就可以把 vm 当 this 来用了。
+      //console.log(vm);//当前组件的实例
+        //localStorage.removeItem('dayCompany')
+        //console.log(233);
+        vm.spinShow = true
+        vm.init()
+    });
+  },
   data() {
     const validateRate = (rule, value, callback) => {
       if (value == "") {
@@ -917,7 +932,7 @@ export default {
       return JSON.parse(localStorage.getItem("userInfo")).subRolePermission;
     }
   },
-  watch: {
+  /* watch: {
     $route(to, from) {
       if (to.name == "dealerDetail") {
         //console.log('in magager');
@@ -925,7 +940,7 @@ export default {
         this.init();
       }
     }
-  },
+  }, */
   methods: {
     handlePage() {
       // 初始化显示，小于每页显示条数，全显，大于每页显示条数，取前每页条数显示
