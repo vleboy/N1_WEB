@@ -34,6 +34,10 @@ import habaVideo from '@/pages/reports/habaVideo'
 import pngVideo from '@/pages/reports/pngVideo'
 import natruehfive from '@/pages/reports/naTrueHfive'
 
+//day
+import dayMergent from '@/pages/day/dayMergent'
+
+
 import opreateLog from '@/pages/log/opreateLog'
 import playerlist from '@/pages/player/playerlist'
 import gameNoticeList from '@/pages/operation/gameNoticeMgr/gameNoticeList'
@@ -202,6 +206,15 @@ export const appRouter = [
         name:'ysb',
         component:main,
         children:[{path:'sport',title:'YSB体育游戏报表',name:'ysbSport',component:ysbSport}]
+    },
+    {
+        path: '/day',
+        title: '日报表',
+        name: 'day',
+        component: main,
+        children: [
+            { path: 'dayMergent', title: '商户日报表', name: 'dayMergent', component: dayMergent }
+        ]
     },
     {
         path:'/log',

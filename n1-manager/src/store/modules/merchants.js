@@ -1,4 +1,4 @@
-import { queryUserStat, queryPlayer, getMerchants, getManagers, getBill, billTransfer, queryDayStat, queryManagerDayStat } from '@/service/index'
+import { queryUserStat, queryPlayer, getMerchants, getManagers, getBill, billTransfer, queryUserDayStat, queryManagerDayStat } from '@/service/index'
 import { Message } from 'iview'
 export const merchants = {
   state: {
@@ -82,6 +82,9 @@ export const merchants = {
     },
     getManagerDayStat({ commit }, params) {
       return queryManagerDayStat(params)
-    }
+    },
+    getUserDayStat({ commit }, params) {
+        return queryUserDayStat(params)
+    },
   }
 }

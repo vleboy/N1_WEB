@@ -100,6 +100,12 @@ export async function getBill(userId){
 export async function getMerchants(params){
     return http(post('/merchants',params))
 }
+
+//商户日报表
+export async function queryUserDayStat(params) {
+    return http(post('/query/userDayStat', params))
+}
+
 //单个商户
 export async function oneMerchants(userId){
     return http(get(`/merchants/${userId}`))

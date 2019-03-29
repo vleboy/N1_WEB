@@ -83,6 +83,13 @@
                         <MenuItem name="pngGame">PNG电子游戏报表</MenuItem>
                     </Submenu>
                 </Submenu>
+                <Submenu name="dayReport">
+                    <template slot="title">
+                        <Icon type="ios-paper-outline"></Icon>
+                        日报表
+                    </template>
+                    <MenuItem name="dayMergent">商户日报表</MenuItem>
+                </Submenu>
                 <Submenu name="playerCenter">
                     <template slot="title">
                         <Icon type="ios-game-controller-b"></Icon>

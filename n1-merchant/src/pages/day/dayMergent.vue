@@ -2,54 +2,31 @@
   <div class="dayReport">
     <div class="nowList">
       <div class="top">
-        <div style="margin-bottom:1rem" class="title1">
-      
-          <p span="5">
-            <RadioGroup v-model="source" class="radioGroup" type="button" @on-change="changeSource" style="">
-              <Radio label="0">正式</Radio>
-              <Radio label="1">测试</Radio>
-              <Radio label="2">全部</Radio>
-            </RadioGroup>
-          </p>
-          <p span="5" style="margin-left:2rem;">
-            <RadioGroup v-model="isAll" class="radioGroup" type="button" @on-change="changeShow">
-              <Radio label="全部"></Radio>
-              <Radio label="仅包含直属"></Radio>
-            </RadioGroup>
-          </p>  
-          <!-- <p span="3" style="font-size:1.3rem;margin-left:1rem;">线路商前缀</p>
-          <p span="4" style="margin-left:1rem;">
-            <Input  v-model="managerName" placeholder="请输入"></Input>
-          </p> -->
-          <p span="4" style="margin-left:2rem;">
-            <p span="5">
-            <DatePicker type="daterange" :options="options" :editable='false' :value="defaultTime" placeholder="选择日期时间范围(默认最近一个月)" style="width: 270px" confirm @on-ok="confirms" @on-change="handle"></DatePicker>
-          </p>
-          </p>
-        </div>
-         <!--  当前用户列表---{{this.identity}} -->
-        <div class="title2">
-          <Select style="width:200px;" placeholder="选择游戏类别" ref="resetSelect" clearable v-model="model1">
-              <Option v-for="(item, index) in gameType" :value="item.name" :key="item.name" @click.native="selGame(item.code)">{{item.name}}</Option>
-            </Select>
-          
-          <p span="1" style="margin-left:2rem;">
-            <Button type="primary" @click="search">搜索</Button>
-            
-          </p> 
-          <p>
-
+        <!-- <p class="title">
+          <Row class="row -search-row" :gutter="12">
+          <Col span="5">商户标识</Col>
+          <Col span="6">
+          <Input v-model="buSN" placeholder="请输入"></Input>
+          </Col>
+          <Col span="4">商户ID</Col>
+          <Col span="6">
+          <Input v-model="buID" placeholder="请输入"></Input>
+          </Col>
+          </Row>
+        </p> -->
+        <Select style="width:200px;margin-right:2rem;" placeholder="选择游戏类别" ref="resetSelect" clearable v-model="model1">
+          <Option v-for="(item, index) in gameType" :value="item.name" :key="item.name" @click.native="selGame(item.code)">{{item.name}}</Option>
+        </Select>
+        <div class="right">
+          <DatePicker type="daterange" :options="options" :editable='false' :value="defaultTime" placeholder="选择日期时间范围(默认最近一个月)" style="width: 300px" confirm @on-ok="confirms" @on-change="handle"></DatePicker>
+          <Button type="primary" @click="search">搜索</Button>
           <Button type="ghost" @click="reset">重置</Button>
-
-          </p>
-        </div> 
-    
+        </div>
       </div>
     </div>
-    <div v-if="showBox">
+    <div v-if="showChat">
       <div id="myChart"></div>
-    </div>
-    
+     </div>
     <div class="playerList" id="playerList">
       <Table :columns="columns1" :data="dayStatList" size="small" ref="table_2"></Table>
     </div>
@@ -65,7 +42,7 @@ import _ from "lodash";
 import dayjs from 'dayjs'
 import { thousandFormatter } from "@/config/format";
 export default {
-   beforeRouteEnter(to, from, next) {
+  beforeRouteEnter(to, from, next) {
     /* console.log(this, 'beforeRouteEnter'); // undefined
     console.log(to, '组件独享守卫beforeRouteEnter第一个参数');
     console.log(from, '组件独享守卫beforeRouteEnter第二个参数');
@@ -74,11 +51,10 @@ export default {
       //因为当钩子执行前，组件实例还没被创建
       // vm 就是当前组件的实例相当于上面的 this，所以在 next 方法里你就可以把 vm 当 this 来用了。
       //console.log(vm);//当前组件的实例
-      if (localStorage.dayManager == 'dayManager') {
-        vm.spinShow = true 
-        vm.init()
+      if (localStorage.dayMerchant == 'dayMerchant') {
+        vm.spinShow = true
       }
-       
+      vm.init()
     });
   },
   data() {
@@ -114,15 +90,13 @@ export default {
       }, 
       defaultTime: [],//getDefaultTime(),
       cacheTime:[],
-      managerName:"",
-      spinShow: false, //加载spin
-      source: "1",
       model1: "全部",
-      isAll: "全部",
-      isBoolean: true,
+      spinShow: false, //加载spin
+      buID: "",
+      buSN: "",
       dayStatList: [],
-      showBox: false,
-      columns1: [
+      showChat: true,
+     columns1: [
         {
           title: "日期",
           key: "createdDate"
@@ -161,7 +135,6 @@ export default {
       ],
       gameType: [],
       gameCode:"",
-
       /* betAmount: -2.25  投加注金额
       betCount: 14 投注次数
       createdDate: "20190102" 日期
@@ -172,43 +145,37 @@ export default {
     };
   },
   created() {
-    //console.log(12345678910);
-    
-    /* if (this.permission.includes("正式数据")) {
-      this.source = "0";
-    } */
-    this.source = "0";
     this.getDate()
     this.getGameList();
     this.init()
   },
+
+
+  computed: {
+    permission() {
+      return JSON.parse(localStorage.getItem("userInfo")).subRolePermission;
+    }
+  },
   /* watch: {
     '$route': function (to, from) {
-    
-      if(to.name == 'dayManager') {
-        this.managerName = this.$route.query.name
+      if(to.name == 'dayMerchant') {
+        this.buSN = this.$route.query.name
         this.defaultTime = this.$route.query.time
-        this.showBox = true
+        this.showChat = true
         this.init()
       }
     }
   }, */
-
-  computed: {
-    /* permission() {
-      return JSON.parse(localStorage.getItem("userInfo")).subRolePermission;
-    } */
-  },
   methods: {
-   
     handle(daterange) {
       this.cacheTime = daterange
-     
+    
+      
     },
-     selGame(index){
+    selGame(index){
+      this.showChat = true
       this.gameCode = index
-      this.showBox = true
-      this.init();
+     this.init();
       
     },
     drawLine() {
@@ -223,6 +190,7 @@ export default {
       let refundAmountArr = _this.dayStatList.map((item) => {return item.refundAmount})
       let winloseAmountArr = _this.dayStatList.map((item) => {return item.winloseAmount})
       let xArr = _this.dayStatList.map((item) => {return item.createdDate})
+      
      
       // 绘制图表
       myChart.setOption({
@@ -270,7 +238,7 @@ export default {
       });
     },
     confirms() {
-      this.showBox = true
+      this.showChat = true
       let cacheTime = this.cacheTime.map(ite => {return ite.replace(/-/g,"")})
       this.getDate(cacheTime)
       this.init();
@@ -278,49 +246,33 @@ export default {
     changeSource(value) {
       this.init();
     },
-    changeShow(value) {
-      if (this.isAll != "全部") {
-        this.isBoolean = false
-      } else {
-        this.isBoolean = true
-      }
-     this.init();
-    },
     reset() {
       this.$refs.resetSelect.clearSingleSelect()
-      this.showBox = false
-      this.isAll = "全部"
-      this.isBoolean = true
-      this.getDate();
-      /* if (this.permission.includes("正式数据")) {
-        this.source = "0";
-      } */
-      this.source = "0";
-      this.managerName = ""
-      this.init();
+      this.getDate()
+      this.buID = "",
+      this.buSN = "",
+      this.dayStatList = []
+      this.showChat = false
     },
     search() {
-      /* if (this.managerName == '') {
-        this.$Message.info('请输入线路商前缀');
-      } else { */
-        this.showBox = true
+      // if (this.dayStatList != "") {
+        
+      // }
+
+      if (this.buID == '' && this.buSN == '') {
+        this.$Message.info('请输入商户标识或商户ID');
+      } else { 
+        this.showChat = true
         this.init();
-      
-      
+      }
+
     },
     // permission() {
     //   return JSON.parse(localStorage.getItem("userInfo")).subRolePermission;
     // },
-    getGameList() {
-      httpRequest("post","/gameBigType",{companyIden: -1},"game")
-      .then(result => {
-        this.gameType = result.payload
-        this.gameType.unshift({type: 4, code: "", name: "全部", company: ""})
-      })
-    },
     async init() {
       this.spinShow = true;
-      if (this.$route.name == 'dayManager' && localStorage.dayManager == 'dayManager') {
+      if (this.$route.name == 'dayMerchant' && localStorage.dayMerchant == 'dayMerchant') {
       
         let st = dayjs(this.$route.query.time[0]).format('YYYYMMDD')
         let et = dayjs(this.$route.query.time[1]).format('YYYYMMDD')
@@ -337,35 +289,37 @@ export default {
             this.model1 = '全部'
           }
         }
-        this.source = this.$route.query.source
+        
         this.defaultTime = []
         this.defaultTime.push(st,et)
-        this.showBox = true
-        //this.managerName = this.$route.query.name
+        this.buSN = this.$route.query.name
+        this.showChat = true
+        this.managerName = this.$route.query.name
          this.gameCode = this.$route.query.type
-        localStorage.removeItem('dayManager')
+        localStorage.removeItem('dayMerchant')
       }
+      
       let params = {
-        //suffix: this.managerName, //ZS1,XLSA
-        isTest: this.source,
+        sn: JSON.parse(localStorage.getItem("userInfo")).sn,
         startTime: parseInt(dayjs(this.defaultTime[0]).format('YYYYMMDD')), //当月一号
         endTime: parseInt(dayjs(this.defaultTime[1]).format('YYYYMMDD')), //当日前一天
-        gameType: parseInt(this.gameCode),
-        isAll: this.isBoolean
+        gameType: parseInt(this.gameCode)
       };
-      let req2 = this.$store.dispatch("getManagerDayStat", params);
-      
+      let req2 = this.$store.dispatch("getUserDayStat", params);
+     
       //当这两个请求都完成的时候会触发这个函数，两个参数分别代表返回的结果
       let [perms] = await this.axios.all([req2]);
-      
-      if (perms.code == 0) {
-        this.dayStatList = perms.payload;
-      }
-      if (this.dayStatList.length == 0) {
-        this.showBox = false
-      }
+     
 
-      if (this.showBox) {
+      this.dayStatList = perms.payload;
+
+
+      if (this.dayStatList == "") {
+        this.showChat = false
+      }
+      
+     
+      if (this.showChat) {
         this.drawLine();
       }
       this.spinShow = false;
@@ -382,8 +336,16 @@ export default {
         this.defaultTime = [dayjs().startOf('month').format('YYYYMMDD'), dayjs(dayjs().valueOf()-24 * 60 * 60 * 1000).format('YYYYMMDD')]
       }
       
-    }
-  }
+    },
+    getGameList() {
+      httpRequest("post","/gameBigType",{companyIden: -1},"game")
+      .then(result => {
+        this.gameType = result.payload
+        this.gameType.unshift({type: 4, code: "", name: "全部", company: ""})
+      })
+    },
+  },
+  props: ['identity']
 };
 </script>
 <style lang="less" scoped>
@@ -396,12 +358,10 @@ export default {
     display: inline-block;
   }
   .top {
-    .title1 {
-      display: flex;
-    }
-    .title2 {
-      display: flex;
-      margin-bottom: 1rem;
+    display: flex;
+    margin-bottom: 1rem;
+    .title {
+      margin: 0;
     }
   }
   .demo-spin-icon-load {

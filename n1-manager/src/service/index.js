@@ -165,6 +165,10 @@ export async function subRoleUpdate(params) {
 export async function queryManagerDayStat(params) {
     return http(post('/query/managerDayStat', params))
 }
+//商户日报表
+export async function queryUserDayStat(params) {
+  return http(post('/query/userDayStat', params))
+}
 
 //管理员列表更新角色
 export async function adminUpdate(params){

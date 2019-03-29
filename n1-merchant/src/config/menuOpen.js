@@ -46,6 +46,8 @@
       openName = ["board"];
     } else if(name=='flow'||name=='noTransferReport'){
       openName=['noTransfer']
+    } else if (name == 'dayMergent') {
+      openName = ['dayReport']
     }
     return openName
   }

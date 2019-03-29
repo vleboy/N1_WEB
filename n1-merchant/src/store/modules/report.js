@@ -1,4 +1,4 @@
-import { queryUserStat,queryPlayer } from '@/service/index'
+import { queryUserStat, queryPlayer, queryUserDayStat } from '@/service/index'
 export const report = {
     state:{
        
@@ -15,6 +15,9 @@ export const report = {
        },
        getPlayerList({commit},params){
          return queryPlayer(params)
-       }
+       },
+      getUserDayStat({ commit }, params) {
+        return queryUserDayStat(params)
+      },
     }
 }
