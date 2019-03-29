@@ -6,9 +6,9 @@
         <Col span="4">
         <Input v-model="sn" placeholder="请输入"></Input>
         </Col>
-        <Col span="2">商户账号</Col>
+        <Col span="2">商户ID</Col>
         <Col span="4">
-        <Input v-model="username" placeholder="请输入"></Input>
+        <Input v-model="displayId" placeholder="请输入"></Input>
         </Col>
         <Col span="5">
         <div class="btns">
@@ -18,13 +18,13 @@
         </Col>
       </Row>
       <Row class="row">
-        <Col span="2" offset="4">商户昵称</Col>
+        <Col span="2" offset="4">商户账号</Col>
+        <Col span="4">
+        <Input v-model="username" placeholder="请输入"></Input>
+        </Col>
+        <Col span="2" >商户昵称</Col>
         <Col span="4">
         <Input v-model="displayName" placeholder="请输入"></Input>
-        </Col>
-        <Col span="2">商户ID</Col>
-        <Col span="4">
-        <Input v-model="displayId" placeholder="请输入"></Input>
         </Col>
       </Row>
     </div>
@@ -110,7 +110,7 @@ export default {
         {
           title: "序号",
           type: "index",
-          maxWidth: 80
+          width: 100
         },
         {
           title: "商户ID",
@@ -256,7 +256,7 @@ export default {
           title: "创建时间",
           key: "createdAt",
           sortable: true,
-          minWidth: 100,
+
           render: (h, params) => {
             return h(
               "span",
@@ -268,7 +268,7 @@ export default {
           title: "最后登录时间",
           key: "loginAt",
           sortable: true,
-          minWidth: 100,
+         
           render: (h, params) => {
             return h(
               "span",
@@ -307,7 +307,7 @@ export default {
         {
           title: "备注",
           key: "remark",
-          maxWidth: 80,
+          
           render: (h, params) => {
             let remark = params.row.remark;
             let result = Object.prototype.toString.call(remark);

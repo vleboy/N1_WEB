@@ -16,16 +16,18 @@
         </Col>
       </Row>
       <Row>
+        <Col span="7">
+          <DatePicker v-model="amountDate" type="datetimerange" :options="options" :transfer='true' style="width: 300px" @on-ok="searchAmount" placeholder="选择日期时间范围">
+        </DatePicker>
+        </Col>
         <Col span="17" style="float: right; text-align: right">
         <Input v-model="betId" placeholder="请输入交易号" style="width: 30%;"></Input>
-        <DatePicker v-model="amountDate" type="datetimerange" :options="options" :transfer='true' style="width: 300px" @on-ok="searchAmount" placeholder="选择日期时间范围">
-        </DatePicker>
         <Button type="primary" @click="searchAmount">搜索</Button>
         <Button type="primary" @click="exportData">导出数据</Button>
         </Col>
-        <Col span="7">
+        <!-- <Col span="7"> -->
         <!-- <span class="justfy2">当前剩余点数：<span style="color: #F7BA2A">{{formatPoints(balance)}}</span></span> -->
-        <Button @click="resultGetPlayerDetail">刷新</Button>
+        <!-- <Button @click="resultGetPlayerDetail">刷新</Button> -->
         </Col>
       </Row>
     </div>
@@ -610,11 +612,11 @@ export default {
         start.setTime(start.getTime() - 3600 * 1000 * 24 * 6);
       this.amountDate = [start, end];
     },
-    resultGetPlayerDetail() {
+    /* resultGetPlayerDetail() {
       this.amountDate = []; // 处理时间不更新，列表页筛选不了最新数据问题
       this.initData();
       this.getTransactionRecord();
-    },
+    }, */
     initData() {
       this.currentPage = 1;
       this.nowPage = 1;
