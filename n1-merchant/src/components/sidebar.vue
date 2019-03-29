@@ -90,13 +90,13 @@
                     </template>
                     <MenuItem name="playList">玩家列表</MenuItem>
                 </Submenu>
-                <Submenu name="logCenter">
+             <!--    <Submenu name="logCenter">
                     <template slot="title">
                         <Icon type="bug"></Icon>
                         日志中心
                     </template>
                     <MenuItem name="opreateLog">操作日志</MenuItem>
-                </Submenu>
+                </Submenu> -->
                  <Submenu name="noTransfer" >
                     <template slot="title">
                         <Icon type="social-usd"></Icon>

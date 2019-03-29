@@ -83,6 +83,14 @@
                         <MenuItem name="pngGame">PNG电子游戏报表</MenuItem>
                     </Submenu>
                 </Submenu>
+                <Submenu name="dayReport">
+                    <template slot="title">
+                        <Icon type="ios-paper-outline"></Icon>
+                        日报表
+                    </template>
+                    <MenuItem name="dealerList">公司日列表</MenuItem>
+                    <MenuItem name="merchantList">线路商列表</MenuItem>
+                </Submenu>
                 <Submenu name="businessCenter">
                     <template slot="title">
                         <Icon type="model-s"></Icon>
@@ -106,7 +114,7 @@
                     <MenuItem name="managerLog">线路商登录日志</MenuItem>
                     <MenuItem name="managerOpreateLog">线路商操作日志</MenuItem>
                     <MenuItem name="merchantLog">商户登录日志</MenuItem>
-                    <MenuItem name="merchantOpreateLog">商户操作日志</MenuItem>
+                    <!-- <MenuItem name="merchantOpreateLog">商户操作日志</MenuItem> -->
                 </Submenu>
                 <Submenu name="noTransfer">
                     <template slot="title">
@@ -127,7 +135,7 @@ export default {
   },
   created() {
     // let game=this.gameList;
-    console.log(this.gameList);
+    //console.log(this.gameList);
     // console.log(str.includes("报表"));
   },
   methods: {

@@ -4,41 +4,48 @@
       <Row class="row -search-row">
         <Col span="2" offset="2">玩家ID</Col>
         <Col span="4">
-        <Input v-model="searchInfo.userId" placeholder="请输入"></Input>
+          <Input v-model="searchInfo.userId" placeholder="请输入"></Input>
         </Col>
-
-        <Col span="2">玩家昵称</Col>
-        <Col span="4">
-        <Input v-model="searchInfo.nickname" placeholder="请输入"></Input>
-        </Col>
-
         <Col span="2">玩家账号</Col>
         <Col span="4">
-        <Input v-model="searchInfo.userName" placeholder="请输入"></Input>
+          <Input v-model="searchInfo.userName" placeholder="请输入"></Input>
+        </Col>
+        <Col span="2">玩家昵称</Col>
+        <Col span="4">
+          <Input v-model="searchInfo.nickname" placeholder="请输入"></Input>
         </Col>
       </Row>
       <Row class="row -search-row" v-if="role!='100'">
         <Col span="2" offset="2">商户ID</Col>
         <Col span="4">
-        <Input v-model="searchInfo.buId" placeholder="请输入"></Input>
+          <Input v-model="searchInfo.buId" placeholder="请输入"></Input>
         </Col>
 
         <Col span="2">商户标识</Col>
         <Col span="4">
-        <Input v-model="searchInfo.parentSn" placeholder="请输入"></Input>
+          <Input v-model="searchInfo.parentSn" placeholder="请输入"></Input>
         </Col>
 
         <Col span="2">游戏状态</Col>
         <Col span="4">
-        <Select v-model="searchInfo.gameId" clearable placeholder="请选择游戏状态" style="text-align: left">
-          <Option v-for="(item, index) in gameTypeList" :value="item.code" :key="index">{{ item.name }}</Option>
-        </Select>
+          <Select
+            v-model="searchInfo.gameId"
+            clearable
+            placeholder="请选择游戏状态"
+            style="text-align: left"
+          >
+            <Option
+              v-for="(item, index) in gameTypeList"
+              :value="item.code"
+              :key="index"
+            >{{ item.name }}</Option>
+          </Select>
         </Col>
         <Col span="4">
-        <div class="btns">
-          <Button type="primary" @click="getSearch(true)">搜索</Button>
-          <Button type="ghost" @click="getSearch(false)">重置</Button>
-        </div>
+          <div class="btns">
+            <Button type="primary" @click="getSearch(true)">搜索</Button>
+            <Button type="ghost" @click="getSearch(false)">重置</Button>
+          </div>
         </Col>
       </Row>
     </div>
@@ -51,11 +58,17 @@
       <!--</Row>-->
       <Table :columns="columns" :data="getItems"></Table>
       <Spin size="large" fix v-if="isFetching">
-        <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
+        <Icon type="load-c" size="18" class="demo-spin-icon-load"></Icon>
         <div>加载中...</div>
       </Spin>
       <div style="text-align: right;margin:2rem 0">
-        <Page :total="playerList.length" show-elevator :page-size="20" :current.sync="currentPage" @on-change="getNowpage"></Page>
+        <Page
+          :total="playerList.length"
+          show-elevator
+          :page-size="20"
+          :current.sync="currentPage"
+          @on-change="getNowpage"
+        ></Page>
       </div>
     </div>
   </div>
@@ -91,7 +104,7 @@ export default {
         userName: "",
         nickname: "",
         suffix: "",
-        parentSn:'',
+        parentSn: "",
         msn: ""
       },
       role: localStorage.loginRole, // 相应角色的权限（区分商户、线路商、平台角色）
@@ -124,7 +137,7 @@ export default {
 
           render: (h, params) => {
             console.log(params);
-            
+
             return h(
               "span",
               params.row.nickname === "NULL!" ? "-" : params.row.nickname
