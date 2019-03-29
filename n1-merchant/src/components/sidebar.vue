@@ -88,7 +88,7 @@
                         <Icon type="ios-paper-outline"></Icon>
                         日报表
                     </template>
-                    <MenuItem name="dayMergent">商户日报表</MenuItem>
+                    <MenuItem name="dayMerchant">商户日报表</MenuItem>
                 </Submenu>
                 <Submenu name="playerCenter">
                     <template slot="title">

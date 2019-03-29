@@ -89,7 +89,7 @@
                         日报表
                     </template>
                     <MenuItem name="dayCompany">公司日列表</MenuItem>
-                    <MenuItem name="dayMergent">商户日报表</MenuItem>
+                    <MenuItem name="dayMerchant">商户日报表</MenuItem>
                 </Submenu>
                 <Submenu name="businessCenter">
                     <template slot="title">

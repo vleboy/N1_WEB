@@ -41,7 +41,7 @@ import natruehfive from '@/pages/reports/naTrueHfive'
 
 //day
 import dayCompany from '@/pages/day/dayCompany'
-import dayMergent from '@/pages/day/dayMergent'
+import dayMerchant from '@/pages/day/dayMerchant'
 
 //log
 import managerOpreateLog from '@/pages/log/managerOpreateLog'
@@ -234,7 +234,7 @@ export const appRouter = [
            component: main,
            children: [
              { path: 'dayCompany', title: '公司日报表', name: 'dayCompany', component: dayCompany },
-             { path: 'dayMergent', title: '线路商日报表', name: 'dayMergent', component: dayMergent }
+             { path: 'dayMerchant', title: '线路商日报表', name: 'dayMerchant', component: dayMerchant }
            ]
          },
          {

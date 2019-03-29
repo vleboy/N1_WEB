@@ -82,7 +82,26 @@ export default {
         },
         {
           title: "昵称",
-          key: "displayName"
+          key: "displayName",
+          render: (h, params) => {
+           
+            return h(
+              "span",
+              {
+                style: {
+                  cursor: "pointer",
+                  color: "#20a0ff"
+                },
+                on: {
+                  click: () => { 
+                    let time = this.changedTime
+                      this.$router.push({name: "dayMerchant",query:{name:params.row.sn,time:time,type:this.gameType}})
+                      localStorage.setItem('dayMerchant','dayMerchant')
+                  }
+                }  
+              }, 
+              params.row.displayName+"(前往日报表)");
+          },
         },
         {
           title: "管理员账号",
