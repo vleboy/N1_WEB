@@ -160,6 +160,12 @@ export async function subRoleDelete(params) {
 export async function subRoleUpdate(params) {
     return http(post('/subRoleUpdate',params))
 }
+
+//线路商日报表
+export async function queryManagerDayStat(params) {
+    return http(post('/query/managerDayStat', params))
+}
+
 //管理员列表更新角色
 export async function adminUpdate(params){
     return http(post('/adminUpdate',params))

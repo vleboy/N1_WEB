@@ -2,14 +2,15 @@
   <div class="p-playerlist">
     <div class="propList-search">
       <Row class="row -search-row">
-        <Col span="2" :offset="level ? '2' : '4'">玩家账号</Col>
-        <Col span="4">
-        <Input v-model="searchInfo.userName" placeholder="请输入"></Input>
-        </Col>
-
-        <Col span="2">玩家ID</Col>
+        
+        <Col span="2" :offset="level ? '2' : '4'">玩家ID</Col>
         <Col span="4">
         <Input v-model="searchInfo.userId" placeholder="请输入"></Input>
+        </Col>
+
+        <Col span="2" >玩家账号</Col>
+        <Col span="4">
+        <Input v-model="searchInfo.userName" placeholder="请输入"></Input>
         </Col>
 
         <Col span="2" v-if="level">游戏状态</Col>

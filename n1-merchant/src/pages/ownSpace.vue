@@ -10,26 +10,6 @@
            <span>商户ID : {{admin.displayId}}</span>
           </td>
           <td>
-             <Row>
-              <Col span="21">商户密匙 :
-              <span v-if="showKey">{{admin.apiKey}}</span>
-              <span v-else>********</span>
-              </Col>
-              <Col span="3">
-              <span class="newPassword" @click="showKey=!showKey" v-if="!showKey">显示</span>
-              <span class="newPassword" @click="showKey=!showKey" v-else>隐藏</span>
-              </Col>
-            </Row>
-          </td>
-          <td>
-            <span>商户简称 : {{ admin.suffix }}</span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span>商户标识 : {{admin.sn}} </span>
-          </td>
-          <td>
             <span>管理员账号 : {{admin.uname}}</span>
           </td>
           <td>
@@ -48,13 +28,30 @@
         </tr>
         <tr>
           <td>
-            <span>商户线路号 : {{ admin.msn }}</span>
+            <span>商户简称 : {{ admin.suffix }}</span>
+          </td>
+          <td>
+            <span>商户标识 : {{admin.sn}} </span>
+          </td>
+          <td>
+             <Row>
+              <Col span="10">商户密匙 :
+              <span v-if="showKey">{{admin.apiKey}}</span>
+              <span v-else>********</span>
+              </Col>
+              <Col span="12">
+              <span class="newPassword" @click="showKey=!showKey" v-if="!showKey">显示</span>
+              <span class="newPassword" @click="showKey=!showKey" v-else>隐藏</span>
+              </Col>
+            </Row>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span>上次登录IP : {{admin.lastIP}}</span>
           </td>
           <td>
             <span>上次登录时间 : {{dayjs(admin.loginAt).format('YYYY-MM-DD HH:mm:ss')}}</span>
-          </td>
-          <td>
-            <span>上次登录IP : {{admin.lastIP}}</span>
           </td>
         </tr>
       </table>
@@ -111,13 +108,13 @@ export default {
         {
           title: "序号",
           type: "index",
-          maxWidth: 80
+          maxWidth: 60
         },
         {
           title: "交易时间",
           key: "createdAt",
           sortable: true,
-          minWidth: 100,
+          minWidth: 45,
           render: (h, params) => {
             return h(
               "span",

@@ -88,8 +88,8 @@
                         <Icon type="ios-paper-outline"></Icon>
                         日报表
                     </template>
-                    <MenuItem name="dealerList">公司日列表</MenuItem>
-                    <MenuItem name="merchantList">线路商列表</MenuItem>
+                    <MenuItem name="dayCompany">公司日列表</MenuItem>
+                    <MenuItem name="dayManager">商户日报表</MenuItem>
                 </Submenu>
                 <Submenu name="businessCenter">
                     <template slot="title">
