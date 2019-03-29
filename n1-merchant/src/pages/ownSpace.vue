@@ -13,17 +13,14 @@
             <span>管理员账号 : {{admin.uname}}</span>
           </td>
           <td>
-            <Row>
-              <Col span="10">管理员密码 :
+            <div>
+              <span>管理员密码 :</span>
               <span v-if="showPass">{{admin.password}}</span>
               <span v-else>********</span>
-              </Col>
-              <Col span="12">
-              <span class="newPassword" @click="showPass=!showPass" v-if="!showPass">显示</span>
+              <span class="newPassword" @click="showPass=!showPass" v-if="!showPass" style="margin-left: 1.5rem">显示</span>
               <span class="newPassword" @click="showPass=!showPass" v-else>隐藏</span>
               <span class="newPassword" @click="newPassword">修改密码</span>
-              </Col>
-            </Row>
+            </div>
           </td>
         </tr>
         <tr>
@@ -34,16 +31,14 @@
             <span>商户标识 : {{admin.sn}} </span>
           </td>
           <td>
-             <Row>
-              <Col span="10">商户密匙 :
+             <div>
+              <div>商户密匙 :
               <span v-if="showKey">{{admin.apiKey}}</span>
               <span v-else>********</span>
-              </Col>
-              <Col span="12">
-              <span class="newPassword" @click="showKey=!showKey" v-if="!showKey">显示</span>
+              <span class="newPassword" @click="showKey=!showKey" v-if="!showKey" style="margin-left: 2.5rem">显示</span>
               <span class="newPassword" @click="showKey=!showKey" v-else>隐藏</span>
-              </Col>
-            </Row>
+              </div>
+            </div>
           </td>
         </tr>
         <tr>
