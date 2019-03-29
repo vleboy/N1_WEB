@@ -44,7 +44,7 @@ export const menuOpen = function(name) {
     openName = ['noTransfer']
   } else if (name == 'dayCompany') {
     openName = ['dayReport']
-  } else if (name == 'dayManager') {
+  } else if (name == 'dayMergent') {
     openName = ['dayReport']
   }
   return openName

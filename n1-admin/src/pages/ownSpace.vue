@@ -92,13 +92,13 @@ export default {
         {
           title: "序号",
           type: "index",
-          maxWidth: 80
+          maxWidth: 60
         },
         {
           title: "交易时间",
           key: "createdAt",
           sortable: true,
-          minWidth: 100,
+          minWidth: 45,
           render: (h, params) => {
             return h(
               "span",

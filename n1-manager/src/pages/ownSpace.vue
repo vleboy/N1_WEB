@@ -6,6 +6,9 @@
     <div class="manangeinfo">
       <table cellspacing="0">
          <tr>
+           <td>
+            <span>线路商前缀 : {{admin.suffix}} </span>
+          </td>
           <td>
             <span>线路商账号 : {{admin.uname}}</span>
           </td>
@@ -21,20 +24,17 @@
               <span class="newPassword" @click="newPassword">修改密码</span>
               </Col>
             </Row>
-          </td>
-          <td>
-            <span>线路商前缀 : {{admin.suffix}} </span>
-          </td>
+          </td> 
         </tr>
          <tr>
+           <td>
+            <span>上次登录IP : {{admin.lastIP}}</span>
+          </td>
           <td>
             <span>上次登录时间 : {{dayjs(admin.loginAt).format('YYYY-MM-DD HH:mm:ss')}}</span>
           </td>
           <td>
             <span>创建时间 : {{dayjs(admin.createdAt).format('YYYY-MM-DD HH:mm:ss')}}</span>
-          </td>
-          <td>
-            <span>上次登录IP : {{admin.lastIP}}</span>
           </td>
         </tr>
       </table>

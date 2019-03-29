@@ -97,13 +97,14 @@ export default {
       columns1: [
         {
           title: "序号",
-          type: "index"
+          type: "index",
+          maxWidth: 70,
         },
          {
           title: "交易时间",
           key: "createdAt",
           sortable:true,
-          minWidth: 80,
+          minWidth: 45,
           render: (h, params) => {
             return h(
               "span",
