@@ -14,6 +14,12 @@
         <Col span="4">
           <Input v-model="searchInfo.nickname" placeholder="请输入"></Input>
         </Col>
+        <Col span="4">
+          <div class="btns">
+            <Button type="primary" @click="getSearch(true)">搜索</Button>
+            <Button type="ghost" @click="getSearch(false)">重置</Button>
+          </div>
+        </Col>
       </Row>
       <Row class="row -search-row" v-if="role!='100'">
         <Col span="2" offset="2">商户ID</Col>
@@ -41,12 +47,7 @@
             >{{ item.name }}</Option>
           </Select>
         </Col>
-        <Col span="4">
-          <div class="btns">
-            <Button type="primary" @click="getSearch(true)">搜索</Button>
-            <Button type="ghost" @click="getSearch(false)">重置</Button>
-          </div>
-        </Col>
+        
       </Row>
     </div>
     <div class="playerform">

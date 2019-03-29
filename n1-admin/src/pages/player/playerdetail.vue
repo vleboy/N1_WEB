@@ -34,7 +34,7 @@
      </Collapse>
     <div class="-d-content">
       <!-- <h4>消费信息</h4> -->
-      <RadioGroup v-model="reportType" type="button" :style="{paddingBottom:'10px'}">
+      <RadioGroup v-model="reportType" type="button" :style="{paddingBottom:'10px'}" size="small">
         <Radio label="1">流水报表</Radio>
         <Radio label="2">交易记录</Radio>
       </RadioGroup>
