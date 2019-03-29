@@ -258,11 +258,9 @@ export default {
       // if (this.dayStatList != "") {
         
       // }
-
-      
+ 
         this.showChat = true
         this.init();
-      
 
     },
     // permission() {
