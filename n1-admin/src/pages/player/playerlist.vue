@@ -113,7 +113,8 @@ export default {
         {
           title: "玩家ID",
           key: "userId",
-          sortable: true
+          sortable: true,
+          width: 100
         },
         {
           title: "玩家账号",

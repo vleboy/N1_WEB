@@ -26,10 +26,7 @@
             <DatePicker type="daterange" :options="options" :editable='false' :value="defaultTime" placeholder="选择日期时间范围(默认最近一个月)" style="width: 270px" confirm @on-ok="confirms" @on-change="handle"></DatePicker>
           </p>
           </p>
-        </div>
-         <!--  当前用户列表---{{this.identity}} -->
-        <div class="title2">
-          <Select style="width:200px;" placeholder="选择游戏类别" ref="resetSelect" clearable v-model="model1">
+          <Select style="width:200px;margin-left:2rem" placeholder="选择游戏类别" ref="resetSelect" clearable v-model="model1">
               <Option v-for="(item, index) in gameType" :value="item.name" :key="item.name" @click.native="selGame(item.code)">{{item.name}}</Option>
             </Select>
           
@@ -42,7 +39,9 @@
           <Button type="ghost" @click="reset">重置</Button>
 
           </p>
-        </div> 
+        </div>
+         <!--  当前用户列表---{{this.identity}} -->
+      
     
       </div>
     </div>
