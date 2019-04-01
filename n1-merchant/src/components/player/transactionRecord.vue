@@ -3,15 +3,15 @@
     <div class="-p-header">
       <Row>
         <Col class="-p-h-bottom">
-        <RadioGroup v-model="companyInfo" @on-change="changeCompany" type="button">
-          <Radio v-for="(item,index) of companyList" :key="index" :label="item.company">{{item.company}}</Radio>
+        <RadioGroup v-model="companyInfo" @on-change="changeCompany" type="button" size="small">
+          <Radio v-for="(value,index) of getCompanyList" :key="index" :label="value">{{value}}</Radio>
         </RadioGroup>
         </Col>
       </Row>
       <Row>
         <Col class="-p-h-bottom">
-        <RadioGroup v-model="radioInfo" @on-change="changeRadio" type="button">
-          <Radio v-for="(item,index) of gameTypeList" :key="index" :label="item.code">{{item.name}}</Radio>
+        <RadioGroup v-model="radioInfo" @on-change="changeRadio" type="button" size="small">
+          <Radio v-for="(value,index) of gameTypeList" :key="index" :label="value">{{value}}</Radio>
         </RadioGroup>
         </Col>
       </Row>
@@ -23,10 +23,10 @@
         <Button type="primary" @click="searchAmount">搜索</Button>
         <Button type="primary" @click="exportData">导出数据</Button>
         </Col>
-        <Col span="7">
-        <!-- <span class="justfy2">当前剩余点数：<span style="color: #F7BA2A">{{formatPoints(balance)}}</span></span> -->
+        <!-- <Col span="7">
+        <!-- <span class="justfy2">当前剩余点数：<span style="color: #F7BA2A">{{formatPoints(balance)}}</span></span> 
         <Button type="text" @click="resultGetPlayerDetail">刷新</Button>
-        </Col>
+        </Col> -->
       </Row>
     </div>
 
@@ -139,10 +139,10 @@ export default {
       isLastMessage: false, // 主要判断是否是后台返回最后一次信息
       isOpenModalBill: false,
       isOpenModalRunning: false,
-      radioInfo: "",
+      radioInfo: "全部",
+      sel:'全部厂商',
       amountDate: [],
       companyList: [],
-      gameTypeList: [],
       companyInfo: "全部厂商",
       playerDetailList: [],
       playerDetailListStorage: [],
@@ -341,6 +341,39 @@ export default {
         }
       }
       return this.allAmount;
+    },
+    getCompanyList() {
+      let arr = Array.from(
+        new Set(
+          JSON.parse(localStorage.getItem("userInfo")).gameList.map(item => {
+            return item.company;
+          })
+        )
+      );
+      arr.unshift("全部厂商");
+      return arr;
+    },
+    gameTypeList() {
+      let arr = [];
+      if (this.sel == '全部厂商') {
+        arr = JSON.parse(localStorage.getItem("userInfo")).gameList.map(
+          item => {
+            return item.name;
+          }
+        );
+      } else {
+        JSON.parse(localStorage.getItem("userInfo")).gameList.map(item => {
+          if (this.sel == item.company) {
+            arr.push(item.name);
+          }
+        })
+      }
+
+      /* arr.unshift("全部厂商");
+      return arr; */
+
+     arr.unshift('全部')
+     return arr
     }
   },
   mounted() {
@@ -427,13 +460,22 @@ export default {
       this.runningDetail = data;
     },
     changeRadio() {
-      this.initData();
-      this.getTransactionRecord();
+      this.radioInfo = val
+      this.getPlayerAccount()
     },
     getTransactionRecord() {
       if (this.isFetching) return;
       this.isFetching = true;
       this.initTime();
+      let code = ''
+      JSON.parse(localStorage.getItem("userInfo")).gameList.map(
+            item => {
+              if (this.radioInfo == item.name) {
+               code = item.code
+               return 
+              }
+            }
+      )
       let name = localStorage.playerName;
       let [startTime, endTime] = this.amountDate;
       startTime = new Date(startTime).getTime();
@@ -461,7 +503,7 @@ export default {
       });
     },
     companySelectList() {
-      httpRequest(
+      /* httpRequest(
         "post",
         "/companySelect",
         {
@@ -475,10 +517,10 @@ export default {
         });
         this.changeCompany();
         // this.$store.commit('closeLoading')
-      });
+      }); */
     }, //获取运营商列表
-    changeCompany() {
-      httpRequest(
+    changeCompany(val) {
+      /* httpRequest(
         "post",
         "/gameBigType",
         {
@@ -496,7 +538,8 @@ export default {
           name: "全部"
         });
         this.radioInfo = "";
-      });
+      }); */
+      this.sel = val 
     },
     searchAmount() {
       this.initData();
