@@ -13,7 +13,7 @@ $
           </RadioGroup>
         </div>
         <div class="from-search">
-          <RadioGroup v-model="radioInfo" type="button" size="small" @on-change="changeGameType">
+          <RadioGroup v-model="radioInfo" type="button" size="small" @on-change="changeGameType" >
             <Radio
               v-for="(item,index) of getGameTypeList"
               :key="index"

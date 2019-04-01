@@ -10,7 +10,7 @@
       </Row>
       <Row>
         <Col class="-p-h-bottom">
-        <RadioGroup v-model="radioInfo"  @on-change="changeRadio" type="button">
+        <RadioGroup v-model="radioInfo"  @on-change="changeRadio" type="button" size="small">
           <Radio v-for="(item,index) of getGameTypeList" :key="index" :label="item.code">{{item.name}}</Radio>
         </RadioGroup>
         </Col>

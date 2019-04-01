@@ -48,7 +48,7 @@ $
         </div>
         <div class="from-search">
           厂商：
-          <RadioGroup v-model="companyInfo" type="button" @on-change="changeCompany">
+          <RadioGroup v-model="companyInfo" type="button" @on-change="changeCompany" >
             <Radio v-for="(item,index) of companyList" :key="index" :label="item.company">{{item.company}}</Radio>
           </RadioGroup>
         </div>
