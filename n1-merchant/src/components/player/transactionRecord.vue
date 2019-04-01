@@ -377,8 +377,7 @@ export default {
     }
   },
   mounted() {
-    // this.getTransactionRecord()
-    this.companySelectList();
+    this.getTransactionRecord()
   },
   methods: {
     getNowpage(page) {
@@ -459,9 +458,9 @@ export default {
       this.isOpenModalRunning = true;
       this.runningDetail = data;
     },
-    changeRadio() {
+    changeRadio(val) {
       this.radioInfo = val
-      this.getPlayerAccount()
+      this.getTransactionRecord()
     },
     getTransactionRecord() {
       if (this.isFetching) return;
@@ -484,7 +483,7 @@ export default {
       httpRequest("post", "/player/bill/detail", {
         userName: name,
         company: this.companyInfo == "全部厂商" ? "-1" : this.companyInfo,
-        gameType: this.radioInfo,
+        gameType: code,
         startTime: startTime,
         endTime: endTime,
         startKey: this.playerDetailStartKey,
