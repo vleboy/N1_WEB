@@ -81,7 +81,7 @@ export default {
                     title: "NA游戏总报表",
                     checked: false
                   },
-                  {
+                  /* {
                     title: "NA电子游戏报表",
                     checked: false
                   },
@@ -92,7 +92,7 @@ export default {
                   {
                     title: "NA棋牌游戏报表",
                     checked: false
-                  },
+                  }, */
                   {
                     title: "NA电子h5报表",
                     checked: false
@@ -100,7 +100,7 @@ export default {
                   {
                     title: "NA电子H5无神秘奖报表",
                     checked: false
-                  },
+                  }/* ,
                    {
                     title: "NA真人h5报表",
                     checked: false
@@ -111,7 +111,7 @@ export default {
                   }, {
                     title: "NA捕鱼游戏报表",
                     checked: false
-                  }
+                  } */
                 ]
               },
               {
@@ -454,13 +454,13 @@ export default {
         {
           title: "序号",
           type: "index",
-          maxWidth: 80
+          
         },
         {
           title: "角色名",
           key: "name",
           sortable:true,
-          maxWidth: 160
+        
         },
         {
           title: "权限",
@@ -468,10 +468,28 @@ export default {
           render: (h, params) => {
             let tags = params.row.permissions;
             return h(
-              "div",
-              tags.map(item => {
-                return h("Tag", item);
-              })
+              "Tooltip",
+              {
+                props: {
+                  placement: 'bottom-start'
+                }
+              },
+              //`${params.row.permissions.length}项权限`
+              [
+                h('div',`${params.row.permissions.length}项权限`),
+                /* params.row.permissions.map(
+                  item => {
+                    return h('span',{slot:'content',props:{maxWidth:10}},item)
+                  }
+                ) */
+                h('div',{slot:'content'},[
+                   params.row.permissions.map(
+                  item => {
+                    return h('p',{slot:'content',props:{maxWidth:10}},item)
+                  }
+                )
+                ])
+              ]
             );
           }
         },
@@ -669,4 +687,26 @@ export default {
     }
   }
 }
+
+
+/deep/ .ivu-tooltip-popper {
+          background: #495060;
+        .ivu-tooltip-content {
+          background: #495060;
+        }
+        .ivu-tooltip-inner {
+          div {
+            display: flex;
+            justify-content: space-between;
+             flex-direction: row;
+            flex-wrap: wrap;
+            p {
+
+              color:#fff;
+              margin-right: 1rem;
+            }
+          }
+          }
+}
+
 </style>

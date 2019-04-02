@@ -69,7 +69,7 @@ export default {
                     {
                       title: "NA游戏总报表"
                     },
-                    {
+                    /* {
                       title: "NA电子游戏报表"
                     },
                     {
@@ -77,10 +77,14 @@ export default {
                     },
                     {
                       title: "NA棋牌游戏报表"
-                    },
+                    }, */
                     {
                     title: "NA电子h5报表",
                   },
+                    {
+                    title: "NA电子h5无神秘奖报表",
+                  }
+                  /* ,
                     {
                     title: "NA真人h5报表",
                   },
@@ -89,7 +93,7 @@ export default {
                     },
                     {
                       title: "NA捕鱼游戏报表"
-                    }
+                    } */
                   ]
                 },
                 {

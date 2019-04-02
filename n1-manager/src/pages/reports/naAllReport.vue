@@ -93,7 +93,7 @@ export default {
       user: [], //当前管理员
       child: [], //管理员下级
       source: "0",
-      gameType: [10000,30000, 40000, 50000,60000,70000,80000,90000],
+      gameType: [70000,90000],
       columns11: [],
       columns22: [],
       columns1: [
@@ -261,7 +261,7 @@ export default {
             }
           }
         },
-        {
+       /*  {
           title: "NA棋牌游戏(输赢金额)",
           key: "winloseAmount",
           render: (h, params) => {
@@ -480,8 +480,7 @@ export default {
               return h("span", "0.00");
             }
           }
-        },
-        
+        },  */   
         {
           title: "NA电子H5(商家交公司)",
           key: "submitAmount",
@@ -499,7 +498,7 @@ export default {
             }
           }
         },
-        {
+        /* {
           title: "NA真人h5(输赢金额)",
           key: "winloseAmount",
           render: (h, params) => {
@@ -542,7 +541,7 @@ export default {
               return h("span", "0.00");
             }
           }
-        },
+        }, */
         {
           title: "NA电子H5无神秘奖(输赢金额)",
           key: "winloseAmount",
@@ -645,7 +644,29 @@ export default {
             );
           }
         },
-        {
+         {
+          title: "NA电子H5(输赢金额)",
+          key: "winloseAmount",
+          render: (h, params) => {
+            let winloseAmount = 0;
+            if (params.row.gameTypeMap["70000"] !== undefined) {
+              winloseAmount = params.row.gameTypeMap[
+                "70000"
+              ].winloseAmount.toFixed(2);
+            }
+            let color = winloseAmount < 0 ? "#f30" : "#0c0";
+            return h(
+              "span",
+              {
+                style: {
+                  color: color
+                }
+              },
+              thousandFormatter(winloseAmount)
+            );
+          }
+        },
+        /* {
           title: "NA棋牌游戏(输赢金额)",
           key: "winloseAmount",
           render: (h, params) => {
@@ -755,28 +776,7 @@ export default {
             );
           }
         },
-         {
-          title: "NA电子H5(输赢金额)",
-          key: "winloseAmount",
-          render: (h, params) => {
-            let winloseAmount = 0;
-            if (params.row.gameTypeMap["70000"] !== undefined) {
-              winloseAmount = params.row.gameTypeMap[
-                "70000"
-              ].winloseAmount.toFixed(2);
-            }
-            let color = winloseAmount < 0 ? "#f30" : "#0c0";
-            return h(
-              "span",
-              {
-                style: {
-                  color: color
-                }
-              },
-              thousandFormatter(winloseAmount)
-            );
-          }
-        },
+        
         {
           title: "NA真人h5(输赢金额)",
           key: "winloseAmount",
@@ -798,7 +798,7 @@ export default {
               thousandFormatter(winloseAmount)
             );
           }
-        },
+        }, */
         {
           title: "NA电子H5无神秘奖(输赢金额)",
           key: "winloseAmount",
@@ -957,35 +957,10 @@ export default {
       let removeArr = []
       let removeArr1 = []
 
-      if (getWinloseAmount(arr, ["10000"]) == 0) {
+      if (getWinloseAmount(arr, ["90000"]) == 0) {
         removeArr.push(9,10)
         removeArr1.push(6)
       }
-      if (getWinloseAmount(arr, ["30000"]) == 0) {
-        removeArr.push(11,12)
-        removeArr1.push(7)
-      }
-      if (getWinloseAmount(arr, ["40000"]) == 0) {
-        removeArr.push(13,14)
-        removeArr1.push(8)
-      }
-      if (getWinloseAmount(arr, ["50000"]) == 0) {
-        removeArr.push(15,16)
-        removeArr1.push(9)
-      }  
-      if (getWinloseAmount(arr, ["60000"]) == 0) {
-        removeArr.push(17,18)
-        removeArr1.push(10)
-      }
-      if (getWinloseAmount(arr, ["80000"]) == 0) {
-        removeArr.push(19,20)
-        removeArr1.push(11)
-      }
-      if (getWinloseAmount(arr, ["90000"]) == 0) {
-        removeArr.push(21,22)
-        removeArr1.push(12)
-      }
-
 
       let rs = Array.from(new Set(removeArr));
       let rs1 = Array.from(new Set(removeArr1));

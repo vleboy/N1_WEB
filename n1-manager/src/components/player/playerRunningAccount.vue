@@ -2,8 +2,18 @@ $
 <template>
   <div class="p-playerAccount">
     <div class="-p-base">
+      <div class="from-search">
+          <RadioGroup v-model="companyInfo" type="button" @on-change="changeCompany" size="small">
+            <Radio v-for="(value,index) of getCompanyList" :key="index" :label="value">{{value}}</Radio>
+          </RadioGroup>
+        </div>
+        <div class="from-search" style="margin-bottom:1rem">
+          <RadioGroup v-model="radioInfo" type="button" size="small" @on-change="changeGameType">
+            <Radio v-for="(value,index) of gameTypeList" :key="index" :label="value">{{value}}</Radio>
+          </RadioGroup>
+        </div>
       <Row class="-b-form">
-        <Col span="17">
+        <Col span="12">
           <DatePicker
             :editable='false'
             :transfer='true'
@@ -13,51 +23,24 @@ $
             @on-change="changeDate"
             placeholder="选择日期范围" style="width: 300px">
           </DatePicker>
-          <DatePicker
-            v-model="monthDate"
-            :transfer='true'
-            type="month"
-            @on-change="changeMonth"
-            placeholder="按月选择" style="width:100px">
-          </DatePicker>
-          最近：
-          <RadioGroup v-model="radioTime" @on-change="changeTime()" type="button">
-            <Radio label="1">1周</Radio>
-            <Radio label="2">1个月</Radio>
-            <Radio label="3">1年</Radio>
-          </RadioGroup>
         </Col>
-        <Col span="7" class="text-right">
+        <Col span="12" class="text-right" style="display:flex;justify-content:flex-end">
+           <div style="margin-right:1rem;width: 50rem;">
+            <Input v-model="sn" placeholder="请输入流水号"></Input>
+          </div>
+          <div style="margin-right:1rem;width: 50rem;">
+            <Input v-model="betId" placeholder="请输入交易号"></Input>
+          </div> 
           <Button @click="isShowSearch = !isShowSearch" type="text">高级筛选
             <Icon type="arrow-down-b" v-if="!isShowSearch"></Icon>
             <Icon type="arrow-up-b" v-else></Icon>
           </Button>
+           <Button type="primary" size="large" @click="searchData(true)" style="margin-right:1rem">搜索</Button>
           <Button type="primary" @click="exportData">导出数据</Button>
         </Col>
       </Row>
       <Row v-if="isShowSearch">
-        <div class="from-search">
-          <div class="-search-input">
-            流水号：<Input v-model="sn" placeholder="请输入流水号" style="width: 70%;"></Input>
-          </div>
-        </div>
-        <div class="from-search">
-          <div class="-search-input">
-            交易号：<Input v-model="betId" placeholder="请输入交易号" style="width: 70%;"></Input>
-          </div>
-        </div>
-        <div class="from-search">
-          厂商：
-          <RadioGroup v-model="companyInfo" type="button" @on-change="changeCompany" >
-            <Radio v-for="(item,index) of companyList" :key="index" :label="item.company">{{item.company}}</Radio>
-          </RadioGroup>
-        </div>
-        <div class="from-search">
-          游戏：
-          <RadioGroup v-model="radioInfo" type="button">
-            <Radio v-for="(item,index) of gameTypeList" :key="index" :label="item.code">{{item.name}}</Radio>
-          </RadioGroup>
-        </div>
+       
         <div class="from-search">
           类型：
           <RadioGroup v-model="radioType" type="button">
@@ -77,10 +60,6 @@ $
             <Radio label="1">本次发生金额（入）</Radio>
             <Radio label="-1">本次发生金额（出）</Radio>
           </RadioGroup>
-        </div>
-        <div class="form-button">
-          <Button type="primary" size="large" @click="searchData(true)">筛选</Button>
-          <Button type="primary" size="large" @click="searchData(false)">重置</Button>
         </div>
       </Row>
     </div>
@@ -175,6 +154,7 @@ $
           '12': '代理操作',
           '13': '商城'
         },
+        removeArr: ['NA棋牌游戏', 'NA捕鱼游戏', 'NA街机游戏', 'NA真人游戏','NA电子游戏', 'H5真人视讯','NA真人视讯'],
         GameNameEnum: {
           "70001": "塔罗之谜",
           "70002": "小厨娘",
@@ -310,10 +290,9 @@ $
             }
           }
         ],
-        companyList: [],
-        gameTypeList: [],
-        radioInfo: '',
-        companyInfo: '全部厂商',
+        radioInfo: "全部",
+        companyInfo: "全部厂商",
+        sel: "全部厂商",
         propChild: {},
         isOpenModalBill: false
       }
@@ -339,6 +318,73 @@ $
           this.allAmount += Number(item.amount)
         }
         return thousandFormatter(this.allAmount)
+      },
+      getCompanyList() {
+        let arr = JSON.parse(localStorage.getItem("userInfo")).gameList.map(
+          item => {
+            return item;
+          }
+        )
+
+        for (let i = 0; i < this.removeArr.length; i++) {
+          for (let j = 0; j < arr.length; j++) {
+            if (this.removeArr[i] == arr[j].name) {
+              arr.splice(j,1)
+            }
+          }
+        }  
+
+        let gameList = Array.from(new Set(arr.map(item => {return item.company})))
+        gameList.unshift('全部厂商')
+
+        return gameList
+
+        
+
+        /* let arr = Array.from(
+          new Set(
+            JSON.parse(localStorage.getItem("userInfo")).gameList.map(item => {
+              return item.company;
+            })
+          )
+        );
+        arr.unshift("全部厂商");
+
+        return arr; */
+      },
+      gameTypeList() {
+      
+
+        let arr = JSON.parse(localStorage.getItem("userInfo")).gameList.map(
+          item => {
+            return item;
+          }
+        ) 
+
+        for (let i = 0; i < this.removeArr.length; i++) {
+          for (let j = 0; j < arr.length; j++) {
+            if (this.removeArr[i] == arr[j].name) {
+              arr.splice(j,1)
+            }
+          }
+        }  
+
+
+        let gameType = [];
+        if (this.sel == "全部厂商") {
+          gameType = arr.map(item => {
+            return item.name
+          })
+        } else {
+        arr.map(item => {
+            if (this.sel == item.company) {
+              gameType.push(item.name);
+            }
+          });
+        }
+
+        gameType.unshift("全部");
+        return gameType;
       }
     },
     methods: {
@@ -353,12 +399,20 @@ $
         if (this.isFetching) return
         this.isFetching = true
 
+         let code = "";
+        JSON.parse(localStorage.getItem("userInfo")).gameList.map(item => {
+          if (this.radioInfo == item.name) {
+            code = item.code;
+            return;
+          }
+        });
+
         httpRequest('post', '/player/bill/flow', {
           userName: localStorage.playerName,
           type: this.radioType,
           action: this.radioMoney,
           company: this.companyInfo == '全部厂商' ? '-1' : this.companyInfo,
-          gameType: this.radioInfo,
+          gameType: code,
           startTime: this.amountDate ? this.startDate : '',
           endTime: this.amountDate ? this.endDate : '',
           startKey: this.playerAccountListStartKey,
@@ -447,7 +501,7 @@ $
         window.open(`${url}/player/bill/flow/download?userName=${localStorage.playerName}&type=${this.radioType}&action=${this.radioMoney}&startTime=${this.amountDate ? this.startDate : ''}&endTime=${this.amountDate ? this.endDate : ''}`)
       },
       companySelectList () {
-        httpRequest('post','/companySelect',{
+        /* httpRequest('post','/companySelect',{
           parent: localStorage.loginRole == 1 ? '' : localStorage.loginId
         },'game').then(
           result => {
@@ -457,10 +511,10 @@ $
             })
             this.changeCompany()
           }
-        )
+        ) */
       }, //获取运营商列表
-      changeCompany () {
-        httpRequest('post','/gameBigType',{
+      changeCompany (val) {
+        /* httpRequest('post','/gameBigType',{
           companyIden: this.companyInfo == '全部厂商' ? '-1' : this.companyInfo
         },'game').then(
           result => {
@@ -471,7 +525,12 @@ $
             })
             this.radioInfo = ''
           }
-        )
+        ) */
+        this.sel = val;
+      },
+      changeGameType(val) {
+      this.radioInfo = val;
+      this.getPlayerAccount();
       },
       openModalBill (data) {
         this.propChild = data;

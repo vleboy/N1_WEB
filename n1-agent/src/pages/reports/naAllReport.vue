@@ -1,5 +1,5 @@
 <template>
-  <div class="naAll" :style="{width:getTabWidth}">
+  <div class="naAll" >
     <div class="nowList">
       <div class="top">
         <p class="title">
@@ -94,7 +94,7 @@ export default {
       user: [], //当前管理员
       child: [], //管理员下级
       source: "1",
-      gameType: [10000, 30000, 40000, 50000,60000,70000,80000,90000],
+      gameType: [70000,90000],
       // option: {
       //   disabledDate(date) {
       //     return date && date.valueOf() > Date.now() - 180000;
@@ -406,7 +406,7 @@ export default {
             }
           }
         },
-         {
+        /*  {
           title: "NA棋牌游戏(输赢金额)",
           key: "winloseAmount",
           render: (h, params) => {
@@ -958,7 +958,7 @@ export default {
               return h("span", thousandFormatter(mixAmount));
             }
           }
-        },
+        }, */
 
         {
           title: "NA真电子H5无神秘奖(输赢金额)",
@@ -1155,7 +1155,7 @@ export default {
             return h("span", thousandFormatter(count));
           }
         },
-         {
+        /*  {
           title: "NA棋牌游戏(输赢金额)",
           key: "winloseAmount",
           render: (h, params) => {
@@ -1335,7 +1335,7 @@ export default {
             }
             return h("span", thousandFormatter(count));
           }
-        },
+        }, */
 
         {
           title: "NA电子H5无神秘奖(输赢金额)",
@@ -1536,36 +1536,11 @@ export default {
       let removeArr = []
       let removeArr1 = []
 
-      if (getMixAmount(arr, ["10000"]) == 0) {
+      if (getMixAmount(arr, ["90000"]) == 0) {
         removeArr.push(11,12,13)
         removeArr1.push(8,9)
       }
-      if (getMixAmount(arr, ["30000"]) == 0) {
-        removeArr.push(14,15,16)
-        removeArr1.push(10,11)
-      }
-      if (getMixAmount(arr, ["40000"]) == 0) {
-        removeArr.push(17,18,19)
-        removeArr1.push(12,13)
-      }
-      if (getMixAmount(arr, ["50000"]) == 0) {
-        removeArr.push(20,21,22)
-        removeArr1.push(14,15)
-      }  
-      if (getMixAmount(arr, ["60000"]) == 0) {
-        removeArr.push(23,24,25)
-        removeArr1.push(16,17)
-      }
-      if (getMixAmount(arr, ["80000"]) == 0) {
-        removeArr.push(26,27,28)
-        removeArr1.push(18,19)
-      }
-      if (getMixAmount(arr, ["90000"]) == 0) {
-        removeArr.push(29,30,31)
-        removeArr1.push(20,21)
-      }
-
-
+    
       let rs = Array.from(new Set(removeArr));
       let rs1 = Array.from(new Set(removeArr1));
   

@@ -221,13 +221,13 @@ export default {
       GameListEnum: {
         All:[
           { company: "全部", code: "", name: "全部" },
-          { company: "NA", code: "10000", name: "NA棋牌游戏" },
+         /*  { company: "NA", code: "10000", name: "NA棋牌游戏" },
           { company: "NA", code: "30000", name: "NA真人视讯" },
           { company: "NA", code: "40000", name: "NA电子游戏" },
           { company: "NA", code: "50000", name: "NA街机游戏" },
           { company: "NA", code: "60000", name: "NA捕鱼游戏" },
+          { company: "NA", code: "80000", name: "H5真人视讯" }, */
           { company: "NA", code: "70000", name: "H5电子游戏" },
-          { company: "NA", code: "80000", name: "H5真人视讯" },
           { company: "NA", code: "90000", name: "H5电子游戏-无神秘奖" },
           { company: "TTG", code: "1010000", name: "TTG电子游戏" },
           { company: "PNG", code: "1020000", name: "PNG电子游戏" },
@@ -247,13 +247,13 @@ export default {
         NA: [
           // { company: 'NA', code: '3', name: 'NA商城' },
           { company: "全部", code: "", name: "全部" },
-          { company: "NA", code: "10000", name: "NA棋牌游戏" },
+          /* { company: "NA", code: "10000", name: "NA棋牌游戏" },
           { company: "NA", code: "30000", name: "NA真人视讯" },
           { company: "NA", code: "40000", name: "NA电子游戏" },
           { company: "NA", code: "50000", name: "NA街机游戏" },
-          { company: "NA", code: "60000", name: "NA捕鱼游戏" },
+          { company: "NA", code: "60000", name: "NA捕鱼游戏" }, */
           { company: "NA", code: "70000", name: "H5电子游戏" },
-          { company: "NA", code: "80000", name: "H5真人视讯" },
+          //{ company: "NA", code: "80000", name: "H5真人视讯" },
           { company: "NA", code: "90000", name: "H5电子游戏-无神秘奖" }
         ],
         TTG: [{ company: "全部", code: "", name: "全部" },{ company: "TTG", code: "1010000", name: "TTG电子游戏" }],

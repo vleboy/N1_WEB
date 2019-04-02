@@ -69,7 +69,7 @@ export default {
       spinShow: false, //加载spin
       playerList: [], //玩家列表
       user: [], //当前商户
-      gameType: [ 10000,30000, 40000, 50000,60000,70000,80000,90000],
+      gameType: [70000,90000],
       columns1: [
         {
           title: "序号",
@@ -160,7 +160,7 @@ export default {
             return h("span", thousandFormatter(count));
           }
         },
-         {
+         /* {
           title: "NA棋牌游戏(输赢金额)",
           key: "winloseAmount",
           render: (h, params) => {
@@ -418,7 +418,7 @@ export default {
             }
             return h("span", thousandFormatter(count));
           }
-        },
+        }, */
         {
           title: "NA电子H5无神秘奖(输赢金额)",
           key: "winloseAmount",
@@ -520,7 +520,7 @@ export default {
             );
           }
         },
-        {
+       /*  {
           title: "NA棋牌游戏(输赢金额)",
           key: "winloseAmount",
           render: (h, params) => {
@@ -629,7 +629,7 @@ export default {
               thousandFormatter(winloseAmount)
             );
           }
-        },
+        }, */
          {
           title: "NA电子H5(输赢金额)",
           key: "winloseAmount",
@@ -652,7 +652,7 @@ export default {
             );
           }
         },
-        {
+       /*  {
           title: "NA真人h5(输赢金额)",
           key: "winloseAmount",
           render: (h, params) => {
@@ -673,7 +673,7 @@ export default {
               thousandFormatter(winloseAmount)
             );
           }
-        },
+        }, */
         {
           title: "NA电子H5无神秘奖(输赢金额)",
           key: "winloseAmount",
@@ -801,38 +801,17 @@ export default {
       let removeArr = []
       let removeArr1 = []
 
-      if (getWinloseAmount(arr, ["10000"]) == 0) {
+      if (getWinloseAmount(arr, ["90000"]) == 0) {
         removeArr.push(9,10)
         removeArr1.push(6)
       }
-      if (getWinloseAmount(arr, ["30000"]) == 0) {
-        removeArr.push(11,12)
-        removeArr1.push(7)
-      }
-      if (getWinloseAmount(arr, ["40000"]) == 0) {
-        removeArr.push(13,14)
-        removeArr1.push(8)
-      }
-      if (getWinloseAmount(arr, ["50000"]) == 0) {
-        removeArr.push(15,16)
-        removeArr1.push(9)
-      }  
-      if (getWinloseAmount(arr, ["60000"]) == 0) {
-        removeArr.push(17,18)
-        removeArr1.push(10)
-      }
-      if (getWinloseAmount(arr, ["80000"]) == 0) {
-        removeArr.push(19,20)
-        removeArr1.push(11)
-      }
-      if (getWinloseAmount(arr, ["90000"]) == 0) {
-        removeArr.push(21,22)
-        removeArr1.push(12)
-      }
 
+     
 
       let rs = Array.from(new Set(removeArr));
       let rs1 = Array.from(new Set(removeArr1));
+
+      
   
       let flg = true
       let flg1 = true
@@ -857,6 +836,8 @@ export default {
           
       }
 
+      
+      
 
       rs = []
       rs1 = []

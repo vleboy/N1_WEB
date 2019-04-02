@@ -20,15 +20,15 @@
                     <Submenu name='nareport' v-if="gameStr.includes('NA')||gameStr.includes('H5')">
                         <template slot="title">NA游戏报表</template>
                         <MenuItem name="naAll">NA游戏总报表</MenuItem>
-                        <MenuItem name="navideo" v-if="gameList.includes('NA电子游戏')">NA电子游戏报表</MenuItem>
+                       <!--  <MenuItem name="navideo" v-if="gameList.includes('NA电子游戏')">NA电子游戏报表</MenuItem>
                         <MenuItem name="nastreet" v-if="gameList.includes('NA街机游戏')">NA街机游戏报表</MenuItem>
-                        <MenuItem name="natrue" v-if="gameStr.includes('NA真人')">NA真人游戏报表</MenuItem>
+                        <MenuItem name="natrue" v-if="gameStr.includes('NA真人')">NA真人游戏报表</MenuItem> -->
                         <!-- <MenuItem name="jump" v-if="gameStr.includes('NA真人')">NA真人游戏报表(跳转)</MenuItem> -->
-                        <MenuItem name="nacard" v-if="gameList.includes('NA棋牌游戏')">NA棋牌游戏报表</MenuItem>
-                        <MenuItem name="nafishing" v-if="gameList.includes('NA捕鱼游戏')">NA捕鱼游戏报表</MenuItem>
+                        <!-- <MenuItem name="nacard" v-if="gameList.includes('NA棋牌游戏')">NA棋牌游戏报表</MenuItem>
+                        <MenuItem name="nafishing" v-if="gameList.includes('NA捕鱼游戏')">NA捕鱼游戏报表</MenuItem> -->
                         <MenuItem name="nahfive" v-if='gameList.includes("H5电子游戏")'>NA电子H5报表</MenuItem>
                         <MenuItem name="nanomsy" v-if='gameList.includes("H5电子游戏-无神秘奖")'>NA电子H5无神秘奖报表</MenuItem>
-                        <MenuItem name="natruehfive" v-if='gameList.includes("H5真人视讯")'>NA真人H5报表</MenuItem>
+                       <!--  <MenuItem name="natruehfive" v-if='gameList.includes("H5真人视讯")'>NA真人H5报表</MenuItem> -->
                     </Submenu>
                     <Submenu name='ttgreport' v-if="gameList.includes('TTG电子游戏')">
                         <template slot="title">TTG游戏报表</template>

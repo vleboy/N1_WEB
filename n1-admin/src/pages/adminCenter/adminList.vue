@@ -77,7 +77,7 @@ export default {
         {
           title: "序号",
           type: "index",
-          maxWidth: 80
+          maxWidth: 60
         },
         {
           title: "账号",
@@ -106,7 +106,7 @@ export default {
           title: "创建时间",
           key: "createdAt",
           sortable:true,
-          minWidth: 100,
+          minWidth:20,
           render: (h, params) => {
             return h(
               "span",
@@ -122,6 +122,7 @@ export default {
         {
           title: "操作",
           key: "",
+          minWidth:20,
           render: (h, params) => {
             return h("p", [
               h(

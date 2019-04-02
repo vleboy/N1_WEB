@@ -30,10 +30,10 @@ $
         </Col>
         <Col span="12" class="text-right" style="display:flex;justify-content:flex-end">
           <div style="margin-right:1rem;width: 50rem;">
-            <Input v-model="sn" placeholder="请输入流水号" ></Input>
+            <Input v-model="sn" placeholder="请输入流水号"></Input>
           </div>
           <div style="margin-right:1rem;width: 50rem;">
-            <Input v-model="betId" placeholder="请输入交易号" ></Input>
+            <Input v-model="betId" placeholder="请输入交易号"></Input>
           </div>
           <Button @click="isShowSearch = !isShowSearch" type="text">
             高级筛选
@@ -211,6 +211,7 @@ export default {
         "12": "代理操作",
         "13": "商城"
       },
+      removeArr: ['NA棋牌游戏', 'NA捕鱼游戏', 'NA街机游戏', 'NA真人游戏','NA电子游戏', 'NA真人视讯'],
       GameNameEnum: {
         "70001": "塔罗之谜",
         "70002": "小厨娘",
@@ -249,7 +250,7 @@ export default {
         "90017": "凤舞朝阳",
         "90018": "鲤跃龙门"
       },
-   
+
       amountDate: [], // 时间日期选择
       playerAccountList: [], // 玩家流水账列表
       playerRecordList: [], // 玩家战绩列表
@@ -366,7 +367,7 @@ export default {
       ],
       radioInfo: "全部",
       companyInfo: "全部厂商",
-      sel:'全部厂商',
+      sel: "全部厂商",
       propChild: {},
       isOpenModalBill: false
     };
@@ -374,6 +375,7 @@ export default {
   mounted() {
     this.changeTime();
     this.companySelectList();
+
   },
   computed: {
     dataList() {
@@ -397,7 +399,28 @@ export default {
       return thousandFormatter(this.allAmount);
     },
     getCompanyList() {
-      let arr = Array.from(
+      let arr = JSON.parse(localStorage.getItem("userInfo")).gameList.map(
+        item => {
+          return item;
+        }
+      )
+
+      for (let i = 0; i < this.removeArr.length; i++) {
+        for (let j = 0; j < arr.length; j++) {
+          if (this.removeArr[i] == arr[j].name) {
+            arr.splice(j,1)
+          }
+        }
+      }  
+
+      let gameList = Array.from(new Set(arr.map(item => {return item.company})))
+      gameList.unshift('全部厂商')
+
+      return gameList
+
+      
+
+      /* let arr = Array.from(
         new Set(
           JSON.parse(localStorage.getItem("userInfo")).gameList.map(item => {
             return item.company;
@@ -405,29 +428,42 @@ export default {
         )
       );
       arr.unshift("全部厂商");
-      return arr;
+
+      return arr; */
     },
     gameTypeList() {
-      let arr = [];
-      if (this.sel == '全部厂商') {
-        arr = JSON.parse(localStorage.getItem("userInfo")).gameList.map(
-          item => {
-            return item.name;
+      
+
+      let arr = JSON.parse(localStorage.getItem("userInfo")).gameList.map(
+        item => {
+          return item;
+        }
+      ) 
+
+      for (let i = 0; i < this.removeArr.length; i++) {
+        for (let j = 0; j < arr.length; j++) {
+          if (this.removeArr[i] == arr[j].name) {
+            arr.splice(j,1)
           }
-        );
-      } else {
-        JSON.parse(localStorage.getItem("userInfo")).gameList.map(item => {
-          if (this.sel == item.company) {
-            arr.push(item.name);
-          }
+        }
+      }  
+
+
+      let gameType = [];
+      if (this.sel == "全部厂商") {
+        gameType = arr.map(item => {
+          return item.name
         })
+      } else {
+       arr.map(item => {
+          if (this.sel == item.company) {
+            gameType.push(item.name);
+          }
+        });
       }
 
-      /* arr.unshift("全部厂商");
-      return arr; */
-
-     arr.unshift('全部')
-     return arr
+      gameType.unshift("全部");
+      return gameType;
     }
   },
   methods: {
@@ -448,15 +484,13 @@ export default {
     getPlayerAccount() {
       if (this.isFetching) return;
       this.isFetching = true;
-      let code = ''
-      JSON.parse(localStorage.getItem("userInfo")).gameList.map(
-            item => {
-              if (this.radioInfo == item.name) {
-               code = item.code
-               return 
-              }
-            }
-      )
+      let code = "";
+      JSON.parse(localStorage.getItem("userInfo")).gameList.map(item => {
+        if (this.radioInfo == item.name) {
+          code = item.code;
+          return;
+        }
+      });
       httpRequest("post", "/player/bill/flow", {
         userName: localStorage.playerName,
         type: this.radioType,
@@ -532,9 +566,9 @@ export default {
       }
     },
     changeGameType(val) {
-      this.radioInfo = val
-      this.getPlayerAccount()
-    }, 
+      this.radioInfo = val;
+      this.getPlayerAccount();
+    },
     // 月份联动
     selectionChange(val) {
       this.checkedArray = val;
@@ -602,8 +636,7 @@ export default {
             this.radioInfo = ''
           }
         ) */
-      this.sel = val  
-      
+      this.sel = val;
     },
     openModalBill(data) {
       this.propChild = data;
