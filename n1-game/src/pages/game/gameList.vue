@@ -418,9 +418,10 @@ export default {
           });
         }
       });
-    }, // 更改玩家状态
+    }, 
+    // 更改玩家状态
     getCompanyList() {
-      httpRequest(
+     /*  httpRequest(
         "post",
         "/companySelect",
         {
@@ -428,13 +429,13 @@ export default {
         },
         "game"
       ).then(result => {
-       
+        */
         this.companyInfo = this.$store.state.add.gameIden
           ? this.$store.state.add.gameIden
           : this.companyOptions[0].company;
         this.searchInfo.companyIden = this.companyInfo;
         this.startSearch();
-      });
+      //});
     }, 
     //获取运营商列表
     startSearch() {
