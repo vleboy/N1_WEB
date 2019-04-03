@@ -437,6 +437,16 @@ export default {
       }  
 
       let gameList = Array.from(new Set(arr.map(item => {return item.company})))
+
+      for (let i =0; i<gameList.length; i++) {
+          if (gameList[i] == 'NA') {
+            gameList.splice(i, 1)
+          }
+        }  
+        
+        gameList.unshift('NA')
+
+
       gameList.unshift('全部厂商')
 
       return gameList 

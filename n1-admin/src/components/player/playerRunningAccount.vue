@@ -431,12 +431,12 @@ export default {
       ],
       companyList: [
         {company: '全部厂商'},
+        {company: 'NA'},
         {company: 'MG'},
         {company: 'DT'},
         {company: 'RTG'},
         {company: 'PP'},
         {company: 'PG'},
-        {company: 'NA'},
         {company: 'PNG'},
         {company: 'TTG'},
         {company: 'HABA'},
