@@ -391,6 +391,17 @@ $
           });
         }
 
+        for(let i = 0; i < gameType.length; i++) {
+        if (gameType[i] == 'H5电子游戏') {
+          gameType.splice(i, 1)
+          gameType.unshift('H5电子游戏')
+        }
+        if (gameType[i] == 'H5电子游戏-无神秘奖') {
+          gameType.splice(i, 1)
+          gameType.unshift('H5电子游戏-无神秘奖')
+        }
+      }
+
         gameType.unshift("全部");
         return gameType;
       }

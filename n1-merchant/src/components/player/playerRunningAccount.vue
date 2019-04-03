@@ -472,6 +472,18 @@ export default {
         });
       }
 
+
+      for(let i = 0; i < gameType.length; i++) {
+        if (gameType[i] == 'H5电子游戏') {
+          gameType.splice(i, 1)
+          gameType.unshift('H5电子游戏')
+        }
+        if (gameType[i] == 'H5电子-无神秘奖游戏') {
+          gameType.splice(i, 1)
+          gameType.unshift('H5电子-无神秘奖游戏')
+        }
+      }
+
       gameType.unshift("全部");
       return gameType;
     }
