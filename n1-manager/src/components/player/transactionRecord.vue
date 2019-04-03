@@ -3,15 +3,15 @@
     <div class="-p-header">
       <Row>
         <Col class="-p-h-bottom">
-        <RadioGroup v-model="companyInfo" @on-change="changeCompany" type="button">
-          <Radio v-for="(item,index) of companyList" :key="index" :label="item.company">{{item.company}}</Radio>
+        <RadioGroup v-model="companyInfo" @on-change="changeCompany" type="button" size="small">
+          <Radio v-for="(value,index) of getCompanyList" :key="index" :label="value">{{value}}</Radio>
         </RadioGroup>
         </Col>
       </Row>
       <Row>
         <Col class="-p-h-bottom">
-        <RadioGroup v-model="radioInfo" @on-change="changeRadio" type="button">
-          <Radio v-for="(item,index) of gameTypeList" :key="index" :label="item.code">{{item.name}}</Radio>
+        <RadioGroup v-model="radioInfo" @on-change="changeRadio" type="button" size="small">
+          <Radio v-for="(value,index) of gameTypeList" :key="index" :label="value">{{value}}</Radio>
         </RadioGroup>
         </Col>
       </Row>
@@ -139,11 +139,10 @@ export default {
       isLastMessage: false, // 主要判断是否是后台返回最后一次信息
       isOpenModalBill: false,
       isOpenModalRunning: false,
-      radioInfo: "",
+      radioInfo: "全部",
       amountDate: [],
-      companyList: [],
-      gameTypeList: [],
       companyInfo: "全部厂商",
+      sel: "全部厂商",
       playerDetailList: [],
       playerDetailListStorage: [],
       playerDetailStartKey: "",
@@ -151,6 +150,7 @@ export default {
       betId: "",
       propChild: {},
       runningDetail: {},
+      removeArr: ['NA棋牌游戏', 'NA捕鱼游戏', 'NA街机游戏', 'NA真人游戏','NA电子游戏', 'H5真人视讯','NA真人视讯'],
       GameNameEnum: {
           "70001": "塔罗之谜",
           "70002": "小厨娘",
@@ -341,10 +341,79 @@ export default {
         }
       }
       return this.allAmount;
-    }
+    },
+    getCompanyList() {
+        let arr = JSON.parse(localStorage.getItem("userInfo")).gameList.map(
+          item => {
+            return item;
+          }
+        )
+
+        for (let i = 0; i < this.removeArr.length; i++) {
+          for (let j = 0; j < arr.length; j++) {
+            if (this.removeArr[i] == arr[j].name) {
+              arr.splice(j,1)
+            }
+          }
+        }  
+
+        let gameList = Array.from(new Set(arr.map(item => {return item.company})))
+        gameList.unshift('全部厂商')
+
+        return gameList
+
+        
+
+        /* let arr = Array.from(
+          new Set(
+            JSON.parse(localStorage.getItem("userInfo")).gameList.map(item => {
+              return item.company;
+            })
+          )
+        );
+        arr.unshift("全部厂商");
+
+        return arr; */
+      },
+       gameTypeList() {
+      
+
+        let arr = JSON.parse(localStorage.getItem("userInfo")).gameList.map(
+          item => {
+            return item;
+          }
+        ) 
+
+        for (let i = 0; i < this.removeArr.length; i++) {
+          for (let j = 0; j < arr.length; j++) {
+            if (this.removeArr[i] == arr[j].name) {
+              arr.splice(j,1)
+            }
+          }
+        }  
+
+
+        let gameType = [];
+        if (this.sel == "全部厂商") {
+          gameType = arr.map(item => {
+            return item.name
+          })
+        } else {
+        arr.map(item => {
+            if (this.sel == item.company) {
+              gameType.push(item.name);
+            }
+          });
+        }
+
+        gameType.unshift("全部");
+        return gameType;
+      }
   },
   mounted() {
     // this.getTransactionRecord()
+    this.getTransactionRecord()
+    
     this.companySelectList();
   },
   methods: {
@@ -426,14 +495,23 @@ export default {
       this.isOpenModalRunning = true;
       this.runningDetail = data;
     },
-    changeRadio() {
-      this.initData();
+    changeRadio(val) {
+      this.radioInfo = val;
       this.getTransactionRecord();
     },
     getTransactionRecord() {
       if (this.isFetching) return;
       this.isFetching = true;
       this.initTime();
+
+      let code = "";
+        JSON.parse(localStorage.getItem("userInfo")).gameList.map(item => {
+          if (this.radioInfo == item.name) {
+            code = item.code;
+            return;
+          }
+        });
+
       let name = localStorage.playerName;
       let [startTime, endTime] = this.amountDate;
       startTime = new Date(startTime).getTime();
@@ -442,7 +520,7 @@ export default {
       httpRequest("post", "/player/bill/detail", {
         userName: name,
         company: this.companyInfo == "全部厂商" ? "-1" : this.companyInfo,
-        gameType: this.radioInfo,
+        gameType: code,
         startTime: startTime,
         endTime: endTime,
         startKey: this.playerDetailStartKey,
@@ -461,7 +539,7 @@ export default {
       });
     },
     companySelectList() {
-      httpRequest(
+      /* httpRequest(
         "post",
         "/companySelect",
         {
@@ -475,10 +553,10 @@ export default {
         });
         this.changeCompany();
         // this.$store.commit('closeLoading')
-      });
+      }); */
     }, //获取运营商列表
-    changeCompany() {
-      httpRequest(
+    changeCompany(val) {
+      /* httpRequest(
         "post",
         "/gameBigType",
         {
@@ -496,7 +574,8 @@ export default {
           name: "全部"
         });
         this.radioInfo = "";
-      });
+      }); */
+      this.sel = val;
     },
     searchAmount() {
       this.initData();
@@ -544,7 +623,8 @@ export default {
         }&startTime=${startTime}&endTime=${endTime}`
       );
     }
-  }
+  },
+ 
 };
 </script>
 
