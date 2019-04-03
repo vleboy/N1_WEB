@@ -90,11 +90,11 @@ export default {
                     checked: false
                   }, */
                   {
-                    title: "NA电子h5报表",
+                    title: "NA电子H5报表",
                     checked: false
                   },
                   {
-                    title: "NA电子h5无神秘奖报表",
+                    title: "NA电子H5无神秘奖报表",
                     checked: false
                   }/* ,
                   {

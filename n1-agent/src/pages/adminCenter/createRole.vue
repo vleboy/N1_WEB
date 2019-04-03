@@ -79,10 +79,10 @@ export default {
                       title: "NA棋牌游戏报表"
                     }, */
                     {
-                    title: "NA电子h5报表",
+                    title: "NA电子H5报表",
                   },
                     {
-                    title: "NA电子h5无神秘奖报表",
+                    title: "NA电子H5无神秘奖报表",
                   }
                   /* ,
                     {

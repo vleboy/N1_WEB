@@ -94,7 +94,7 @@ export default {
                     checked: false
                   }, */
                   {
-                    title: "NA电子h5报表",
+                    title: "NA电子H5报表",
                     checked: false
                   },
                   {
