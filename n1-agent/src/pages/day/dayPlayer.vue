@@ -97,6 +97,31 @@ export default {
       dayStatList: [],
       model1: "全部",
       showChat: false,
+      GameListEnum: [
+        { company: "全部", code: "", name: "全部" },
+        /*  { company: "NA", code: "10000", name: "NA棋牌游戏" },
+        { company: "NA", code: "30000", name: "NA真人视讯" },
+        { company: "NA", code: "40000", name: "NA电子游戏" },
+        { company: "NA", code: "50000", name: "NA街机游戏" },
+        { company: "NA", code: "60000", name: "NA捕鱼游戏" },
+        { company: "NA", code: "80000", name: "H5真人视讯" }, */
+        { company: "NA", code: "70000", name: "H5电子游戏" },
+        { company: "NA", code: "90000", name: "H5电子游戏-无神秘奖" },
+        { company: "TTG", code: "1010000", name: "TTG电子游戏" },
+        { company: "PNG", code: "1020000", name: "PNG电子游戏" },
+        { company: "MG", code: "10300000", name: "MG电子游戏" },
+        { company: "HABA", code: "1040000", name: "HABA电子游戏" },
+        { company: "AG", code: "1050000", name: "AG真人游戏" },
+        { company: "SA", code: "1060000", name: "SA真人游戏" },
+        { company: "SA", code: "1110000", name: "SA捕鱼游戏" },
+        { company: "PG", code: "1090000", name: "PG电子游戏" },
+        { company: "YSB", code: "1130000", name: "YSB体育游戏" },
+        { company: "RTG", code: "1140000", name: "RTG电子游戏" },
+        { company: "SB", code: "1080000", name: "SB电子游戏" },
+        { company: "SB", code: "1120000", name: "SB真人游戏" },
+        { company: "DT", code: "1150000", name: "DT电子游戏" },
+        { company: "PP", code: "1160000", name: "PP电子游戏" }
+      ],
       columns1: [
         {
           title: "日期",
@@ -235,11 +260,12 @@ export default {
       this.init();
     },
     getGameList() {
-      httpRequest("post","/gameBigType",{companyIden: -1},"game")
+      /* httpRequest("post","/gameBigType",{companyIden: -1},"game")
       .then(result => {
         this.gameType = result.payload
         this.gameType.unshift({type: 4, code: "", name: "全部", company: ""})
-      })
+      }) */
+      this.gameType = this.GameListEnum
     },
     reset() {
       this.$refs.resetSelect.clearSingleSelect()
@@ -267,13 +293,13 @@ export default {
         let st = dayjs(this.$route.query.time[0]).format('YYYYMMDD')
         let et = dayjs(this.$route.query.time[1]).format('YYYYMMDD')
 
-        let ps = await  httpRequest("post","/gameBigType",{companyIden: -1},"game")
+        /* let ps = await  httpRequest("post","/gameBigType",{companyIden: -1},"game")
         .then(result => {
           return result.payload
-        })
-        for (let index = 0; index < ps.length; index++) {
-          if(this.$route.query.type == ps[index].code) {
-            this.model1 = ps[index].name
+        }) */
+        for (let index = 0; index < this.GameListEnum.length; index++) {
+          if(this.$route.query.type == this.GameListEnum[index].code) {
+            this.model1 = this.GameListEnum[index].name
             break;
           } else {
             this.model1 = '全部'
