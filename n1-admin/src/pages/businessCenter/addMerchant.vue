@@ -121,7 +121,7 @@
               </Col>
             </Row>
           </FormItem>
-          <FormItem label="商户官网页面地址">
+          <!-- <FormItem label="商户官网页面地址">
             <Row>
               <Col span="10">
               <Select v-model="detail.httpType" placeholder="请选择">
@@ -185,7 +185,7 @@
               <span class="check" @click="serviceurl">验证</span>
               </Col>
             </Row>
-          </FormItem>
+          </FormItem> -->
         </Form>
       </div>
       </Col>
