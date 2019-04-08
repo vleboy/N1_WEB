@@ -56,13 +56,6 @@
               </Col>
             </Row>
           </FormItem>
-          <FormItem label="备注" prop="remark">
-            <Row>
-              <Col span="20">
-              <Input v-model="admin.remark" type="textarea" :maxlength='200' :rows="4" placeholder="请输入备注,最多不超过200个字符"></Input>
-              </Col>
-            </Row>
-          </FormItem>
         </Form>
       </div>
       </Col>
@@ -98,6 +91,9 @@
             </Row>
           </FormItem>
           <Table :columns="columns" :data="gameDetail" class="table" size="small"></Table>
+          <FormItem label="备注" prop="remark">
+            <Input v-model="admin.remark" type="textarea" :maxlength='200' :rows="4" placeholder="请输入备注,最多不超过200个字符" style="margin-left:0"></Input>
+          </FormItem>
         </Form>
       </div>
       </Col>

@@ -63,13 +63,6 @@
               </Col>
             </Row>
           </FormItem>
-          <FormItem label="备注" prop="remark">
-            <Row>
-              <Col span="20">
-              <Input v-model="admin.remark" :maxlength='200' type="textarea" :rows="4" placeholder="请输入备注,最多不超过200个字符"></Input>
-              </Col>
-            </Row>
-          </FormItem>
         </Form>
       </div>
       </Col>
@@ -118,6 +111,13 @@
             <Row>
               <Col span="20">
               <Input v-model="detail.loginWhiteList" type="textarea" :rows="4" placeholder="请输入IP地址或IP范围,一行一个规则,每行以分号结尾,0.0.0.0为不限制任何IP"></Input>
+              </Col>
+            </Row>
+          </FormItem>
+          <FormItem label="备注" prop="remark">
+            <Row>
+              <Col span="20">
+              <Input v-model="admin.remark" :maxlength='200' type="textarea" :rows="4" placeholder="请输入备注,最多不超过200个字符"></Input>
               </Col>
             </Row>
           </FormItem>
