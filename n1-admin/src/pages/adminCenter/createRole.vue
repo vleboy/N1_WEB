@@ -50,6 +50,9 @@ export default {
               title: "看板"
             },
             {
+              title: "新看板"
+            },
+            {
               title: "个人中心"
             },
             {

@@ -97,7 +97,7 @@
         配置信息
         <div slot="content">
           <Form :model="basic" label-position="left" :label-width="100">
-            <Row>
+            <!-- <Row>
               <Col span="8">
               <FormItem label="商户前端域名" v-if="edit">
                 {{merchantDetail.frontURL}}
@@ -134,8 +134,8 @@
                 </Row>
               </FormItem>
               </Col>
-            </Row>
-            <Row>
+            </Row> -->
+            <!-- <Row>
               <Col span="8">
               <FormItem label="商户客服域名" v-if="edit">
                 {{merchantDetail.feedbackURL}}
@@ -149,21 +149,9 @@
               </FormItem>
               </Col>
               <Col span="8">
-              <FormItem label="商户白名单" v-if="edit">
-                {{merchantDetail.loginWhiteList}}
-              </FormItem>
-              <FormItem label="商户白名单" v-else>
-                <Row>
-                  <Col span="10">
-                  <Input v-model="basic.loginWhiteList"></Input>
-                  </Col>
-                </Row>
-              </FormItem>
-              </Col>
-              <Col span="8">
               <Checkbox class="browser" v-model="defaultBrower">是否在系统浏览器中打开</Checkbox>
               </Col>
-            </Row>
+            </Row> -->
             <Row>
               <Col span="8">
               <FormItem label="管理员密码" v-if="edit">
@@ -199,10 +187,22 @@
               </FormItem>
               </Col>
               <Col span="8">
-              <Checkbox class="browser" :disabled='edit' v-model="isTest">测试号</Checkbox>
+              <FormItem label="商户白名单" v-if="edit">
+                {{merchantDetail.loginWhiteList}}
+              </FormItem>
+              <FormItem label="商户白名单" v-else>
+                <Row>
+                  <Col span="10">
+                  <Input v-model="basic.loginWhiteList"></Input>
+                  </Col>
+                </Row>
+              </FormItem>
               </Col>
+              <!-- <Col span="8">
+              <Checkbox class="browser" :disabled='edit' v-model="isTest">测试号</Checkbox>
+              </Col> -->
             </Row>
-            <Row>
+            <!-- <Row>
               <Col span="8">
               <FormItem label="LOGO">
                 <img :src="merchantDetail.launchImg.logo[0]" alt="oo" class="logo">
@@ -223,7 +223,7 @@
                 </div>
               </FormItem>
               </Col>
-            </Row>
+            </Row> -->
           </Form>
         </div>
       </Panel>
@@ -264,7 +264,13 @@
       </Panel>
     </Collapse>
     <div class="finance">
-      <h2>财务信息</h2>
+      <h2>
+        财务信息
+         <span
+          style="color:#20a0ff;cursor:pointer;fontSize:1rem"
+          @click="getWaterfallList"
+        >(点击查询)</span>
+      </h2>
       <Table :columns="columns" :data="showData" size="small"></Table>
       <Page :total="total" class="page" show-elevator :page-size='pageSize' show-total @on-change="changepage"></Page>
     </div>
@@ -718,6 +724,20 @@ export default {
         this.gameDetail = res.payload.gameList;
       })
     },
+    async getWaterfallList() {
+      let userId = this.$route.query.userId;
+      let req1 = getWaterfall(userId);
+      this.spinShow = true;
+      let waterfall = await this.axios.all([req1]);
+      this.spinShow = false;
+      /* if (waterfall && waterfall.code == 0) {
+        this.waterfall = waterfall.payload;
+        console.log(this.waterfall);
+      } */
+      //console.log(waterfall[0].payload);
+
+      this.showData = waterfall[0].payload;
+    },
     async init() {
       this.spinShow = true;
       let userId = this.$route.query.userId;
@@ -729,15 +749,10 @@ export default {
       let req1 = getWaterfall(userId);
       let req2 = oneMerchants(userId);
       let req3 = companySelect({ parent });
-      let [waterfall, merchant, company] = await this.axios.all([
-        req1,
+      let [merchant, company] = await this.axios.all([
         req2,
         req3
       ]);
-      this.spinShow = false;
-      if (waterfall && waterfall.code == 0) {
-        this.waterfall = waterfall.payload;
-      }
       if (merchant && merchant.code == 0) {
         this.merchantDetail = merchant.payload;
         this.isTest = merchant.payload.isTest == 1 ? true : false;
@@ -751,6 +766,7 @@ export default {
           this.parentGame = res.payload.gameList || [];
         }
       });
+      this.spinShow = false;
       this.handlePage();
     },
     uploadAliLogo() {

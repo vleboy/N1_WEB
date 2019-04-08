@@ -56,6 +56,10 @@ export default {
             checked: false
           },
           {
+            title: "新看板",
+            checked: false
+          },
+          {
             title: "个人中心",
             checked: false
           },

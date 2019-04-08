@@ -52,7 +52,10 @@
       openName = ["operation"];
     } else if (name == "board") {
       openName = ["board"];
-    } else if (name == 'dataRepair') {
+    } else if (name == "newBoard") {
+      openName = ["newBoard"];
+    }
+     else if (name == 'dataRepair') {
       openName = ["logCenter"];
     } else if (name == 'playerReport') {
       openName = ['report']

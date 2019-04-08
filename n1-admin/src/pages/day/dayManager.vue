@@ -3,46 +3,40 @@
     <div class="nowList">
       <div class="top">
         <div style="margin-bottom:1rem" class="title1">
-      
-          <p span="5">
+          <p style="width:11rem;">
             <RadioGroup v-model="source" class="radioGroup" type="button" @on-change="changeSource" style="">
             <Radio label="0" v-if="permission.includes('正式数据')">正式</Radio>
             <Radio label="1">测试</Radio>
             <Radio label="2" v-if="permission.includes('正式数据')">全部</Radio>
           </RadioGroup>
           </p>
-          <p span="5" style="margin-left:2rem;">
+          <p style="width:10rem;">
             <RadioGroup v-model="isAll" class="radioGroup" type="button" @on-change="changeShow">
               <Radio label="全部"></Radio>
               <Radio label="仅包含直属"></Radio>
             </RadioGroup>
-          </p>  
-          <p span="3" style="font-size:1.3rem;margin-left:1rem;">线路商前缀</p>
-          <p span="4" style="margin-left:1rem;">
+          </p> 
+          <Select style="width:8rem;" placeholder="选择游戏类别" ref="resetSelect" clearable v-model="model1">
+              <Option v-for="(item, index) in gameType" :value="item.name" :key="item.name" @click.native="selGame(item.code)">{{item.name}}</Option>
+          </Select> 
+          <p style="font-size:1.3rem;width:7.5rem;margin-left:1rem">线路商前缀</p>
+          <p style="">
             <Input  v-model="managerName" placeholder="请输入"></Input>
           </p>
-          <p span="4" style="margin-left:2rem;">
-            <p span="5">
-            <DatePicker type="daterange" :options="options" :editable='false' :value="defaultTime" placeholder="选择日期时间范围(默认最近一个月)" style="width: 270px" confirm @on-ok="confirms" @on-change="handle"></DatePicker>
-          </p>
-          </p>
-        </div>
-         <!--  当前用户列表---{{this.identity}} -->
-        <div class="title2">
-          <Select style="width:200px;" placeholder="选择游戏类别" ref="resetSelect" clearable v-model="model1">
-              <Option v-for="(item, index) in gameType" :value="item.name" :key="item.name" @click.native="selGame(item.code)">{{item.name}}</Option>
-            </Select>
-          
-          <p span="1" style="margin-left:2rem;">
+            <p style="margin-left:1rem">
+              <DatePicker type="daterange" :options="options" :editable='false' :value="defaultTime" placeholder="选择日期时间范围(默认最近一个月)" confirm @on-ok="confirms" @on-change="handle"></DatePicker>
+            </p>
+          <div class="title2">
+          <p style="margin-left:1rem">
             <Button type="primary" @click="search">搜索</Button>
-            
           </p> 
           <p>
-
           <Button type="ghost" @click="reset">重置</Button>
-
           </p>
         </div> 
+        </div>
+         <!--  当前用户列表---{{this.identity}} -->
+        
     
       </div>
     </div>

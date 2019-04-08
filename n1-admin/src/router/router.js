@@ -13,6 +13,7 @@ import playerDetail from '@/pages/player/playerdetail'
 // appRouter
 import ownSpace from '@/pages/ownSpace'
 import board from '@/pages/board/board'
+import newBoard from '@/pages/newBoard/newBoard'
 import allReport from '@/pages/reports/allReport'
 import playerReport from '@/pages/reports/playerReport'
 import agtrue from '@/pages/reports/agTrueGame'
@@ -126,6 +127,13 @@ export const appRouter = [
         name:'boards',
         component:main,
         children:[{path:'board',title:'看板', name:'board',component:board}]
+    },
+    {
+        path: '/newBoard',
+        title: '看板(新)',
+        name: 'newBoard',
+        component: main,
+        children: [{ path: 'newBoard', title: '看板(新)', name: 'newBoard', component: newBoard }]
     },
     {
         path:'/allreport',
