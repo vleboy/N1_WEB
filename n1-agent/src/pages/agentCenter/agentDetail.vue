@@ -264,6 +264,50 @@ export default {
       }
     };
     return {
+      GameListEnum: {
+        NA: [
+          { company: "NA", code: "70000", name: "H5电子游戏" },
+          { company: "NA", code: "90000", name: "H5电子游戏-无神秘奖" }
+        ],
+        TTG: [
+          { company: "TTG", code: "1010000", name: "TTG电子游戏" }
+        ],
+        PNG: [
+          { company: "PNG", code: "1020000", name: "PNG电子游戏" }
+        ],
+        MG: [
+          { company: "MG", code: "10300000", name: "MG电子游戏" }
+        ],
+        HABA: [
+          { company: "HABA", code: "1040000", name: "HABA电子游戏" }
+        ],
+        AG: [
+          { company: "AG", code: "1050000", name: "AG真人游戏" }
+        ],
+        SA: [
+          { company: "SA", code: "1060000", name: "SA真人游戏" },
+          { company: "SA", code: "1110000", name: "SA捕鱼游戏" }
+        ],
+        PG: [
+          { company: "PG", code: "1090000", name: "PG电子游戏" }
+        ],
+        YSB: [
+          { company: "YSB", code: "1130000", name: "YSB体育游戏" }
+        ],
+        RTG: [
+          { company: "RTG", code: "1140000", name: "RTG电子游戏" }
+        ],
+        SB: [
+          { company: "SB", code: "1080000", name: "SB电子游戏" },
+          { company: "SB", code: "1120000", name: "SB真人游戏" }
+        ],
+        DT: [
+          { company: "DT", code: "1150000", name: "DT电子游戏" }
+        ],
+        PP: [
+          { company: "PP", code: "1160000", name: "PP电子游戏" }
+        ]
+      },
       parent: "",
       value: "",
       editPass: false,
@@ -960,7 +1004,7 @@ export default {
       }
     },
     selectCompany(value) {
-      let userId = this.parent;
+      /* let userId = this.parent;
       let params = { companyIden: value, userId };
       if (userId == "01") {
         delete params.userId;
@@ -969,7 +1013,8 @@ export default {
         if (res.code == 0) {
           this.gameList = res.payload;
         }
-      });
+      }); */
+      this.gameList = this.GameListEnum[value]
     },
     selectGame(value) {
       this.selected = true;
