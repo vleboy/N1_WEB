@@ -109,6 +109,8 @@ export default {
           sortable: true,
           maxWidth: 140,
           render: (h, params) => {
+            console.log(params.row);
+            
             if (params.row.role == "10") {
               return h(
                 "span",
