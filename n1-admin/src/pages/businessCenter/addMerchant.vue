@@ -78,7 +78,7 @@
               </Select>
               </Col>
               <Col span="10">
-              <Select v-model="detail.gamelist" placeholder="请选择" @on-change="selectGame" :label-in-value='true'>
+              <Select v-model="detail.gamelist" placeholder="请选择" @on-change="selectGame" :label-in-value='true' clearable ref="resetSelect">
                 <Option v-for="item in gameList" :value="item.code" :key="item.name">{{ item.name }}</Option>
               </Select>
               </Col>
@@ -317,13 +317,16 @@ export default {
       } else {
         let testReg = /^(\d{1,2}(\.\d{1,2})?|100(\.0{1,2})?)$/;
         if (!testReg.test(value)) {
+          this.regFlg = false
           callback(new Error("请输入0.00~100.00之间的数字"));
         } else {
+          this.regFlg = true
           callback();
         }
       }
     };
     return {
+      regFlg: true,
       basic: {
         // suffix: "",
         sn: "",
@@ -578,24 +581,27 @@ export default {
           this.gameList = res.payload;
         }
       }); */
-
+      
+      this.$refs.resetSelect.clearSingleSelect()
       this.gameList = this.GameListEnum[value]
     },
     selectGame(o) {
-      this.selected = true;
-      this.game = o.label;
-      this.code = o.value;
-      let parentGameList = this.parentGameList;
-      let maxRate = null;
-      if (parentGameList.length > 0) {
-        for (let item of parentGameList) {
-          if (item.code == o.value) {
-            maxRate = item.rate;
-            this.tipContent = `上级游戏占成为:${maxRate}`;
+      if (o != undefined) {
+        this.selected = true;
+        this.game = o.label ? o.label : '';
+        this.code = o.value ? o.value : '';
+        let parentGameList = this.parentGameList;
+        let maxRate = null;
+        if (parentGameList.length > 0) {
+          for (let item of parentGameList) {
+            if (item.code == o.value) {
+              maxRate = item.rate;
+              this.tipContent = `上级游戏占成为:${maxRate}`;
+            }
           }
-        }
-      }else{
-         this.tipContent = `上级游戏占成为:100`;
+        }else{
+          this.tipContent = `上级游戏占成为:100`;
+          }
       }
     },
     addGame() {
@@ -634,10 +640,14 @@ export default {
         }
       }
       gameItem.rate = balance;
-      if (gameItem.rate) {
+      if (this.regFlg) {
+        if (gameItem.rate) {
         this.gameDetail.push(gameItem);
         this.gameDetail = _.uniqWith(this.gameDetail, _.isEqual);
       }
+      }
+        
+      
     },
     merchantUrl() {
       let url = this.detail.httpType + this.detail.url;

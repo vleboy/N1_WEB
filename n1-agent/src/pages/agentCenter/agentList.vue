@@ -126,7 +126,7 @@
             </Select>
             </Col>
             <Col span="10">
-            <Select placeholder="请选择" v-model="agent.game" @on-change="selectGame" :label-in-value='true'>
+            <Select placeholder="请选择" v-model="agent.game" @on-change="selectGame" :label-in-value='true' clearable ref="resetSelect">
               <Option v-for="item in gameList" :value="item.code" :key="item.name">{{ item.name }}</Option>
             </Select>
             </Col>
@@ -1561,6 +1561,7 @@ export default {
           }
         });
       } */
+      this.$refs.resetSelect.clearSingleSelect()
       this.gameList = this.GameListEnum[value]
     },
     selectGame(o) {
@@ -1604,6 +1605,13 @@ export default {
       if (balance > maxMix && maxMix != null) {
         this.$Message.warning({
           content: "不能超过上级洗码比",
+          duration: 2.5
+        });
+        return;
+      }
+      if (balance < 0 && maxMix != null) {
+        this.$Message.warning({
+          content: "参数不合法",
           duration: 2.5
         });
         return;
