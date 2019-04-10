@@ -1611,7 +1611,14 @@ export default {
       }
       if (balance < 0 && maxMix != null) {
         this.$Message.warning({
-          content: "参数不合法",
+          content: "不能小于0",
+          duration: 2.5
+        });
+        return;
+      }
+      if (typeof(this.balance) == "string") {
+        this.$Message.warning({
+          content: "请输入数字",
           duration: 2.5
         });
         return;
