@@ -78,6 +78,7 @@ import propPrizeList from '@/pages/operation/propPrize/propPrizeList'
 import flow from '@/pages/notransfer/flow'
 import noTransferReport from '@/pages/notransfer/noTransferReport'
 import gameManager from '@/pages/operation/gameManager/gameManager'
+import addGame from '@/pages/operation/gameManager/addGame'
 
 const loginRouter = {
     path: '/login',
@@ -358,7 +359,8 @@ export const appRouter = [
              { path: 'sysConfig', title: '系统配置', name: 'sysConfig', component: sysConfig },
              { path: 'prizeList', title: '中奖纪录', name: 'prizeList', component: prizeList },
              { path: 'numericalControl', title: '数值调控中心', name: 'numericalControl', component: numericalControl },
-               { path: 'gameManager', title: '游戏管理', name: 'gameManager', component: gameManager }
+             { path: 'gameManager', title: '游戏管理', name: 'gameManager', component: gameManager },
+             { path: 'addGame', title: '创建游戏', name: 'addGame', component: addGame }
            ]
          }
        ]
