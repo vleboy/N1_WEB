@@ -13,7 +13,7 @@
       </Col>
       <Col :span="3">
         <Select
-          v-model="searchInfo.gameStatus"
+          value="2"
           placeholder="请选择状态"
           filterable
           clearable
@@ -107,12 +107,12 @@ export default {
       companyOptions: [],
       gameStatus: ["下线", "正常"],
       companyOptions: [
+        { company: "NA", companyName: "NA" },
         { company: "MG", companyName: "MG" },
         { company: "DT", companyName: "DT" },
         { company: "RTG", companyName: "RTG" },
         { company: "PP", companyName: "PP" },
         { company: "PG", companyName: "PG" },
-        { company: "NA", companyName: "NA" },
         { company: "PNG", companyName: "PNG" },
         { company: "TTG", companyName: "TTG" },
         { company: "HABA", companyName: "HABA" },
@@ -438,8 +438,9 @@ export default {
       //});
     }, 
     //获取运营商列表
-    startSearch() {
+    startSearch(val) {
      
+      this.searchInfo.gameStatus = val
       
       this.searchInfo.companyIden =
         this.companyInfo == "全部厂商" ? "" : this.companyInfo;
