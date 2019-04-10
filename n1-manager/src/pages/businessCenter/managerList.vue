@@ -2,7 +2,7 @@
   <div class="line">
     <div class="search">
       <Row class="row">
-        <Col span="2" offset="4">线路商前缀</Col>
+        <Col span="2" offset="4">线路商标识</Col>
         <Col span="4">
         <Input v-model="suffix" placeholder="请输入"></Input>
         </Col>
@@ -103,7 +103,7 @@ export default {
           maxWidth: 80
         },
         {
-          title: "线路商前缀",
+          title: "线路商标识",
           key: "suffix",
           sortable: true
         },

@@ -51,7 +51,7 @@
               </FormItem>
               </Col>
               <Col span="8">
-              <FormItem label="商户前缀">
+              <FormItem label="商户标识">
                 {{merchantDetail.suffix}}
               </FormItem>
               </Col>

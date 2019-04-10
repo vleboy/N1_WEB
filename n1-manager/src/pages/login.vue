@@ -20,7 +20,7 @@
             </Col>
           </Row>
         </FormItem>
-        <FormItem label="前缀">
+        <FormItem label="标识">
           <Row>
             <Col span="8">
             <Input v-model.trim="suffix"></Input>
@@ -89,7 +89,7 @@ export default {
         return this.$Message.warning('请填写账号')
       }
       if(!this.suffix){
-        return this.$Message.warning('请填写前缀')
+        return this.$Message.warning('请填写标识')
       }
       this.loadImg=true;
       httpRequest('post','/captcha',{

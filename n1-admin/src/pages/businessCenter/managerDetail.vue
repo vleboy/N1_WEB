@@ -23,7 +23,7 @@
                 <FormItem label="上级线路商">{{lineDetail.parentDisplayName}}</FormItem>
               </Col>
               <Col span="8">
-                <FormItem label="线路商前缀">{{lineDetail.suffix}}</FormItem>
+                <FormItem label="线路商标识">{{lineDetail.suffix}}</FormItem>
               </Col>
             </Row>
             <Row>

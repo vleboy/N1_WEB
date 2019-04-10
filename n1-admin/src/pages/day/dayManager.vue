@@ -19,7 +19,7 @@
           <Select style="width:8rem;" placeholder="选择游戏类别" ref="resetSelect" clearable v-model="model1">
               <Option v-for="(item, index) in gameType" :value="item.name" :key="item.name" @click.native="selGame(item.code)">{{item.name}}</Option>
           </Select> 
-          <p style="font-size:1.3rem;width:7.5rem;margin-left:1rem">线路商前缀</p>
+          <p style="font-size:1.3rem;width:7.5rem;margin-left:1rem">线路商标识</p>
           <p style="">
             <Input  v-model="managerName" placeholder="请输入"></Input>
           </p>
@@ -315,7 +315,7 @@ export default {
     },
     search() {
       if (this.managerName == '') {
-        this.$Message.info('请输入线路商前缀');
+        this.$Message.info('请输入线路商标识');
       } else {
         this.showBox = true
         this.init();

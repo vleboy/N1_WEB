@@ -7,7 +7,7 @@
       <table cellspacing="0">
          <tr>
            <td>
-            <span>线路商前缀 : {{admin.suffix}} </span>
+            <span>线路商标识 : {{admin.suffix}} </span>
           </td>
           <td>
             <span>线路商账号 : {{admin.uname}}</span>
