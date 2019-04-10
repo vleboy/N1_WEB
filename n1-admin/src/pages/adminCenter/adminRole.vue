@@ -410,6 +410,10 @@ export default {
               {
                 title: "电子游戏配置",
                 checked: false
+              },
+              {
+                 title: "游戏管理",
+                checked: false
               }
             ]
           },

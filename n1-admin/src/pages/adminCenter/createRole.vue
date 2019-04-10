@@ -314,6 +314,9 @@ export default {
                 },
                 {
                   title: "电子游戏配置"
+                },
+                {
+                  title: "游戏管理"
                 }
               ]
             },
