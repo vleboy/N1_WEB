@@ -17,7 +17,7 @@
           placeholder="请选择状态"
           filterable
           clearable
-          @on-change="startSearch"
+          @on-change="statusSearch"
         >
           <Option value="2" label="全部"></Option>
           <Option value="1" label="正常"></Option>
@@ -439,6 +439,12 @@ export default {
     }, 
     //获取运营商列表
     startSearch(val) {
+      this.searchInfo.companyIden =
+        this.companyInfo == "全部厂商" ? "" : this.companyInfo;
+      this.nowPage = 1;
+      this.getGameList();
+    },
+    statusSearch(val) {
      
       this.searchInfo.gameStatus = val
       
