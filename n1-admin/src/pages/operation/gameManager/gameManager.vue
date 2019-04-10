@@ -13,7 +13,7 @@
       </Col>
       <Col :span="3">
         <Select
-          value="2"
+          v-model="searchInfo.status"
           placeholder="请选择状态"
           filterable
           clearable
@@ -64,6 +64,8 @@ export default {
   name: "gameList",
   components: { detailModal },
   created() {
+    console.log(this.searchInfo);
+    
     this.isFetching = true;
     this.getCompanyList(); // 获取所属游戏商信息
     //this.getGameType();
@@ -105,7 +107,7 @@ export default {
       ],
       companyInfo: "",
       companyOptions: [],
-      gameStatus: ["下线", "正常"],
+      gameStatusNum: ["下线", "正常"],
       companyOptions: [
         { company: "NA", companyName: "NA" },
         { company: "MG", companyName: "MG" },
@@ -123,7 +125,8 @@ export default {
       ],
       searchInfo: {
         gameStatus: "2",
-        companyIden: ""
+        companyIden: "",
+        status: '2'
       },
       columns: [
         {
@@ -174,7 +177,7 @@ export default {
                   color: params.row.gameStatus ? "green" : "red"
                 }
               },
-              this.gameStatus[params.row.gameStatus]
+              this.gameStatusNum[params.row.gameStatus]
             );
           }
         },
@@ -313,13 +316,13 @@ export default {
       if (this.searchInfo.companyIden == "") {
         delete this.searchInfo.companyIden;
       }
-
+      
       httpRequest(
         "post",
         "/gameList",
         {
           gameType: null,
-          query: this.searchInfo
+          query: {companyIden: this.searchInfo.companyIden, gameStatus: this.searchInfo.gameStatus}
         },
         "game"
       )
@@ -445,7 +448,7 @@ export default {
       this.getGameList();
     },
     statusSearch(val) {
-     
+
       this.searchInfo.gameStatus = val
       
       this.searchInfo.companyIden =
