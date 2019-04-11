@@ -38,6 +38,7 @@
           <Button icon="ios-cloud-upload-outline" :loading="dialogLoading">请选择需要上传文件</Button>
         </Upload>
         <div style="padding: 16px 0">只能上传一张jpg/png文件，且不超过1M</div>
+        <div style="overflow: hidden"><img style="width: 80%" :src="managerInfo.gameImg"></div>
       </FormItem>
     </Form>
     <div class="stepbtn createform">
@@ -111,7 +112,7 @@ export default {
         this.isfinish.kindId = true
       }
     } // kindID
-    var validateGameIden = (rule, value, callback) => {
+    /* var validateGameIden = (rule, value, callback) => {
       let reg = new RegExp(/^[0-9]*$/)
       if (value === '') {
         callback(new Error('请输入游戏标识'))
@@ -126,7 +127,8 @@ export default {
         callback()
         this.isfinish.gameIden = true
       }
-    } // 端口
+    }  */
+    // 端口
     return {
       GameListEnum: {
         NA: [
@@ -178,7 +180,7 @@ export default {
         company: false,
         kindId: false,
         gameRecommend: false,
-        gameIden: false
+        //gameIden: false
       },
       managerInfo: {
         gameName: '', // 名称
@@ -189,8 +191,8 @@ export default {
         gameImg: '', // 游戏logo
         gameImgAli: '', // 游戏logoAli
         gameLink: '', // 网页游戏链接
-        isWebGame: '', // 网页游戏标识
-        gameIden: '', // 标识
+        //isWebGame: '', // 网页游戏标识
+        //gameIden: '', // 标识
         companyIden: '', // 供应商标识
         companyName: '' // 供应商名称
       }, // 创建列表
@@ -210,9 +212,9 @@ export default {
         kindId: [
           {validator: validateKindId, trigger: 'blur',required: true}
         ],
-        gameIden: [
+        /* gameIden: [
           {validator: validateGameIden, trigger: 'blur',required: true}
-        ]
+        ] */
       }, // 列表验证规则
       options: [],
       fileList: [],
@@ -251,20 +253,20 @@ export default {
         this.managerInfo = {
           gameId: this.storeInfo.gameId,
           gameName: this.storeInfo.gameName, // 供应商名称
-          gameIden: this.storeInfo.gameIden, // 供应商名标识
+          //gameIden: this.storeInfo.gameIden, // 供应商名标识
           gameRecommend: this.storeInfo.gameRecommend, // 简介
           kindId: Number(this.storeInfo.kindId)-Number(this.storeInfo.gameType), // kindId
           gameType: this.storeInfo.gameType, // 游戏类别
           gameImg: this.storeInfo.gameImg, // logo
           gameImgAli: this.storeInfo.gameImgAli, // logoAli
-          isWebGame: this.storeInfo.isWebGame, // 是否是网页游戏
+          //isWebGame: this.storeInfo.isWebGame, // 是否是网页游戏
           gameLink: this.storeInfo.gameLink, // 链接
           company: this.storeInfo.company, // 游戏厂商规则
           companyName: this.storeInfo.companyName, // 游戏厂商规则
           companyIden: this.storeInfo.companyIden // 游戏厂商规则
         }
 
-        this.isShowWebGame = this.storeInfo.isWebGame == '1'
+        //this.isShowWebGame = this.storeInfo.isWebGame == '1'
         this.companyIden = this.storeInfo.companyIden
         this.isfinish = {
           gameName: true,
@@ -272,7 +274,7 @@ export default {
           company: true,
           kindId: true,
           gameRecommend: true,
-          gameIden: true
+          //gameIden: true
         }
       } else {
 
@@ -283,41 +285,45 @@ export default {
       this.getGameType()
     },
     postCreateform () {
+      console.log(this.managerInfo);
+      
       if(this.isSending) return
-      if (!this.isfinish.gameName || !this.managerInfo.gameType  || !this.isfinish.gameIden ||
+      if (!this.isfinish.gameName || !this.managerInfo.gameType ||
         !this.isfinish.gameRecommend || !this.isfinish.kindId || !this.managerInfo.gameImg) {
         this.$Message.error('请完善创建信息')
-      } else {
+      } else { 
         /* this.operatorList.forEach((item) => {
           if (item.companyIden === this.companyIden) {
             this.managerInfo.company = item
             this.managerInfo.companyIden = item.companyIden
           }
         }) */
-        if (this.isShowWebGame && !this.managerInfo.gameLink) {
+        if (!this.managerInfo.gameLink) {
           return this.$Message.error('请输入网页游戏链接')
         }
+ 
+        //this.managerInfo.isWebGame = this.isShowWebGame ? '1' : '0'
+        
 
-        this.managerInfo.isWebGame = this.isShowWebGame ? '1' : '0'
-        this.managerInfo.gameLink = this.isShowWebGame ? this.managerInfo.gameLink : ''
-
-        this.isSending = true
+         this.isSending = true
         httpRequest("post",
           `${!this.$store.state.add.isEdit ? '/games' : '/gameUpdate'}`,
           this.managerInfo,
-          'game').then(()=> {
+          'game').then((res)=> {  
+          if (res.code == 0) {
           this.$store.commit('closeEditState')
           this.$router.push({
-            name: "gameList"
+            name: "gameManager"
           });
           this.$store.commit({
             type: 'changeRefresh',
             data: true
           })
+          }
         }).finally(()=>{
           this.isSending = false
         })
-      }
+      } 
     },
     getGameType () {
       /* !this.$store.state.add.isEdit && (this.managerInfo.gameType = '')
@@ -326,6 +332,8 @@ export default {
       },'game').then(res => {
         this.gameTypeOptions = res.payloads
       }) */
+       //console.log(this.companyIden);
+       this.managerInfo.company = this.companyIden 
        this.gameTypeOptions = this.GameListEnum[this.companyIden]
     },
     /* getOperatorList () {
@@ -339,7 +347,7 @@ export default {
       this.managerInfo = {
         gameName: '', // 名称
         gameType: '', // 类别
-        company: '', // 供应商
+        company: this.company, // 供应商
         gameRecommend: '', // 简介
         gameImg: '', // 图片上传 （暂不实现）
         gameImgAli: '', // 图片上传 （暂不实现）
@@ -352,19 +360,22 @@ export default {
     },
 
     uploadAli () {
+      //console.log('0');
       localStorage.setItem("nowUrl", 'addGame');
       this.url = 'http://assetdownload.oss-cn-hangzhou.aliyuncs.com'
-      let mi = new OSS.Wrapper({
+      /* let mi = new OSS.Wrapper({
         region: 'oss-cn-hangzhou',
         accessKeyId: this.uploadAction[1].ali.AccessKeyId,
         accessKeySecret: this.uploadAction[1].ali.AccessKeySecret,
         stsToken: this.uploadAction[1].ali.SecurityToken,
         bucket: 'assetdownload'
-      })
+      }) */
+      
       // console.log(this.imgFile.name)
       let suffix = this.suffixFun(this.imgFile.name)
-      let date = new Date().getTime()
+      let date = new Date().getTime() 
       let fileName = `image/${suffix[0]+date}.${suffix[1]}`
+      this.managerInfo.gameImgAli =  `http://app.risheng3d.com/image/${suffix[0]+date}.${suffix[1]}`
       mi.multipartUpload(fileName, this.imgFile, {
       }).then((results) => {
         this.$Message.success('上传阿里云成功')
@@ -373,7 +384,6 @@ export default {
         // console.log(results,this.managerInfo.img, 'src')
       }).catch((err) => {
         this.dialogLoading = false
-        console.log(err);
       });
     },
     uploadAws () {

@@ -36,6 +36,6 @@ export const http = config => {
       return localStorage.removeItem('nowUrl')
     } // 处理上传图片未知错误信息
 
-    Message.warning('网络连接不稳定');
+    //Message.warning('网络连接不稳定');
   })
 }
