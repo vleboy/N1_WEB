@@ -202,7 +202,7 @@ export default {
                   }
                 }
               },
-              params.row.playerCount+"(前往玩家列表)")
+              params.row.playerCount)
           }
         },
         {

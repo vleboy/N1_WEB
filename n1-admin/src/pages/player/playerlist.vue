@@ -95,7 +95,7 @@ export default {
       //console.log(vm);//当前组件的实例
       if (localStorage.playList == 'playList') {
         vm.searchInfo.parentSn = vm.$route.query.sn;
-        vm.getPlayList()
+        vm.getSearch(true)
       }
 
     });

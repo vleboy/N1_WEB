@@ -248,12 +248,12 @@ export default {
         !this.isfinish.gameRecommend || !this.isfinish.kindId || !this.managerInfo.gameImg) {
         this.$Message.error('请完善创建信息')
       } else {
-        this.operatorList.forEach((item) => {
+        /* this.operatorList.forEach((item) => {
           if (item.companyIden === this.companyIden) {
             this.managerInfo.company = item
             this.managerInfo.companyIden = item.companyIden
           }
-        })
+        }) */
         if (this.isShowWebGame && !this.managerInfo.gameLink) {
           return this.$Message.error('请输入网页游戏链接')
         }
