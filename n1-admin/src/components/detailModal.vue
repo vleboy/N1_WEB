@@ -4,19 +4,15 @@
       <Col :span="24" class="-row-title">游戏名称：{{detailInfo.gameName}}</Col>
     </Row>
     <Row class="record-row">
-      <Col :span="12">游戏标识：{{detailInfo.gameIden}}</Col>
-      <Col :span="12" class="-row-left">供应商标识：{{detailInfo.companyIden}}</Col>
+      <Col :span="12">供应商标识：{{detailInfo.companyIden}}</Col>
+      <Col :span="12" class="-row-left">游戏ID：{{detailInfo.kindId}}</Col>
     </Row>
     <Row class="record-row">
       <Col :span="12">游戏状态：{{detailInfo.gameStatus ? '正常' : '下线'}}</Col>
-      <Col :span="12" class="-row-left">kindID：{{detailInfo.kindId}}</Col>
+      <Col :span="12" class="-row-left">游戏简介：{{detailInfo.gameRecommend == 'NULL!' ? '' : detailInfo.gameRecommend}}</Col>
     </Row>
     <Row class="record-row">
-      <Col :span="12">游戏简介：{{detailInfo.gameRecommend == 'NULL!' ? '' : detailInfo.gameRecommend}}</Col>
-      <Col :span="12" class="-row-left">创建时间：{{formatterTime(detailInfo.createdDate)}}</Col>
-    </Row>
-    <Row class="record-row">
-      <Col :span="12">网页游戏：{{detailInfo.isWebGame!='0' ? '是' : '否'}}</Col>
+      <Col :span="12">创建时间：{{formatterTime(detailInfo.createdDate)}}</Col>
     </Row>
      <Row class="record-row">
       <Col :span="24">网页地址：{{detailInfo.gameLink || '暂无'}}</Col>

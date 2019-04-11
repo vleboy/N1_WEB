@@ -154,7 +154,7 @@ export default {
           }
         },
         {
-          title: "kindId",
+          title: "游戏Id",
           key: "kindId",
           align: "center",
           width: 100

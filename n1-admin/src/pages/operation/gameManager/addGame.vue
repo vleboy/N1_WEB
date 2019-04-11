@@ -375,7 +375,7 @@ export default {
       let suffix = this.suffixFun(this.imgFile.name)
       let date = new Date().getTime() 
       let fileName = `image/${suffix[0]+date}.${suffix[1]}`
-      this.managerInfo.gameImgAli =  `http://app.risheng3d.com/image/${suffix[0]+date}.${suffix[1]}`
+      
       mi.multipartUpload(fileName, this.imgFile, {
       }).then((results) => {
         this.$Message.success('上传阿里云成功')
@@ -388,11 +388,15 @@ export default {
     },
     uploadAws () {
       const dev = `https://s3-ap-southeast-1.amazonaws.com/image-na-dev/${this.imgFile.fileName}` //测试环境
-      const prod = `http://img.na77.com/${this.imgFile.fileName}` //正式环境
+      this.managerInfo.gameImgAli =  `https://app.risheng3d.com/image/${this.imgFile.fileName}`
+      const prod = `https://img.na77.com/${this.imgFile.fileName}` //正式环境
       httpRequest('put',`${this.uploadAction[0].aws}`, this.imgFile)
         .then(res => {
           this.$Message.success('上传亚马逊成功')
           this.managerInfo.gameImg = (process.env.NODE_ENV == 'development') ? dev : prod
+          
+          console.log(this.managerInfo.gameImg)
+          
         }).finally(()=>{
         this.dialogLoading = false
       })
