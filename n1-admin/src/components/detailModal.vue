@@ -12,7 +12,7 @@
       <Col :span="12" class="-row-left">游戏简介：{{detailInfo.gameRecommend == 'NULL!' ? '' : detailInfo.gameRecommend}}</Col>
     </Row>
     <Row class="record-row">
-      <Col :span="12">创建时间：{{formatterTime(detailInfo.createdDate)}}</Col>
+      <Col :span="12">创建时间：{{formatterTime(detailInfo.createdAt)}}</Col>
     </Row>
      <Row class="record-row">
       <Col :span="24">网页地址：{{detailInfo.gameLink || '暂无'}}</Col>
@@ -39,6 +39,8 @@ export default {
   },
   computed: {
     detailInfo () {
+      console.log(this.dataProp);
+      
       return this.dataProp
     }
   },

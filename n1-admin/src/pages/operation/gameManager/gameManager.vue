@@ -60,7 +60,25 @@
 <script type="text/ecmascript-6">
 import { httpRequest } from "@/service/index";
 import detailModal from "@/components/detailModal";
+
 export default {
+  beforeRouteEnter(to, from, next) {
+    /* console.log(this, 'beforeRouteEnter'); // undefined
+    console.log(to, '组件独享守卫beforeRouteEnter第一个参数');
+    console.log(from, '组件独享守卫beforeRouteEnter第二个参数');
+    console.log(next, '组件独享守卫beforeRouteEnter第三个参数'); */
+    next(vm => {
+      //因为当钩子执行前，组件实例还没被创建
+      // vm 就是当前组件的实例相当于上面的 this，所以在 next 方法里你就可以把 vm 当 this 来用了。
+      //console.log(vm);//当前组件的实例
+      if (localStorage.gameManager == "gameManager") {
+        //localStorage.removeItem('dayCompany')
+        //console.log(233);
+        vm.isFetching = true;
+        vm.getGameList();
+      }
+    });
+  },
   name: "gameList",
   components: { detailModal },
   created() {
@@ -305,8 +323,12 @@ export default {
       this.gameOrder = 0;
     },
     getGameList() {
-   
       this.isFetching = true;
+      if ( this.$route.name == "gameManager" && localStorage.gameManager == "gameManager") {
+         localStorage.removeItem("gameManager");
+      }
+
+      
       if (
         this.searchInfo.gameStatus == "" ||
         this.searchInfo.gameStatus == "2"

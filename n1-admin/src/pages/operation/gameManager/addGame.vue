@@ -319,6 +319,7 @@ export default {
             type: 'changeRefresh',
             data: true
           })
+          localStorage.setItem('gameManager', 'gameManager')
           }
         }).finally(()=>{
           this.isSending = false
