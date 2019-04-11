@@ -5,9 +5,9 @@
       <FormItem label="游戏名称" prop="gameName">
         <Input v-model="managerInfo.gameName" class="input" type="text"  placeholder="请输入游戏名称" :maxlength='30' :disabled="isEdit"></Input>
       </FormItem>
-      <FormItem label="游戏标识" prop="gameIden">
+      <!-- <FormItem label="游戏标识" prop="gameIden">
         <Input v-model="managerInfo.gameIden" class="input" type="text" placeholder="请输入游戏标识(必须首字母开头并且大写)" :maxlength='20' :disabled="isEdit"></Input>
-      </FormItem>
+      </FormItem> -->
       <FormItem label="游戏简介" prop="gameRecommend">
         <Input v-model="managerInfo.gameRecommend" class="input" placeholder="请输入游戏简介" type="textarea" :maxlength='200'></Input>
       </FormItem>
@@ -19,11 +19,14 @@
           <Option v-for="item in gameTypeOptions" :key="item.code" :label="item.name" :value="item.code" class="select-width"></Option>
         </Select>
       </FormItem>
-      <FormItem label="KindId" prop="kindId">
-        <Input v-model="managerInfo.kindId" class="input" placeholder="请输入KindId(范围1-99999)" type='text'></Input>
+      <FormItem label="游戏ID" prop="kindId">
+        <Input v-model="managerInfo.kindId" class="input" placeholder="请输入游戏ID(范围1-99999)" type='text'></Input>
       </FormItem>
       <FormItem label="key" v-if="companyKey">
         <Tag type="danger">{{companyKey}}</Tag>
+      </FormItem>
+      <FormItem label="网页地址">
+        <Input v-model="managerInfo.gameLink" placeholder="请输入网页游戏地址"></Input>
       </FormItem>
       <FormItem label="游戏LOGO" prop="gameImg" class="is-required">
         <Upload
@@ -35,9 +38,6 @@
           <Button icon="ios-cloud-upload-outline" :loading="dialogLoading">请选择需要上传文件</Button>
         </Upload>
         <div style="padding: 16px 0">只能上传一张jpg/png文件，且不超过1M</div>
-      </FormItem>
-      <FormItem label="网页地址">
-        <Input v-model="managerInfo.gameLink" placeholder="请输入网页游戏地址"></Input>
       </FormItem>
     </Form>
     <div class="stepbtn createform">
@@ -227,7 +227,7 @@ export default {
       isSending: false,
       isShowWebGame: false,
       gameTypeOptions: [],
-      operatorList: [],
+      //operatorList: [],
       companyIden: '',
       companyKey: ''
     }
@@ -241,7 +241,7 @@ export default {
     }
   },
   mounted () {
-    this.getOperatorList()
+    //this.getOperatorList()
     this.init()
   },
   methods: {
@@ -288,12 +288,12 @@ export default {
         !this.isfinish.gameRecommend || !this.isfinish.kindId || !this.managerInfo.gameImg) {
         this.$Message.error('请完善创建信息')
       } else {
-        this.operatorList.forEach((item) => {
+        /* this.operatorList.forEach((item) => {
           if (item.companyIden === this.companyIden) {
             this.managerInfo.company = item
             this.managerInfo.companyIden = item.companyIden
           }
-        })
+        }) */
         if (this.isShowWebGame && !this.managerInfo.gameLink) {
           return this.$Message.error('请输入网页游戏链接')
         }
@@ -328,13 +328,13 @@ export default {
       }) */
        this.gameTypeOptions = this.GameListEnum[this.companyIden]
     },
-    getOperatorList () {
+    /* getOperatorList () {
       httpRequest("post", "/companyList", {},'game').then(
         result => {
           this.operatorList = result.payload.Items
         }
       )
-    }, // 获取游戏商列表
+    }, */ // 获取游戏商列表
     resetData () {
       this.managerInfo = {
         gameName: '', // 名称
@@ -344,8 +344,8 @@ export default {
         gameImg: '', // 图片上传 （暂不实现）
         gameImgAli: '', // 图片上传 （暂不实现）
         gameLink: '', // 网页游戏链接
-        isWebGame: '', // 网页游戏标识
-        gameIden: '', // 标识
+        //isWebGame: '', // 网页游戏标识
+        //gameIden: '', // 标识
         companyIden: '', // 供应商标识
         companyName: '' // 供应商名称
       }
