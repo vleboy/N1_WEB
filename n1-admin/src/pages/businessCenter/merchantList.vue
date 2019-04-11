@@ -186,7 +186,24 @@ export default {
         },
          {
           title:'玩家数量',
-          key:'playerCount'
+          key:'playerCount',
+          render: (h, params) => {
+            return h(
+              "span",
+              {
+                style: {
+                  color: "#20a0ff",
+                  cursor:'pointer'
+                },
+                on: {
+                  click: () => {
+                     this.$router.push({name: "playList",query:{sn:params.row.sn}})
+                     localStorage.setItem('playList','playList')
+                  }
+                }
+              },
+              params.row.playerCount+"(前往玩家列表)")
+          }
         },
         {
           title: "剩余点数",
@@ -287,6 +304,8 @@ export default {
           title: "商户游戏",
           key: "",
           render: (h, params) => {
+            //console.log(params);
+            
             let column = [
               {
                 title: "商户游戏",
