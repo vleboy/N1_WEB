@@ -4,7 +4,7 @@ import { URL } from './urlConfig'
 
 // get请求 (url拼接参数，请求域名类别）
 // 域名类别为: 不传域名默认为n1, 游戏相关接口为game
-const get = (urls, type) => {
+const get = (urls, type, params) => {
     let token=localStorage.getItem('n1token');
     let headers={
         "Content-Type": "application/json; charset=utf-8",
@@ -13,7 +13,8 @@ const get = (urls, type) => {
     return {
      method: 'get',
      url: URL(type) + urls,
-     headers: headers
+     params: params,
+     //headers: headers
     }
 }
 
@@ -55,7 +56,7 @@ export async function httpRequest(method,url,params,type) {
   //参数分别作用 （方法, 请求接口, 参数, 域名接口）
   switch (method) {
     case 'get':
-      return http(get(url,type))
+          return http(get(url, type, params))
     case 'post':
       return http(post(url,params,type))
     case 'put':
