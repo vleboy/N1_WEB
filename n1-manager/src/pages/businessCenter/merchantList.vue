@@ -110,17 +110,19 @@ export default {
         {
           title: "序号",
           type: "index",
-          width: 100
+          width: 60
         },
         {
           title: "商户ID",
           key: "displayId",
-          sortable: true
+          sortable: true,
+          width: 95,
         },
         {
           title: "商户标识",
           key: "sn",
-          sortable: true
+          sortable: true,
+          width: 105
         },
         {
           title: "商户账号",
@@ -136,6 +138,28 @@ export default {
           title: "上级线路商",
           key: "parentDisplayName",
           sortable: true
+        },
+        {
+          title:'玩家数量',
+          key:'playerCount',
+          width: 105,
+          render: (h, params) => {
+            return h(
+              "span",
+              {
+                style: {
+                  color: "#20a0ff",
+                  cursor:'pointer'
+                },
+                on: {
+                  click: () => {
+                     this.$router.push({name: "playList",query:{sn:params.row.sn}})
+                     localStorage.setItem('playList','playList')
+                  }
+                }
+              },
+              params.row.playerCount)
+          }
         },
         {
           title: "剩余点数",

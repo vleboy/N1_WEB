@@ -152,12 +152,15 @@ export default {
         },
         series: [
           {
-            name: "data",
+            name: "数据",
             type: "map",
             mapType: "world",
             roam: true,
             itemStyle: {
               emphasis: { label: { show: true } }
+            },
+            nameMap:{
+	          'China':'中国',
             },
             data: [
               { name: "Afghanistan", value: 28397.812 },
@@ -190,7 +193,7 @@ export default {
               { name: "Canada", value: 34126.24 },
               { name: "Switzerland", value: 7830.534 },
               { name: "Chile", value: 17150.76 },
-              { name: "China", value: 1359821.465 },
+              { name: "中国", value: 1359821.465 },
               { name: "Ivory Coast", value: 60508.978 },
               { name: "Cameroon", value: 20624.343 },
               { name: "Democratic Republic of the Congo", value: 62191.161 },

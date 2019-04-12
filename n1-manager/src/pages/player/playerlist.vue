@@ -58,6 +58,22 @@ import {
   thousandFormatter
 } from "@/config/format";
 export default {
+   beforeRouteEnter(to, from, next) {
+    /* console.log(this, 'beforeRouteEnter'); // undefined
+    console.log(to, '组件独享守卫beforeRouteEnter第一个参数');
+    console.log(from, '组件独享守卫beforeRouteEnter第二个参数');
+    console.log(next, '组件独享守卫beforeRouteEnter第三个参数'); */
+    next(vm => {
+      //因为当钩子执行前，组件实例还没被创建
+      // vm 就是当前组件的实例相当于上面的 this，所以在 next 方法里你就可以把 vm 当 this 来用了。
+      //console.log(vm);//当前组件的实例
+      if (localStorage.playList == 'playList') {
+        vm.searchInfo.parentSn = vm.$route.query.sn;
+        vm.getSearch(true)
+      }
+
+    });
+  },
   beforeCreate() {},
   data() {
     return {
@@ -263,8 +279,11 @@ export default {
       });
     },
     getPlayList() {
-      if (this.isFetching) return;
+      //if (this.isFetching) return;
       this.isFetching = true;
+      if (this.$route.name == 'playList' && localStorage.playList == 'playList') {
+        localStorage.removeItem('playList')
+      }
       // this.$store.commit('startLoading')
       this.searchInfo.startKey = this.playerListStartKey;
       this.searchInfo.pageSize = this.pageSize;
