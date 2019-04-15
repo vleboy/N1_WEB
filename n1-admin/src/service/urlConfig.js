@@ -8,7 +8,7 @@ export let URL = type => {
       case 'prize':
         return 'https://game.alimuban.cn:45557'
       case 'map':
-        return 'https://webgame.na77.org'
+        return 'http://visual.na12345.com'
       default:
         return 'https://n1admin.na12345.com'
     }
@@ -20,7 +20,7 @@ export let URL = type => {
         return 'https://testgame.alimuban.cn:45557'
       // return 'http://192.168.3.200:45557'
       case 'map':
-        return 'https://webgame.na77.org'
+        return 'http://visual.na12345.com'
       default:
         return 'https://d3rqtlfdd4m9wd.cloudfront.net'
     }
