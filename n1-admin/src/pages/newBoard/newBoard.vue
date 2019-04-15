@@ -10,7 +10,7 @@
       >{{item.name}}</Option>
       </Select>
     <div class="right">
-      <RadioGroup v-model="dateType" size="small" @on-change="changeDateType" type="button">
+      <RadioGroup v-model="dateType" @on-change="changeDateType" type="button">
         <Radio label="1">近一周</Radio>
         <Radio label="2">近一个月</Radio>
         <Radio label="3">近三个月</Radio>
@@ -105,7 +105,7 @@ export default {
       chinaSplitList: [],
       worldData: [],
       spinShow: false,
-      model1: '',
+      model1: '全部',
       gameCode: '',
       dateType: '1',
     };

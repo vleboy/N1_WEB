@@ -131,13 +131,13 @@ export const appRouter = [
            component: main,
            children: [{ path: 'board', title: '看板', name: 'board', component: board }]
          },
-         {
+        /*  {
            path: '/newBoard',
            title: '看板(新)',
            name: 'newBoard',
            component: main,
            children: [{ path: 'newBoard', title: '看板(新)', name: 'newBoard', component: newBoard }]
-         },
+         }, */
          {
            path: '/allreport',
            title: '公司输赢总报表',

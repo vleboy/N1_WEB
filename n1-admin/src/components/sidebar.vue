@@ -31,7 +31,7 @@
                         <!-- <MenuItem name="jump" v-if='permission.includes("NA真人游戏报表")'>NA真人游戏报表(跳转)</MenuItem> -->
                         <!-- <MenuItem name="nacard" v-if='permission.includes("NA棋牌游戏报表")'>NA棋牌游戏报表</MenuItem>
                         <MenuItem name="nafishing" v-if='permission.includes("NA捕鱼游戏报表")'>NA捕鱼游戏报表</MenuItem> -->
-                        <MenuItem name="nahfive" v-if='permission.includes("NA电子h5报表")'>NA电子H5报表</MenuItem>
+                        <MenuItem name="nahfive" v-if='permission.includes("NA电子H5报表")'>NA电子H5报表</MenuItem>
                         <MenuItem name="nanomys" v-if='permission.includes("NA电子H5无神秘奖报表")'>NA电子H5无神秘奖报表</MenuItem>
 						            <!-- <MenuItem name="natruehfive" v-if='permission.includes("NA真人h5报表")'>NA真人H5报表</MenuItem> -->
                     </Submenu>
