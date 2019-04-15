@@ -153,4 +153,7 @@ export default {
   background: url(http://img.na77.com/adminh5/yaoqianshu/bg_bouns.png) no-repeat;
   background-size: contain;
 }
+.demo-spin-icon-load {
+    animation: ani-demo-spin 1s linear infinite;
+  }
 </style>

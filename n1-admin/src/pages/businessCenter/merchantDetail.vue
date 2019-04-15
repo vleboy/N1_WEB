@@ -1150,5 +1150,8 @@ export default {
     margin-top: 15px;
   }
 }
+.demo-spin-icon-load {
+    animation: ani-demo-spin 1s linear infinite;
+  }
 </style>
 

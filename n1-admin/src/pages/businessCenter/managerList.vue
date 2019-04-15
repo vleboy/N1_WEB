@@ -681,4 +681,7 @@ export default {
   padding: 30px 20px;
   font-size: 14px;
 }
+.demo-spin-icon-load {
+    animation: ani-demo-spin 1s linear infinite;
+  }
 </style>
