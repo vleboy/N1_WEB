@@ -564,4 +564,8 @@ export default {
   font-size: 14px;
   margin: 5px auto;
 }
+.demo-spin-icon-load {
+    animation: ani-demo-spin 1s linear infinite;
+  }
 </style>
+

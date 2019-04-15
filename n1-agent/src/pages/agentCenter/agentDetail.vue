@@ -1176,5 +1176,8 @@ export default {
   border-radius: 4px;
   transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
+.demo-spin-icon-load {
+    animation: ani-demo-spin 1s linear infinite;
+  }
 </style>
 
