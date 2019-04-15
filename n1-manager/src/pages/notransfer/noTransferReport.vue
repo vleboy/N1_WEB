@@ -392,4 +392,7 @@ export default {
     line-height: 36px;
   }
 }
+.demo-spin-icon-load {
+    animation: ani-demo-spin 1s linear infinite;
+  }
 </style>

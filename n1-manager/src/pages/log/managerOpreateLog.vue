@@ -146,5 +146,8 @@ export default {
     text-align: right
   }
 }
+.demo-spin-icon-load {
+    animation: ani-demo-spin 1s linear infinite;
+  }
 </style>
 
