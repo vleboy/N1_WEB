@@ -6,7 +6,7 @@ export let URL = type => {
       case 'game':
         return 'https://n1game.na12345.com'
       case 'prize':
-        return 'https://game.alimuban.cn:45557'
+        return 'https://game.jvshihui.cn:45557'
       case 'map':
         return 'http://visual.na12345.com'
       default:
@@ -17,7 +17,7 @@ export let URL = type => {
       case 'game':
         return 'https://dgjmusja39cm2.cloudfront.net'
       case 'prize':
-        return 'https://testgame.alimuban.cn:45557'
+        return 'https://testgame.jvshihui.cn:45557'
       // return 'http://192.168.3.200:45557'
       case 'map':
         return 'http://visual.na12345.com'
