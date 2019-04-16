@@ -40,6 +40,7 @@
     <div :style="{height:'600px',width:'100%'}" ref="chinaEchart"></div>
     <div :style="{height:'600px',width:'100%'}" ref="worldEchart"></div>
     <div :style="{height:'600px',width:'100%'}" ref="report"></div>
+    <div :style="{height:'600px',width:'100%'}" ref="dynamic"></div>
   </div>
   <Spin size="large" fix v-if="spinShow">
       <Icon type="load-c" size="18" class="demo-spin-icon-load"></Icon>
@@ -123,13 +124,16 @@ export default {
       worldAllData: '',
       chinaSplitList: [],
       worldSplitList: [],
+      dayCompany: [],
       worldData: [],
       spinShow: false,
       model1: '全部',
       gameCode: '',
       dateType: '1',
       chinaDataType: '0',
-      worldDataType: '0'
+      worldDataType: '0',
+      realData: [932, 901, 934, 1290, 1330, 1320,145],
+      xArr: [1, 2, 3, 4, 5, 6, 7],
     };
   },
   mounted() {
@@ -265,14 +269,9 @@ export default {
             "#FFD700",
             "#FFFFCD",
             "#ccc",
-            "#fff"
+            "#eee"
           ]
         },
-        /* legend: {
-            orient: 'vertical',
-            x:'center',
-            data:['重庆市区县']
-        }, */
         //配置属性
         series: [
           {
@@ -318,7 +317,7 @@ export default {
             "#FFD700",
             "#FFFFCD",
             "#ccc",
-            "#fff"
+            "#eee"
           ]
         },
         series: [
@@ -327,9 +326,6 @@ export default {
             type: "map",
             mapType: "world",
             roam: false,
-            /* itemStyle: {
-              emphasis: { label: { show: true } }
-            }, */
             label: {
               normal: {
                 show: false 
@@ -522,28 +518,27 @@ export default {
         ]
       });
     },
-    /* reportConfigure() {
-      // 基于准备好的dom，初始化echarts实例
+    reportConfigure() {
       let myChart = this.$echarts.init(this.$refs.report)
       let _this = this;
 
-      let betCountArr = _this.dayStatList.map(item => {
+      let betCountArr = _this.dayCompany.map(item => {
         return item.betCount;
       });
-      let betAmountArr = _this.dayStatList.map(item => {
+      let betAmountArr = _this.dayCompany.map(item => {
         return item.betAmount;
       });
-      let retAmountArr = _this.dayStatList.map(item => {
+      let retAmountArr = _this.dayCompany.map(item => {
         return item.retAmount;
       });
-      let refundAmountArr = _this.dayStatList.map(item => {
+      let refundAmountArr = _this.dayCompany.map(item => {
         return item.refundAmount;
       });
-      let winloseAmountArr = _this.dayStatList.map(item => {
+      let winloseAmountArr = _this.dayCompany.map(item => {
         return item.winloseAmount;
       });
 
-      let xArr = _this.dayStatList.map(item => {
+      let xArr = _this.dayCompany.map(item => {
         return item.createdDate;
       });
 
@@ -591,7 +586,32 @@ export default {
           }
         ]
       });
-    }, */
+    },
+    realTimeDynamicConfigure() {
+      let myChart = this.$echarts.init(this.$refs.dynamic)
+      myChart.setOption({
+        xAxis: {
+          type: 'category',
+          data: this.xArr
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [{
+          data: this.realData,
+          type: 'line'
+        }]
+      })
+    },
+    realChange() {
+      let num = 8
+      setInterval(() => {
+        let randomData = Math.round(Math.random()*1000)
+        this.realData.push(randomData)
+        this.xArr.push(num)
+        num++
+      }, 500)
+    },
     async init() {
       this.spinShow = true
       let params = {}
@@ -610,9 +630,13 @@ export default {
       let [perms1,perms2] = await this.axios.all([httpRequest("get", "/visual/map/china", params, "map"),httpRequest("get", "/visual/map/world", params, "map")])
       this.chinaAllData = perms1.data
       this.worldAllData = perms2.data
+      
       this.spinShow = false
+      //this.reportConfigure()
+      this.realTimeDynamicConfigure()
       this.changeChinaDataType()
       this.changeWorldDataType()
+      this.realChange()
     }
   },
   computed: {
@@ -655,13 +679,13 @@ export default {
   .chinaEcharts {
     position: absolute;
     top:280px;
-    right: 8rem;
+    right: 2rem;
     z-index: 100;
   }
   .worldEcharts {
     position: absolute;
     top:880px;
-    right: 8rem;
+    right: 2rem;
     z-index: 100;
   }
   .demo-spin-icon-load {
