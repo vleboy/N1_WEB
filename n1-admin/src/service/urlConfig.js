@@ -17,7 +17,7 @@ export let URL = type => {
       case 'game':
         return 'https://dgjmusja39cm2.cloudfront.net'
       case 'prize':
-        return 'https://testgame.jvshihui.cn:45557'
+        return 'https://testgame.alimuban.cn:45557'
       // return 'http://192.168.3.200:45557'
       case 'map':
         return 'http://visual.na12345.com'

@@ -134,6 +134,7 @@ export default {
       worldDataType: '0',
       realData: [932, 901, 934, 1290, 1330, 1320,145],
       xArr: [1, 2, 3, 4, 5, 6, 7],
+      hander: null
     };
   },
   mounted() {
@@ -594,23 +595,32 @@ export default {
           type: 'category',
           data: this.xArr
         },
+        tooltip: {
+          trigger: "axis"
+        },
         yAxis: {
           type: 'value'
         },
         series: [{
           data: this.realData,
-          type: 'line'
+          type: 'line',
+          symbol: 'circle', // 拐点类型
+          smooth: true, // 当为true时，就是光滑的曲线（默认为true）；当为false，就是折线不是曲线的了，那这个设为true，下面的（吃饭）数据中设置smooth为false，这个就不是光滑的曲线了。
+          symbolSize: 3, // 拐点圆的大小
         }]
       })
     },
     realChange() {
       let num = 8
-      setInterval(() => {
+      this.hander = setInterval(() => {
         let randomData = Math.round(Math.random()*1000)
         this.realData.push(randomData)
+        this.realData.splice(0,1)
         this.xArr.push(num)
+        this.xArr.splice(0,1)
+        this.realTimeDynamicConfigure()
         num++
-      }, 500)
+      }, 3000)
     },
     async init() {
       this.spinShow = true
@@ -652,6 +662,9 @@ export default {
       return time;
     },
     
+  },
+  beforeDestroy() {
+    clearInterval(this.hander);
   }
 };
 </script>
