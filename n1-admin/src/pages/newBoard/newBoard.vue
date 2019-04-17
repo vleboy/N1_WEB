@@ -20,27 +20,32 @@
       <Button type="ghost" @click="reset">重置</Button>
     </div>    
   </div>
-  <RadioGroup v-model="chinaDataType" @on-change="changeChinaDataType" vertical class="chinaEcharts" size="large">
-    <Radio label="0">玩家数量</Radio>
-    <Radio label="1">投加注金额</Radio>
-    <Radio label="2">投注次数</Radio>
-    <Radio label="3">退款金额</Radio>
-    <Radio label="4">返还金额</Radio>
-    <Radio label="5">输赢金额</Radio>
-  </RadioGroup>
-  <RadioGroup v-model="worldDataType" @on-change="changeWorldDataType" vertical class="worldEcharts" size="large">
-    <Radio label="0">玩家数量</Radio>
-    <Radio label="1">投加注金额</Radio>
-    <Radio label="2">投注次数</Radio>
-    <Radio label="3">退款金额</Radio>
-    <Radio label="4">返还金额</Radio>
-    <Radio label="5">输赢金额</Radio>
-  </RadioGroup>
   <div class="echarts">
-    <div :style="{height:'600px',width:'100%'}" ref="chinaEchart"></div>
-    <div :style="{height:'600px',width:'100%'}" ref="worldEchart"></div>
+    <div class="map">
+      <div :style="{height:'600px',width:'50%'}" ref="worldEchart"></div>
+      <div :style="{height:'600px',width:'50%'}" ref="chinaEchart"></div>
+      <RadioGroup v-model="worldDataType" @on-change="changeWorldDataType"  class="worldEcharts" size="small">
+        <Radio label="0">玩家数量</Radio>
+        <Radio label="1">投加注金额</Radio>
+        <Radio label="2">投注次数</Radio>
+        <Radio label="3">退款金额</Radio>
+        <Radio label="4">返还金额</Radio>
+        <Radio label="5">输赢金额</Radio>
+      </RadioGroup>
+      <RadioGroup v-model="chinaDataType" @on-change="changeChinaDataType"  class="chinaEcharts" size="small">
+        <Radio label="0">玩家数量</Radio>
+        <Radio label="1">投加注金额</Radio>
+        <Radio label="2">投注次数</Radio>
+        <Radio label="3">退款金额</Radio>
+        <Radio label="4">返还金额</Radio>
+        <Radio label="5">输赢金额</Radio>
+      </RadioGroup>
+    </div>
     <div :style="{height:'600px',width:'100%'}" ref="report"></div>
     <div :style="{height:'600px',width:'100%'}" ref="dynamic"></div>
+    <div :style="{height:'600px',width:'100%'}" ref="momentBar"></div>
+    <div :style="{height:'600px',width:'100%'}" ref="playerActive"></div>
+    <div :style="{height:'600px',width:'100%'}" ref="gameDtributed"></div>
   </div>
   <Spin size="large" fix v-if="spinShow">
       <Icon type="load-c" size="18" class="demo-spin-icon-load"></Icon>
@@ -246,7 +251,6 @@ export default {
     chinaConfigure() {
       this.$echarts.registerMap("china", chinaJson);
       let myChart = this.$echarts.init(this.$refs.chinaEchart); //这里是为了获得容器所在位置
-      window.onresize = myChart.resize;
       myChart.setOption({
         backgroundColor: "#FFFFFF",
         title: {
@@ -296,7 +300,6 @@ export default {
     worldConfigure() {
       this.$echarts.registerMap("world", worldJson);
       let myChart = this.$echarts.init(this.$refs.worldEchart); //这里是为了获得容器所在位置
-      window.onresize = myChart.resize;
       myChart.setOption({
         title: {
           text: '世界地图大数据',
@@ -545,6 +548,11 @@ export default {
 
       // 绘制图表
       myChart.setOption({
+        title: {
+          text: "公司日报表",
+          subtext: "",
+          x: "center"
+        },
         xAxis: {
           type: "category",
           data: xArr
@@ -591,8 +599,13 @@ export default {
     realTimeDynamicConfigure() {
       let myChart = this.$echarts.init(this.$refs.dynamic)
       myChart.setOption({
+        title: {
+          text: "累计输赢金额近5分钟动态曲线",
+          subtext: "",
+          x: "center"
+        },
         xAxis: {
-          type: 'category',
+          type: 'time',
           data: this.xArr
         },
         tooltip: {
@@ -600,6 +613,10 @@ export default {
         },
         yAxis: {
           type: 'value'
+        },
+        animationEasing: 'elasticOut',
+        animationDelayUpdate: function (idx) {
+          return idx * 100;
         },
         series: [{
           data: this.realData,
@@ -610,6 +627,134 @@ export default {
         }]
       })
     },
+    momentBarConfigure() {
+      let myChart = this.$echarts.init(this.$refs.momentBar)
+      myChart.setOption({
+        title: {
+          text: "时刻分布柱状图",
+          subtext: "",
+          x: "center"
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            crossStyle: {
+              color: '#999'
+            }
+          }
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left',
+          data:['蒸发量','降水量','平均温度']
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+            axisPointer: {
+              type: 'shadow'
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            name: '水量',
+          }
+        ],
+        series: [
+          {
+            name:'蒸发量',
+            type:'bar',
+            itemStyle : {  
+              normal : {  
+                color:'blue',  //圈圈的颜色
+                /* lineStyle:{  
+                    color:'blue'  //线的颜色
+                }  */ 
+              }  
+            }, 
+            data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+          },
+          {
+            name:'降水量',
+            type:'bar',
+            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+          },
+        ]
+      })
+    },
+    playerActiveConfigure() {
+      let myChart = this.$echarts.init(this.$refs.playerActive)
+      myChart.setOption({
+        title: {
+          text: "玩家活跃",
+          subtext: "",
+          x: "center"
+        },
+        xAxis: {
+          type: 'category',
+          data: [1,2,3,4,5,6,7]
+        },
+        tooltip: {
+          trigger: "axis"
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [{
+          data: [2820, 932, 901, 934, 1290, 1330, 1320],
+          type: 'line',
+          symbol: 'circle', // 拐点类型
+          smooth: true, // 当为true时，就是光滑的曲线（默认为true）；当为false，就是折线不是曲线的了，那这个设为true，下面的（吃饭）数据中设置smooth为false，这个就不是光滑的曲线了。
+          symbolSize: 3, // 拐点圆的大小
+        }]
+      })
+    },
+    gameDtributedConfigure() {
+      let myChart = this.$echarts.init(this.$refs.gameDtributed)
+      myChart.setOption({
+        title : {
+          text: '游戏分布比例',
+          subtext: '纯属虚构',
+          x:'center'
+        },
+        tooltip : {
+          trigger: 'item',
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+        },
+        series : [
+          {
+            name: '访问来源',
+            type: 'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            data:[
+                {value:335, name:'直接访问'},
+                {value:310, name:'邮件营销'},
+                {value:234, name:'联盟广告'},
+                {value:135, name:'视频广告'},
+                {value:1548, name:'搜索引擎'}
+            ],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+          }
+        ]
+      })
+    },
+    
     realChange() {
       let num = 8
       this.hander = setInterval(() => {
@@ -644,9 +789,12 @@ export default {
       this.spinShow = false
       //this.reportConfigure()
       this.realTimeDynamicConfigure()
+      this.momentBarConfigure()
+      this.playerActiveConfigure()
+      this.gameDtributedConfigure()
       this.changeChinaDataType()
       this.changeWorldDataType()
-      this.realChange()
+      //this.realChange()
     }
   },
   computed: {
@@ -689,20 +837,26 @@ export default {
       margin-left: 2rem;
     }
   }
-  .chinaEcharts {
+  .worldEcharts {
+    width: 50%;
     position: absolute;
-    top:280px;
-    right: 2rem;
+    top:650px;
+    left: 3rem;
     z-index: 100;
   }
-  .worldEcharts {
+  .chinaEcharts{
+    width: 50%;
     position: absolute;
-    top:880px;
-    right: 2rem;
+    top:650px;
+    left: 55%;
     z-index: 100;
   }
   .demo-spin-icon-load {
     animation: ani-demo-spin 1s linear infinite;
+  }
+  .map {
+    display: flex;
+   // justify-content: space-around;
   }
 }
 </style>

@@ -80,7 +80,7 @@ export default {
         {
           title: "序号",
           type: "index",
-          maxWidth: 80
+          maxWidth: 60
         },
         {
           title: "类型",
@@ -107,10 +107,8 @@ export default {
           title: "接入商昵称",
           key: "displayName",
           sortable: true,
-          maxWidth: 140,
+          maxWidth: 160,
           render: (h, params) => {
-            console.log(params.row);
-            
             if (params.row.role == "10") {
               return h(
                 "span",
