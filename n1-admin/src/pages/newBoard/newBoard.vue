@@ -44,9 +44,15 @@
     <div :style="{height:'600px',width:'100%'}" ref="report"></div>
     <div :style="{height:'600px',width:'100%'}" ref="dynamic"></div>
     <div :style="{height:'600px',width:'100%'}" ref="momentBar"></div>
-    <div :style="{height:'600px',width:'100%'}" ref="playerActive"></div>
     <div :style="{height:'600px',width:'100%'}" ref="gameDtributed"></div>
   </div>
+  <RadioGroup v-model="gameDtributedDataType" @on-change="changeGameDtributedDataType"  class="gameDtributedEcharts" size="small">
+        <Radio label="0">玩家数量GAME</Radio>
+        <Radio label="1">投加注金额</Radio>
+        <Radio label="2">投注次数</Radio>
+        <Radio label="3">退款金额</Radio>
+        <Radio label="4">返还金额</Radio>
+      </RadioGroup>
   <Spin size="large" fix v-if="spinShow">
       <Icon type="load-c" size="18" class="demo-spin-icon-load"></Icon>
       <div>加载中...</div>
@@ -137,9 +143,14 @@ export default {
       dateType: '1',
       chinaDataType: '0',
       worldDataType: '0',
+      gameDtributedDataType: '0',
       realData: [932, 901, 934, 1290, 1330, 1320,145],
       xArr: [1, 2, 3, 4, 5, 6, 7],
-      hander: null
+      hander: null,
+      playerActiveData: [],
+      gameDtributedData: [],
+      valueGD: [],
+      valueTP: [],
     };
   },
   mounted() {
@@ -234,6 +245,34 @@ export default {
           break;
       }
       this.worldConfigure()
+    },
+    changeGameDtributedDataType(val) {
+      if (val == undefined) {
+        val = this.chinaDataType
+      }
+      switch (val) {
+        case '0':
+          this.valueGD = this.gameDtributedData.playerCount.map(item => {return item})
+          this.valueTP = this.gameDtributedData.playerCount.map(item => {return item.name})
+          break;
+        case '1':
+          this.valueGD = this.gameDtributedData.betAmount.map(item => {return item})
+          this.valueTP = this.gameDtributedData.betAmount.map(item => {return item.name})
+          break;
+        case '2':
+          this.valueGD = this.gameDtributedData.betCount.map(item => {return item})
+          this.valueTP = this.gameDtributedData.betCount.map(item => {return item.name})
+          break;
+        case '3':
+          this.valueGD = this.gameDtributedData.refundAmount.map(item => {return item})
+          this.valueTP = this.gameDtributedData.refundAmount.map(item => {return item.name})
+          break;
+        case '4':
+          this.valueGD = this.gameDtributedData.retAmount.map(item => {return item})
+          this.valueTP = this.gameDtributedData.retAmount.map(item => {return item.name})
+          break;
+      }
+      this.gameDtributedConfigure()
     },
     confirm() {
       this.defaultTime = this.changedTime
@@ -629,6 +668,12 @@ export default {
     },
     momentBarConfigure() {
       let myChart = this.$echarts.init(this.$refs.momentBar)
+      let betAmount = this.playerActiveData.betAmount.map(item => {return item.y})
+      let betCount = this.playerActiveData.betCount.map(item => {return item.y})
+      let playerCount = this.playerActiveData.playerCount.map(item => {return item.y})
+      let refundAmount = this.playerActiveData.refundAmount.map(item => {return item.y})
+      let retAmount = this.playerActiveData.retAmount.map(item => {return item.y})
+      let winloseAmount = this.playerActiveData.winloseAmount.map(item => {return item.y})
       myChart.setOption({
         title: {
           text: "时刻分布柱状图",
@@ -647,12 +692,13 @@ export default {
         legend: {
           orient: 'vertical',
           left: 'left',
-          data:['蒸发量','降水量','平均温度']
+          data:['玩家数量','投注金额','投注次数','退款金额','返回金额','输赢金额'],
+          selectedMode: "single"
         },
         xAxis: [
           {
             type: 'category',
-            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+            data: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],
             axisPointer: {
               type: 'shadow'
             }
@@ -661,56 +707,40 @@ export default {
         yAxis: [
           {
             type: 'value',
-            name: '水量',
           }
         ],
         series: [
           {
-            name:'蒸发量',
+            name:'玩家数量',
             type:'bar',
-            itemStyle : {  
-              normal : {  
-                color:'blue',  //圈圈的颜色
-                /* lineStyle:{  
-                    color:'blue'  //线的颜色
-                }  */ 
-              }  
-            }, 
-            data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+            data: playerCount
           },
           {
-            name:'降水量',
+            name:'投注金额',
             type:'bar',
-            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+            data: betAmount
+          },
+          {
+            name:'投注次数',
+            type:'bar',
+            data: betCount
+          },
+          {
+            name:'退款金额',
+            type:'bar',
+            data: refundAmount
+          },
+          {
+            name:'返回金额',
+            type:'bar',
+            data: retAmount
+          },
+          {
+            name:'输赢金额',
+            type:'bar',
+            data: winloseAmount
           },
         ]
-      })
-    },
-    playerActiveConfigure() {
-      let myChart = this.$echarts.init(this.$refs.playerActive)
-      myChart.setOption({
-        title: {
-          text: "玩家活跃",
-          subtext: "",
-          x: "center"
-        },
-        xAxis: {
-          type: 'category',
-          data: [1,2,3,4,5,6,7]
-        },
-        tooltip: {
-          trigger: "axis"
-        },
-        yAxis: {
-          type: 'value'
-        },
-        series: [{
-          data: [2820, 932, 901, 934, 1290, 1330, 1320],
-          type: 'line',
-          symbol: 'circle', // 拐点类型
-          smooth: true, // 当为true时，就是光滑的曲线（默认为true）；当为false，就是折线不是曲线的了，那这个设为true，下面的（吃饭）数据中设置smooth为false，这个就不是光滑的曲线了。
-          symbolSize: 3, // 拐点圆的大小
-        }]
       })
     },
     gameDtributedConfigure() {
@@ -728,21 +758,15 @@ export default {
         legend: {
           orient: 'vertical',
           left: 'left',
-          data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+          data: this.valueTP
         },
         series : [
           {
-            name: '访问来源',
+            name: '数据',
             type: 'pie',
             radius : '55%',
             center: ['50%', '60%'],
-            data:[
-                {value:335, name:'直接访问'},
-                {value:310, name:'邮件营销'},
-                {value:234, name:'联盟广告'},
-                {value:135, name:'视频广告'},
-                {value:1548, name:'搜索引擎'}
-            ],
+            data:this.valueGD,
             itemStyle: {
                 emphasis: {
                     shadowBlur: 10,
@@ -782,16 +806,23 @@ export default {
         gameTypeL: this.gameCode
         }
       }    
-      let [perms1,perms2] = await this.axios.all([httpRequest("get", "/visual/map/china", params, "map"),httpRequest("get", "/visual/map/world", params, "map")])
+      let [perms1,perms2,perms3,perms4] = await this.axios.all([
+        httpRequest("get", "/visual/map/china", params, "map"),
+        httpRequest("get", "/visual/map/world", params, "map"),
+        httpRequest("get", "/visual/pie/game", params, "map"),
+        httpRequest("get", "/visual/line/graph", params, "map"),
+        ])
       this.chinaAllData = perms1.data
       this.worldAllData = perms2.data
-      
+      this.gameDtributedData = perms3.data
+      console.log(perms3);
+      this.playerActiveData = perms4.data
+    
       this.spinShow = false
       //this.reportConfigure()
       this.realTimeDynamicConfigure()
       this.momentBarConfigure()
-      this.playerActiveConfigure()
-      this.gameDtributedConfigure()
+      this.changeGameDtributedDataType()
       this.changeChinaDataType()
       this.changeWorldDataType()
       //this.realChange()
@@ -844,10 +875,17 @@ export default {
     left: 3rem;
     z-index: 100;
   }
-  .chinaEcharts{
+  .chinaEcharts {
     width: 50%;
     position: absolute;
     top:650px;
+    left: 55%;
+    z-index: 100;
+  }
+  .gameDtributedEcharts {
+    width: 50%;
+    position: absolute;
+    top:3600px;
     left: 55%;
     z-index: 100;
   }
