@@ -4,27 +4,35 @@
       <div class="top">
         <p class="title">
           当前用户列表
-          <RadioGroup v-model="source" class="radioGroup" type="button" @on-change='changeSource'>
-          <Radio label="0" v-if="permission.includes('正式数据')">正式</Radio>
-          <Radio label="1">测试</Radio>
-          <Radio label="2" v-if="permission.includes('正式数据')">全部</Radio>
-        </RadioGroup>
+          <RadioGroup v-model="source" class="radioGroup" type="button" @on-change="changeSource">
+            <Radio label="0" v-if="permission.includes('正式数据')">正式</Radio>
+            <Radio label="1">测试</Radio>
+            <Radio label="2" v-if="permission.includes('正式数据')">全部</Radio>
+          </RadioGroup>
           <Button type="ghost" @click="exportdata('table_0')">导出数据</Button>
         </p>
         <div class="right">
-          <DatePicker type="datetimerange" :options="options" :editable='false' v-model="defaultTime" placeholder="选择日期时间范围(默认最近一周)" style="width: 300px" @on-ok="confirm"></DatePicker>
+          <DatePicker
+            type="datetimerange"
+            :options="options"
+            :editable="false"
+            v-model="defaultTime"
+            placeholder="选择日期时间范围(默认最近一周)"
+            style="width: 300px"
+            @on-ok="confirm"
+          ></DatePicker>
           <Button type="primary" @click="search">搜索</Button>
           <Button type="ghost" @click="reset">重置</Button>
         </div>
       </div>
-      <Table :columns="columns11" :data="user" size="small" ref='table_0'></Table>
+      <Table :columns="columns11" :data="user" size="small" ref="table_0"></Table>
     </div>
     <div class="childList">
       <p class="title">
         直属下级列表
         <Button type="ghost" @click="exportdata('table_1')">导出数据</Button>
       </p>
-      <Table :columns="columns11" :data="child" size="small" ref='table_1'></Table>
+      <Table :columns="columns11" :data="child" size="small" ref="table_1"></Table>
     </div>
     <div class="childList" v-for="(item,index) in reportChild" :key="index">
       <p class="title">
@@ -35,13 +43,13 @@
     </div>
     <div class="playerList" id="playerList">
       <p class="title">
-        <span v-show="showName"> ({{ userName }})</span>所属玩家列表
+        <span v-show="showName">({{ userName }})</span>所属玩家列表
         <Button type="ghost" @click="exportdata('table_2')">导出数据</Button>
       </p>
-      <Table :columns="columns22" :data="playerList" size="small" ref='table_2'></Table>
+      <Table :columns="columns22" :data="playerList" size="small" ref="table_2"></Table>
     </div>
     <Spin size="large" fix v-if="spinShow">
-      <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
+      <Icon type="load-c" size="18" class="demo-spin-icon-load"></Icon>
       <div>加载中...</div>
     </Spin>
   </div>
@@ -60,30 +68,80 @@ export default {
           {
             text: "本周",
             value() {
-              return [new Date(dayjs().startOf('week').valueOf() + 24 * 60 * 60 * 1000), new Date(dayjs().endOf('second').valueOf())]
+              return [
+                new Date(
+                  dayjs()
+                    .startOf("week")
+                    .valueOf() +
+                    24 * 60 * 60 * 1000
+                ),
+                new Date(
+                  dayjs()
+                    .endOf("second")
+                    .valueOf()
+                )
+              ];
             }
           },
           {
             text: "本月",
             value() {
-              return [new Date(dayjs().startOf('month').valueOf()), new Date(dayjs().endOf('second').valueOf())]
+              return [
+                new Date(
+                  dayjs()
+                    .startOf("month")
+                    .valueOf()
+                ),
+                new Date(
+                  dayjs()
+                    .endOf("second")
+                    .valueOf()
+                )
+              ];
             }
           },
           {
             text: "上周",
             value() {
-              return [new Date(dayjs().add(-1, 'week').startOf('week').valueOf() + 24 * 60 * 60 * 1000), new Date(dayjs().startOf('week').valueOf() + 24 * 60 * 60 * 1000 - 1)]
+              return [
+                new Date(
+                  dayjs()
+                    .add(-1, "week")
+                    .startOf("week")
+                    .valueOf() +
+                    24 * 60 * 60 * 1000
+                ),
+                new Date(
+                  dayjs()
+                    .startOf("week")
+                    .valueOf() +
+                    24 * 60 * 60 * 1000 -
+                    1
+                )
+              ];
             }
           },
           {
             text: "上月",
             value() {
               //-1 上月
-              return [new Date(dayjs().add(-1, 'month').startOf('month').valueOf()), new Date(dayjs().startOf('month').valueOf() - 1)]
+              return [
+                new Date(
+                  dayjs()
+                    .add(-1, "month")
+                    .startOf("month")
+                    .valueOf()
+                ),
+                new Date(
+                  dayjs()
+                    .startOf("month")
+                    .valueOf() - 1
+                )
+              ];
             }
           }
         ]
-      }, 
+      },
       defaultTime: getDefaultTime(),
       spinShow: false, //加载spin
       showName: false, //上级商家
@@ -94,8 +152,13 @@ export default {
       child: [], //管理员下级
       source: "1",
       gameType: [
-        70000,90000,
-        1010000,1090000,1040000,1020000,
+        70000,
+        90000,
+        1010000,
+        1090000,
+        1040000,
+        1070000,
+        1020000,
         10300000,
         1050000,
         1060000,
@@ -111,71 +174,110 @@ export default {
       columns1: [
         {
           title: "序号",
-          type: "index",
+          type: "index"
         },
         {
           title: "类型",
           key: "role",
           render: (h, params) => {
             //console.log(params);
-            
+
             return h("span", this.types(params.row.role));
-          },
-          
+          }
         },
         {
           title: "昵称",
           key: "displayName",
           render: (h, params) => {
             return h(
-              "span",
+              "Tooltip",
               {
                 style: {
                   cursor: "pointer",
                   color: "#20a0ff"
                 },
-                on: {
-                  click: () => {
-                    
-                    let time = this.changedTime
-                    
-                    if (params.row.role == "1") {
-                      this.$router.push({name: "dayCompany",query:{name:"dayCompany",time:time,type:"",source:this.source}})
-                      localStorage.setItem('dayCompany','dayCompany')
-                    } else if(params.row.role == "10") {
-                      this.$router.push({name: "dayManager",query:{name:params.row.suffix,time:time,type:"",source:this.source}})
-                      localStorage.setItem('dayManager','dayManager')
-                    } else {
-                      this.$router.push({name: "dayMerchant",query:{name:params.row.sn,time:time,type:""}})
-                      localStorage.setItem('dayMerchant','dayMerchant')
+                props: {
+                  content: "前往日报表",
+                  placement: "top"
+                }
+              },
+              [
+                h(
+                  "span",
+                  {
+                    on: {
+                      click: () => {
+                        let time = this.changedTime;
+
+                        if (params.row.role == "1") {
+                          this.$router.push({
+                            name: "dayCompany",
+                            query: {
+                              name: "dayCompany",
+                              time: time,
+                              type: "",
+                              source: this.source
+                            }
+                          });
+                          localStorage.setItem("dayCompany", "dayCompany");
+                        } else if (params.row.role == "10") {
+                          this.$router.push({
+                            name: "dayManager",
+                            query: {
+                              name: params.row.suffix,
+                              time: time,
+                              type: "",
+                              source: this.source
+                            }
+                          });
+                          localStorage.setItem("dayManager", "dayManager");
+                        } else {
+                          this.$router.push({
+                            name: "dayMerchant",
+                            query: { name: params.row.sn, time: time, type: "" }
+                          });
+                          localStorage.setItem("dayMerchant", "dayMerchant");
+                        }
+                      }
                     }
-                  }
-                }  
-              }, 
-              params.row.displayName+"(前往日报表)");
-          },
-         
+                  },
+                  params.row.displayName
+                )
+              ]
+            );
+          }
         },
         {
           title: "账号/标识",
           key: "uname",
           render: (h, params) => {
-            var name = ''
-            if (params.row.role == '1') {
-              name = params.row.uname
-            } else if(params.row.role == '10') {
-              name = params.row.suffix
+            var name = "";
+            if (params.row.role == "1") {
+              name = params.row.uname;
+            } else if (params.row.role == "10") {
+              name = params.row.suffix;
             } else {
-              name = params.row.sn
+              name = params.row.sn;
             }
             return h(
-              "span",
+              "Tooltip",
               {
-                style: {
-                  cursor: "pointer",
-                  color: "#20a0ff"
-                },
-                on: {
+                props: {
+                  content: "显示下一级",
+                  placement: "top",
+                  transfer: true
+                }
+              },
+
+              [
+                /* h (
+                'span',
+                {
+                  style: {
+                    cursor: "pointer",
+                    color: "#20a0ff"
+                  },
+                  on: {
                   click: async () => {
                     this.spinShow = true;
                     if (params.row.role == "1") {
@@ -255,9 +357,102 @@ export default {
                       this.reportChild = showList;
                     }
                   }
+                },
+                  name
                 }
-              },
-              name
+              ) */
+                h(
+                  "span",
+                  {
+                    style: {
+                      cursor: "pointer",
+                      color: "#20a0ff"
+                    },
+                    on: {
+                      click: async () => {
+                        this.spinShow = true;
+                        if (params.row.role == "1") {
+                          //管理员
+                          this.$store
+                            .dispatch("getUserChild", {
+                              parent: "01",
+                              isTest: +this.source,
+                              gameType: this.gameType,
+                              query: {
+                                createdAt: this.changedTime
+                              }
+                            })
+                            .then(res => {
+                              // console.log(res);
+                              this.child = res.payload;
+                              this.reportChild = [];
+                              this.showName = false;
+                              this.playerList = [];
+                              this.spinShow = false;
+                            });
+                        } else if (params.row.role == "100") {
+                          //商户
+                          this.userName = params.row.displayName;
+                          this.showName = true;
+                          let userId = params.row.userId;
+                          let level = params.row.level;
+                          let oldArr = this.reportChild;
+                          let len = oldArr.length;
+                          if (len > 0) {
+                            while (len--) {
+                              if (oldArr[len][0].level >= level + 1) {
+                                oldArr.splice(len, 1);
+                              }
+                            }
+                          }
+                          this.$store
+                            .dispatch("getPlayerList", {
+                              parentId: userId,
+                              gameType: this.gameType,
+                              query: {
+                                createdAt: this.changedTime
+                              }
+                            })
+                            .then(res => {
+                              this.playerList = res.payload;
+
+                              this.spinShow = false;
+                            });
+                          let anchor = this.$el.querySelector("#playerList");
+                          document.documentElement.scrollTop = anchor.offsetTop;
+                        } else if (params.row.role == "10") {
+                          //线路商
+                          this.playerList = [];
+                          this.showName = false;
+                          let userId = params.row.userId;
+                          let level = params.row.level;
+                          if (level == 1) {
+                            this.reportChild = [];
+                          }
+                          let oldArr = this.reportChild;
+                          let len = oldArr.length;
+                          if (len > 0) {
+                            while (len--) {
+                              if (oldArr[len][0].level > level + 1) {
+                                oldArr.splice(len, 1);
+                              }
+                            }
+                          }
+                          let showList = await this.getNextLevel(
+                            this.reportChild,
+                            userId
+                          );
+                          showList = _.filter(showList, function(o) {
+                            return o.length;
+                          });
+                          this.reportChild = showList;
+                        }
+                      }
+                    }
+                  },
+                  name
+                )
+              ]
             );
           }
         },
@@ -282,8 +477,7 @@ export default {
           key: "winloseAmount",
           render: (h, params) => {
             //console.log(this.child);
-           
-            
+
             let arr = this.child;
             let count = 0;
             for (let item of arr) {
@@ -302,7 +496,6 @@ export default {
                 thousandFormatter(count.toFixed(2))
               );
             } else {
-               
               color = params.row.winloseAmount < 0 ? "#f30" : "#0c0";
               return h(
                 "span",
@@ -338,7 +531,7 @@ export default {
             let allCount = 0;
             for (let item of arr) {
               for (let key in item.gameTypeMap) {
-                if (["70000","90000"].includes(key)) {
+                if (["70000", "90000"].includes(key)) {
                   allCount += item.gameTypeMap[key].winloseAmount;
                 }
               }
@@ -359,7 +552,7 @@ export default {
               let obj = params.row.gameTypeMap;
               let count = 0;
               for (let key in obj) {
-                if (["70000","90000"].includes(key)) {
+                if (["70000", "90000"].includes(key)) {
                   count += obj[key].winloseAmount;
                 }
               }
@@ -386,7 +579,7 @@ export default {
               let obj = params.row.gameTypeMap;
               let count = 0;
               for (let key in obj) {
-                if (["70000","90000"].includes(key)) {
+                if (["70000", "90000"].includes(key)) {
                   count += obj[key].submitAmount;
                 }
               }
@@ -597,7 +790,7 @@ export default {
               for (let key in item.gameTypeMap) {
                 if (["10300000"].includes(key)) {
                   //console.log(23333333333333333333333333);
-                  
+
                   allCount += item.gameTypeMap[key].winloseAmount;
                 }
               }
@@ -1164,6 +1357,70 @@ export default {
               return h("span", thousandFormatter(count.toFixed(2)));
             }
           }
+        },
+        {
+          title: "KY游戏(输赢金额)",
+          key: "winloseAmount",
+          render: (h, params) => {
+            let arr = this.child;
+            let allCount = 0;
+            for (let item of arr) {
+              for (let key in item.gameTypeMap) {
+                if (["1070000"].includes(key)) {
+                  allCount += item.gameTypeMap[key].winloseAmount;
+                }
+              }
+            }
+            let color = "";
+            if (params.row.role == "1") {
+              color = allCount < 0 ? "#f30" : "#0c0";
+              return h(
+                "span",
+                {
+                  style: {
+                    color: color
+                  }
+                },
+                thousandFormatter(allCount.toFixed(2))
+              );
+            } else {
+              let obj = params.row.gameTypeMap;
+              let count = 0;
+              for (let key in obj) {
+                if (key == "1070000") {
+                  count = obj[key].winloseAmount;
+                }
+              }
+              color = count < 0 ? "#f30" : "#0c0";
+              return h(
+                "span",
+                {
+                  style: {
+                    color: color
+                  }
+                },
+                thousandFormatter(count.toFixed(2))
+              );
+            }
+          }
+        },
+        {
+          title: "KY游戏(商家交公司)",
+          key: "submitAmount",
+          render: (h, params) => {
+            if (params.row.role == "1") {
+              return h("span", "0.00");
+            } else {
+              let obj = params.row.gameTypeMap;
+              let count = 0;
+              for (let key in obj) {
+                if (key == "1070000") {
+                  count = obj[key].submitAmount;
+                }
+              }
+              return h("span", thousandFormatter(count.toFixed(2)));
+            }
+          }
         }
       ],
       columns11: [],
@@ -1177,22 +1434,40 @@ export default {
           title: "昵称",
           key: "nickname",
           render: (h, params) => {
-           
             return h(
-              "span",
+              "Tooltip",
               {
                 style: {
                   color: "#20a0ff",
-                  cursor:'pointer'
+                  cursor: "pointer"
                 },
-                on: {
-                  click: () => {
-                     this.$router.push({name: "dayPlayer",query:{name:params.row.userName,time:this.changedTime,type:""}})
-                     localStorage.setItem('dayPlayer','dayPlayer')
-                  }
+                props: {
+                  content: "前往日报表",
+                  placement: "top"
                 }
               },
-              params.row.nickname+"(前往日报表)")
+              [
+                h(
+                  "span",
+                  {
+                    on: {
+                      click: () => {
+                        this.$router.push({
+                          name: "dayPlayer",
+                          query: {
+                            name: params.row.userName,
+                            time: this.changedTime,
+                            type: ""
+                          }
+                        });
+                        localStorage.setItem("dayPlayer", "dayPlayer");
+                      }
+                    }
+                  },
+                  params.row.nickname
+                )
+              ]
+            );
           }
         },
         {
@@ -1201,25 +1476,32 @@ export default {
           render: (h, params) => {
             let name = params.row.userName;
             return h(
-              "span",
+              "Tooltip",
               {
                 style: {
                   color: "#20a0ff",
-                  cursor:'pointer'
+                  cursor: "pointer"
                 },
+                props: {
+                  content: "前往玩家详情",
+                  placement: "top"
+                }
+                
+              },
+              [h('span',{
                 on: {
                   click: () => {
                     localStorage.setItem("playerName", name);
                     this.$router.push({
                       name: "playDetail",
                       query: {
-                        name:name
+                        name: name
                       }
                     });
                   }
                 }
-              },
-              name
+              },name)]
+              
             );
           }
         },
@@ -1250,7 +1532,7 @@ export default {
             let obj = params.row.gameTypeMap;
             let count = 0;
             for (let key in obj) {
-              if (["70000","90000"].includes(key)) {
+              if (["70000", "90000"].includes(key)) {
                 count += obj[key].winloseAmount;
               }
             }
@@ -1450,7 +1732,7 @@ export default {
             );
           }
         },
-         {
+        {
           title: "PG游戏(输赢金额)",
           key: "winloseAmount",
           render: (h, params) => {
@@ -1473,7 +1755,7 @@ export default {
             );
           }
         },
-         {
+        {
           title: "HABA游戏(输赢金额)",
           key: "winloseAmount",
           render: (h, params) => {
@@ -1496,7 +1778,7 @@ export default {
             );
           }
         },
-         {
+        {
           title: "PNG游戏(输赢金额)",
           key: "winloseAmount",
           render: (h, params) => {
@@ -1541,6 +1823,29 @@ export default {
               thousandFormatter(count.toFixed(2))
             );
           }
+        },
+        {
+          title: "KY游戏(输赢金额)",
+          key: "winloseAmount",
+          render: (h, params) => {
+            let obj = params.row.gameTypeMap;
+            let count = 0;
+            for (let key in obj) {
+              if (["1070000"].includes(key)) {
+                count += obj[key].winloseAmount;
+              }
+            }
+            let color = count < 0 ? "#f30" : "#0c0";
+            return h(
+              "span",
+              {
+                style: {
+                  color: color
+                }
+              },
+              thousandFormatter(count.toFixed(2))
+            );
+          }
         }
       ]
     };
@@ -1562,18 +1867,17 @@ export default {
     },
     getTabWidth() {
       if (this.columns11.length <= 9) {
-        return '100%'
+        return "100%";
       } else {
-        return ((this.columns11.length) - 9) * 7 + 100 + '%'
+        return (this.columns11.length - 9) * 7 + 100 + "%";
       }
     }
-},
+  },
   methods: {
-    
     confirm() {
       this.reportChild = [];
       this.playerList = [];
-      this.showName = false
+      this.showName = false;
       this.init();
     },
     exportdata(table) {
@@ -1606,8 +1910,8 @@ export default {
     reset() {
       this.defaultTime = getDefaultTime();
       this.reportChild = [];
-       this.playerList = [];
-      this.showName = false
+      this.playerList = [];
+      this.showName = false;
       if (this.permission.includes("正式数据")) {
         this.source = "0";
       }
@@ -1644,7 +1948,7 @@ export default {
         this.$store
           .dispatch("getUserChild", {
             parent: userId,
-            isTest:+this.source,
+            isTest: +this.source,
             gameType: this.gameType,
             query: {
               createdAt: this.changedTime
@@ -1659,7 +1963,6 @@ export default {
       });
     },
     async init() {
-      
       let userId = JSON.parse(localStorage.getItem("userInfo")).userId;
       let params1 = { userId: userId, isTest: +this.source };
       let params2 = {
@@ -1676,104 +1979,103 @@ export default {
       let [acct, perms] = await this.axios.all([req1, req2]);
       this.spinShow = false;
       this.user = [];
-      
-      this.columns11 = await _.cloneDeep(this.columns1)
-      this.columns22 = await _.cloneDeep(this.columns2)
 
-      let arr = perms.payload
-      let removeArr = []
-      let removeArr1 = []
+      this.columns11 = await _.cloneDeep(this.columns1);
+      this.columns22 = await _.cloneDeep(this.columns2);
+
+      let arr = perms.payload;
+      let removeArr = [];
+      let removeArr1 = [];
 
       if (getWinloseAmount(arr, ["1010000"]) == 0) {
-        removeArr.push(9,10)
-        removeArr1.push(6)
+        removeArr.push(9, 10);
+        removeArr1.push(6);
       }
       if (getWinloseAmount(arr, ["1060000", "1110000"]) == 0) {
-        removeArr.push(11,12)
-        removeArr1.push(7)
+        removeArr.push(11, 12);
+        removeArr1.push(7);
       }
       if (getWinloseAmount(arr, ["1120000", "1080000"]) == 0) {
-        removeArr.push(13,14)
-        removeArr1.push(8)
+        removeArr.push(13, 14);
+        removeArr1.push(8);
       }
       if (getWinloseAmount(arr, ["10300000"]) == 0) {
-        removeArr.push(15,16)
-        removeArr1.push(9)
-      }  
+        removeArr.push(15, 16);
+        removeArr1.push(9);
+      }
       if (getWinloseAmount(arr, ["1050000"]) == 0) {
-        removeArr.push(17,18)
-        removeArr1.push(10)
+        removeArr.push(17, 18);
+        removeArr1.push(10);
       }
       if (getWinloseAmount(arr, ["1140000"]) == 0) {
-        removeArr.push(19,20)
-        removeArr1.push(11)
+        removeArr.push(19, 20);
+        removeArr1.push(11);
       }
       if (getWinloseAmount(arr, ["1150000"]) == 0) {
-        removeArr.push(21,22)
-        removeArr1.push(12)
+        removeArr.push(21, 22);
+        removeArr1.push(12);
       }
       if (getWinloseAmount(arr, ["1160000"]) == 0) {
-        removeArr.push(23,24)
-        removeArr1.push(13)
+        removeArr.push(23, 24);
+        removeArr1.push(13);
       }
       if (getWinloseAmount(arr, ["1090000"]) == 0) {
-        removeArr.push(25,26)
-        removeArr1.push(14)
+        removeArr.push(25, 26);
+        removeArr1.push(14);
       }
       if (getWinloseAmount(arr, ["1040000"]) == 0) {
-        removeArr.push(27,28)
-        removeArr1.push(15)
+        removeArr.push(27, 28);
+        removeArr1.push(15);
       }
       if (getWinloseAmount(arr, ["1020000"]) == 0) {
-        removeArr.push(29,30)
-        removeArr1.push(16)
+        removeArr.push(29, 30);
+        removeArr1.push(16);
       }
       if (getWinloseAmount(arr, ["1130000"]) == 0) {
-        removeArr.push(31,32)
-        removeArr1.push(17)
+        removeArr.push(31, 32);
+        removeArr1.push(17);
       }
-
+      if (getWinloseAmount(arr, ["1070000"]) == 0) {
+        removeArr.push(33, 34);
+        removeArr1.push(18);
+      }
 
       let rs = Array.from(new Set(removeArr));
       let rs1 = Array.from(new Set(removeArr1));
-  
-      let flg = true
-      let flg1 = true
-    
+
+      let flg = true;
+      let flg1 = true;
+
       for (let i = 0; i < rs.length; i++) {
         if (flg) {
-          this.columns11.splice(rs[i], 1)
-          flg = !flg
+          this.columns11.splice(rs[i], 1);
+          flg = !flg;
         } else {
-          this.columns11.splice(rs[i] - i, 1)   
+          this.columns11.splice(rs[i] - i, 1);
         }
-          
       }
 
       for (let i = 0; i < rs1.length; i++) {
         if (flg1) {
-          this.columns22.splice(rs1[i], 1)
-          flg1 = !flg1
+          this.columns22.splice(rs1[i], 1);
+          flg1 = !flg1;
         } else {
-          this.columns22.splice(rs1[i] - i, 1)   
+          this.columns22.splice(rs1[i] - i, 1);
         }
-          
       }
 
-
-      rs = []
-      rs1 = []
+      rs = [];
+      rs1 = [];
 
       if (acct && acct.code == 0) {
-        this.user.push(acct.payload); 
+        this.user.push(acct.payload);
       }
       if (perms && perms.code == 0) {
         this.child = perms.payload;
-      } 
+      }
     }
   },
   created() {
-   
     if (this.permission.includes("正式数据")) {
       this.source = "0";
     }
@@ -1784,7 +2086,7 @@ export default {
 <style lang="less" scoped>
 .allreport {
   min-height: 87vh;
- 
+
   .title {
     font-size: 1.2rem;
     margin: 0.5rem 0 0.5rem;

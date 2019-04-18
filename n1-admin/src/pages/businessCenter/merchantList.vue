@@ -18,13 +18,17 @@
         </Col>
       </Row>
       <Row class="row">
-        <Col span="2" offset="4">商户账号</Col>
+     <!--    <Col span="2" offset="4">商户账号</Col>
         <Col span="4">
         <Input v-model="username" placeholder="请输入"></Input>
-        </Col>
-        <Col span="2" >商户昵称</Col>
+        </Col> -->
+        <Col span="2" offset="4">商户昵称</Col>
         <Col span="4">
         <Input v-model="displayName" placeholder="请输入"></Input>
+        </Col>
+        <Col span="2">上级标识</Col>
+        <Col span="4">
+        <Input v-model="supSuffix" placeholder="请输入"></Input>
         </Col>
       </Row>
     </div>
@@ -96,11 +100,28 @@ import dayjs from "dayjs";
 import { userChangeStatus } from "@/service/index";
 import { thousandFormatter } from "@/config/format";
 export default {
+  beforeRouteEnter(to, from, next) {
+    /* console.log(this, 'beforeRouteEnter'); // undefined
+    console.log(to, '组件独享守卫beforeRouteEnter第一个参数');
+    console.log(from, '组件独享守卫beforeRouteEnter第二个参数');
+    console.log(next, '组件独享守卫beforeRouteEnter第三个参数'); */
+    next(vm => {
+      //因为当钩子执行前，组件实例还没被创建
+      // vm 就是当前组件的实例相当于上面的 this，所以在 next 方法里你就可以把 vm 当 this 来用了。
+      //console.log(vm);//当前组件的实例
+      if (localStorage.merchantList == 'merchantList') {
+        vm.supSuffix = vm.$route.query.suffix;
+        vm.init()
+      }
+
+    });
+  },
   data() {
     return {
       sn: "", //标识
       isH5:true,
       username: "", //
+      supSuffix: "",
       displayName: "",
       displayId: "",
       uname: "", //modal增加账户
@@ -122,7 +143,7 @@ export default {
         {
           title: "序号",
           type: "index",
-          maxWidth: 80
+          width: 60
         },
         {
           title: "商户ID",
@@ -135,46 +156,6 @@ export default {
           sortable: true
         },
         {
-          title: "商户账号",
-          key: "uname",
-          sortable: true,
-          render: (h, params) => {
-            if (params.row.isTest == 1) {
-              return h("div", [
-                h(
-                  "span",
-                  {
-                    style: {
-                      color: "#ff9900"
-                    }
-                  },
-                  params.row.uname
-                ),
-                h(
-                  "Tooltip",
-                  {
-                    props: {
-                      content: "测试帐号，在看板和报表统计中可选显示"
-                    }
-                  },
-                  [
-                    h("Icon", {
-                      props: {
-                        type: "help-circled"
-                      },
-                      style: {
-                        paddingLeft: "8px"
-                      }
-                    })
-                  ]
-                )
-              ]);
-            } else {
-              return h("span", params.row.uname);
-            }
-          }
-        },
-        {
           title: "商户昵称",
           key: "displayName",
           sortable: true
@@ -182,27 +163,43 @@ export default {
         {
           title: "上级线路商",
           key: "parentDisplayName",
-          sortable: true
+          sortable: true,
+          render: (h, params) => {
+            //console.log(params);
+            
+            return h(
+              "span",
+               `${params.row.parentDisplayName}(${params.row.parentSuffix})` 
+              )
+          }
         },
          {
           title:'玩家数量',
+          width:90,
           key:'playerCount',
           render: (h, params) => {
             return h(
-              "span",
+              "Tooltip",
               {
                 style: {
                   color: "#20a0ff",
                   cursor:'pointer'
                 },
+                props: {
+                  content: "前往玩家列表",
+                  placement: "top"
+                },
+                
+              },
+              [h('span',{
                 on: {
                   click: () => {
                      this.$router.push({name: "playList",query:{sn:params.row.sn}})
                      localStorage.setItem('playList','playList')
                   }
                 }
-              },
-              params.row.playerCount)
+              },params.row.playerCount)]
+              )
           }
         },
         {
@@ -360,6 +357,7 @@ export default {
         {
           title: "创建时间",
           key: "createdAt",
+          width: 110,
           sortable: true,
           render: (h, params) => {
             return h(
@@ -371,6 +369,7 @@ export default {
         {
           title: "最后登录时间",
           key: "loginAt",
+          width: 110,
           sortable: true,
           render: (h, params) => {
             return h(
@@ -626,9 +625,15 @@ export default {
       this.init();
     },
     init() {
+      console.log(this.supSuffix);
+      
+      if (this.$route.name == 'merchantList' && localStorage.merchantList == 'merchantList') {
+        localStorage.removeItem('merchantList')
+      }
        let query = {
         sn: this.sn,
         uname: this.username,
+        parentSuffix: this.supSuffix,
         displayName: this.displayName,
         displayId: this.displayId
       };
@@ -637,6 +642,9 @@ export default {
       }
       if (!query.displayName) {
         delete query.displayName;
+      }
+      if (!query.parentSuffix) {
+        delete query.parentSuffix;
       }
       if (!query.uname) {
         delete query.uname;

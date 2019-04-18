@@ -4,27 +4,35 @@
       <div class="top">
         <p class="title">
           当前用户列表
-          <RadioGroup v-model="source" class="radioGroup" type="button" @on-change='changeSource'>
-          <Radio label="0" v-if="permission.includes('正式数据')">正式</Radio>
-          <Radio label="1">测试</Radio>
-          <Radio label="2" v-if="permission.includes('正式数据')">全部</Radio>
-        </RadioGroup>
+          <RadioGroup v-model="source" class="radioGroup" type="button" @on-change="changeSource">
+            <Radio label="0" v-if="permission.includes('正式数据')">正式</Radio>
+            <Radio label="1">测试</Radio>
+            <Radio label="2" v-if="permission.includes('正式数据')">全部</Radio>
+          </RadioGroup>
           <Button type="ghost" @click="exportdata('table_0')">导出数据</Button>
         </p>
         <div class="right">
-          <DatePicker type="datetimerange" :options="options" :editable='false' v-model="defaultTime" placeholder="选择日期时间范围(默认最近一周)" style="width: 300px" @on-ok="confirm"></DatePicker>
+          <DatePicker
+            type="datetimerange"
+            :options="options"
+            :editable="false"
+            v-model="defaultTime"
+            placeholder="选择日期时间范围(默认最近一周)"
+            style="width: 300px"
+            @on-ok="confirm"
+          ></DatePicker>
           <Button type="primary" @click="search">搜索</Button>
           <Button type="ghost" @click="reset">重置</Button>
         </div>
       </div>
-      <Table :columns="columns11" :data="user" size="small" ref='table_0'></Table>
+      <Table :columns="columns11" :data="user" size="small" ref="table_0"></Table>
     </div>
     <div class="childList">
       <p class="title">
         直属下级列表
         <Button type="ghost" @click="exportdata('table_1')">导出数据</Button>
       </p>
-      <Table :columns="columns11" :data="child" size="small" ref='table_1'></Table>
+      <Table :columns="columns11" :data="child" size="small" ref="table_1"></Table>
     </div>
     <div class="childList" v-for="(item,index) in reportChild" :key="index">
       <p class="title">
@@ -35,13 +43,13 @@
     </div>
     <div class="playerList" id="playerList">
       <p class="title">
-        <span v-show="showName"> ({{ userName }})</span>所属玩家列表
+        <span v-show="showName">({{ userName }})</span>所属玩家列表
         <Button type="ghost" @click="exportdata('table_2')">导出数据</Button>
       </p>
-      <Table :columns="columns22" :data="playerList" size="small" ref='table_2'></Table>
+      <Table :columns="columns22" :data="playerList" size="small" ref="table_2"></Table>
     </div>
     <Spin size="large" fix v-if="spinShow">
-      <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
+      <Icon type="load-c" size="18" class="demo-spin-icon-load"></Icon>
       <div>加载中...</div>
     </Spin>
   </div>
@@ -60,30 +68,80 @@ export default {
           {
             text: "本周",
             value() {
-              return [new Date(dayjs().startOf('week').valueOf() + 24 * 60 * 60 * 1000), new Date(dayjs().endOf('second').valueOf())]
+              return [
+                new Date(
+                  dayjs()
+                    .startOf("week")
+                    .valueOf() +
+                    24 * 60 * 60 * 1000
+                ),
+                new Date(
+                  dayjs()
+                    .endOf("second")
+                    .valueOf()
+                )
+              ];
             }
           },
           {
             text: "本月",
             value() {
-              return [new Date(dayjs().startOf('month').valueOf()), new Date(dayjs().endOf('second').valueOf())]
+              return [
+                new Date(
+                  dayjs()
+                    .startOf("month")
+                    .valueOf()
+                ),
+                new Date(
+                  dayjs()
+                    .endOf("second")
+                    .valueOf()
+                )
+              ];
             }
           },
           {
             text: "上周",
             value() {
-              return [new Date(dayjs().add(-1, 'week').startOf('week').valueOf() + 24 * 60 * 60 * 1000), new Date(dayjs().startOf('week').valueOf() + 24 * 60 * 60 * 1000 - 1)]
+              return [
+                new Date(
+                  dayjs()
+                    .add(-1, "week")
+                    .startOf("week")
+                    .valueOf() +
+                    24 * 60 * 60 * 1000
+                ),
+                new Date(
+                  dayjs()
+                    .startOf("week")
+                    .valueOf() +
+                    24 * 60 * 60 * 1000 -
+                    1
+                )
+              ];
             }
           },
           {
             text: "上月",
             value() {
               //-1 上月
-              return [new Date(dayjs().add(-1, 'month').startOf('month').valueOf()), new Date(dayjs().startOf('month').valueOf() - 1)]
+              return [
+                new Date(
+                  dayjs()
+                    .add(-1, "month")
+                    .startOf("month")
+                    .valueOf()
+                ),
+                new Date(
+                  dayjs()
+                    .startOf("month")
+                    .valueOf() - 1
+                )
+              ];
             }
           }
         ]
-      }, 
+      },
       defaultTime: getDefaultTime(),
       spinShow: false, //加载spin
       showName: false, //上级商家
@@ -92,7 +150,7 @@ export default {
       playerList: [], //玩家列表
       user: [], //当前管理员
       child: [], //管理员下级
-      gameType: [70000,90000],
+      gameType: [70000, 90000],
       source: "1",
       columns11: [],
       columns22: [],
@@ -117,93 +175,104 @@ export default {
           key: "uname",
           render: (h, params) => {
             return h(
-              "span",
+              "Tooltip",
               {
                 style: {
                   cursor: "pointer",
                   color: "#20a0ff"
                 },
-                on: {
-                  click: async () => {
-                    this.spinShow = true;
-                    if (params.row.role == "1") {
-                      //管理员
-                      this.$store
-                        .dispatch("getUserChild", {
-                          parent: "01",
-                          isTest:+this.source,
-                          gameType: this.gameType,
-                          query: {
-                            createdAt: this.changedTime
-                          }
-                        })
-                        .then(res => {
-                          this.child = res.payload;
-                          this.reportChild = [];
-                          this.showName=false
-                          this.playerList=[]
-                          this.spinShow = false;
-                        });
-                    } else if (params.row.role == "100") {
-                      //商户
-                      this.userName = params.row.displayName;
-                      this.showName = true;
-                      let userId = params.row.userId;
-                      let level = params.row.level;
-                      let oldArr = this.reportChild;
-                      let len = oldArr.length;
-                      if (len > 0) {
-                        while (len--) {
-                          if (oldArr[len][0].level >= level + 1) {
-                            oldArr.splice(len, 1);
-                          }
-                        }
-                      }
-                      this.$store
-                        .dispatch("getPlayerList", {
-                          parentId: userId,
-                          gameType: this.gameType,
-                          query: {
-                            createdAt: this.changedTime
-                          }
-                        })
-                        .then(res => {
-                          this.playerList = res.payload;
-                          this.spinShow = false;
-                        });
-                      let anchor = this.$el.querySelector("#playerList");
-                      document.documentElement.scrollTop = anchor.offsetTop;
-                    } else if (params.row.role == "10") {
-                      //线路商
-                      this.playerList = [];
-                      this.showName = false;
-                      let userId = params.row.userId;
-                      let level = params.row.level;
-                      if (level == 1) {
-                        this.reportChild = [];
-                      }
-                      let oldArr = this.reportChild;
-                      let len = oldArr.length;
-                      if (len > 0) {
-                        while (len--) {
-                          if (oldArr[len][0].level > level + 1) {
-                            oldArr.splice(len, 1);
-                          }
-                        }
-                      }
-                      let showList = await this.getNextLevel(
-                        this.reportChild,
-                        userId
-                      );
-                      showList = _.filter(showList, function(o) {
-                        return o.length;
-                      });
-                      this.reportChild = showList;
-                    }
-                  }
+                props: {
+                  content: "显示下一级",
+                  placement: "top"
                 }
               },
-              params.row.uname
+              [
+                h(
+                  "span",
+                  {
+                    on: {
+                      click: async () => {
+                        this.spinShow = true;
+                        if (params.row.role == "1") {
+                          //管理员
+                          this.$store
+                            .dispatch("getUserChild", {
+                              parent: "01",
+                              isTest: +this.source,
+                              gameType: this.gameType,
+                              query: {
+                                createdAt: this.changedTime
+                              }
+                            })
+                            .then(res => {
+                              this.child = res.payload;
+                              this.reportChild = [];
+                              this.showName = false;
+                              this.playerList = [];
+                              this.spinShow = false;
+                            });
+                        } else if (params.row.role == "100") {
+                          //商户
+                          this.userName = params.row.displayName;
+                          this.showName = true;
+                          let userId = params.row.userId;
+                          let level = params.row.level;
+                          let oldArr = this.reportChild;
+                          let len = oldArr.length;
+                          if (len > 0) {
+                            while (len--) {
+                              if (oldArr[len][0].level >= level + 1) {
+                                oldArr.splice(len, 1);
+                              }
+                            }
+                          }
+                          this.$store
+                            .dispatch("getPlayerList", {
+                              parentId: userId,
+                              gameType: this.gameType,
+                              query: {
+                                createdAt: this.changedTime
+                              }
+                            })
+                            .then(res => {
+                              this.playerList = res.payload;
+                              this.spinShow = false;
+                            });
+                          let anchor = this.$el.querySelector("#playerList");
+                          document.documentElement.scrollTop = anchor.offsetTop;
+                        } else if (params.row.role == "10") {
+                          //线路商
+                          this.playerList = [];
+                          this.showName = false;
+                          let userId = params.row.userId;
+                          let level = params.row.level;
+                          if (level == 1) {
+                            this.reportChild = [];
+                          }
+                          let oldArr = this.reportChild;
+                          let len = oldArr.length;
+                          if (len > 0) {
+                            while (len--) {
+                              if (oldArr[len][0].level > level + 1) {
+                                oldArr.splice(len, 1);
+                              }
+                            }
+                          }
+                          let showList = await this.getNextLevel(
+                            this.reportChild,
+                            userId
+                          );
+                          showList = _.filter(showList, function(o) {
+                            return o.length;
+                          });
+                          this.reportChild = showList;
+                        }
+                      }
+                    }
+                  },
+                  params.row.uname
+                )
+              ]
             );
           }
         },
@@ -769,8 +838,7 @@ export default {
               return h("span", thousandFormatter(submitAmount));
             }
           }
-        },
-
+        }
       ],
       columns2: [
         {
@@ -783,25 +851,32 @@ export default {
           render: (h, params) => {
             let name = params.row.userName;
             return h(
-              "span",
+              "Tooltip",
               {
                 style: {
                   color: "#20a0ff",
-                  cursor:'pointer'
+                  cursor: "pointer"
                 },
+                props: {
+                  content: "前往玩家详情",
+                  placement: "top"
+                },
+                
+              },
+              [h('span',{
                 on: {
                   click: () => {
                     localStorage.setItem("playerName", name);
                     this.$router.push({
                       name: "playDetail",
                       query: {
-                        name:name
+                        name: name
                       }
                     });
                   }
                 }
-              },
-              name
+              },name)]
+              
             );
           }
         },
@@ -851,7 +926,7 @@ export default {
             );
           }
         },
-       /*  {
+        /*  {
           title: "NA棋牌游戏(输赢金额)",
           key: "winloseAmount",
           render: (h, params) => {
@@ -1026,9 +1101,9 @@ export default {
     },
     getTabWidth() {
       if (this.columns11.length <= 9) {
-        return '100%'
+        return "100%";
       } else {
-        return ((this.columns11.length) - 9) * 7 + 100 + '%'
+        return (this.columns11.length - 9) * 7 + 100 + "%";
       }
     }
   },
@@ -1036,7 +1111,7 @@ export default {
     confirm() {
       this.reportChild = [];
       this.playerList = [];
-      this.showName = false
+      this.showName = false;
       this.init();
     },
     exportdata(table) {
@@ -1069,8 +1144,8 @@ export default {
     reset() {
       this.defaultTime = getDefaultTime();
       this.reportChild = [];
-       this.playerList = [];
-      this.showName = false
+      this.playerList = [];
+      this.showName = false;
       if (this.permission.includes("正式数据")) {
         this.source = "0";
       }
@@ -1107,7 +1182,7 @@ export default {
         this.$store
           .dispatch("getUserChild", {
             parent: userId,
-            isTest:+this.source,
+            isTest: +this.source,
             gameType: this.gameType,
             query: {
               createdAt: this.changedTime
@@ -1139,51 +1214,44 @@ export default {
       this.spinShow = false;
       this.user = [];
 
-      this.columns11 = await _.cloneDeep(this.columns1)
-      this.columns22 = await _.cloneDeep(this.columns2)
+      this.columns11 = await _.cloneDeep(this.columns1);
+      this.columns22 = await _.cloneDeep(this.columns2);
 
-      let arr = perms.payload
-      let removeArr = []
-      let removeArr1 = []
+      let arr = perms.payload;
+      let removeArr = [];
+      let removeArr1 = [];
 
       if (getWinloseAmount(arr, ["90000"]) == 0) {
-        removeArr.push(9,10)
-        removeArr1.push(6)
+        removeArr.push(9, 10);
+        removeArr1.push(6);
       }
-      
+
       let rs = Array.from(new Set(removeArr));
       let rs1 = Array.from(new Set(removeArr1));
-  
-      let flg = true
-      let flg1 = true
-    
+
+      let flg = true;
+      let flg1 = true;
+
       for (let i = 0; i < rs.length; i++) {
         if (flg) {
-          this.columns11.splice(rs[i], 1)
-          flg = !flg
+          this.columns11.splice(rs[i], 1);
+          flg = !flg;
         } else {
-          this.columns11.splice(rs[i] - i, 1)   
+          this.columns11.splice(rs[i] - i, 1);
         }
-          
       }
 
       for (let i = 0; i < rs1.length; i++) {
         if (flg1) {
-          this.columns22.splice(rs1[i], 1)
-          flg1 = !flg1
+          this.columns22.splice(rs1[i], 1);
+          flg1 = !flg1;
         } else {
-          this.columns22.splice(rs1[i] - i, 1)   
+          this.columns22.splice(rs1[i] - i, 1);
         }
-          
       }
 
-
-      rs = []
-      rs1 = []
-
-
-
-
+      rs = [];
+      rs1 = [];
 
       if (acct && acct.code == 0) {
         this.user.push(acct.payload);
@@ -1204,7 +1272,7 @@ export default {
 <style lang="less" scoped>
 .naAll {
   min-height: 87vh;
-  
+
   .title {
     font-size: 1.2rem;
     margin: 0.5rem 0 0.5rem;

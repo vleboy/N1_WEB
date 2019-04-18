@@ -41,18 +41,21 @@
         <Radio label="5">输赢金额</Radio>
       </RadioGroup>
     </div>
-    <div :style="{height:'600px',width:'100%'}" ref="report"></div>
-    <div :style="{height:'600px',width:'100%'}" ref="dynamic"></div>
-    <div :style="{height:'600px',width:'100%'}" ref="momentBar"></div>
-    <div :style="{height:'600px',width:'100%'}" ref="gameDtributed"></div>
-  </div>
-  <RadioGroup v-model="gameDtributedDataType" @on-change="changeGameDtributedDataType"  class="gameDtributedEcharts" size="small">
+    <div :style="{height:'600px',width:'100%',marginTop:'150px'}" ref="report"></div>
+    <div class="distribution">
+      <div :style="{height:'600px',width:'40%'}" ref="gameDtributed"></div>
+      <div :style="{height:'600px',width:'60%'}" ref="momentBar"></div>
+      <RadioGroup v-model="gameDtributedDataType" @on-change="changeGameDtributedDataType"  class="gameDtributedEcharts" size="small">
         <Radio label="0">玩家数量GAME</Radio>
         <Radio label="1">投加注金额</Radio>
         <Radio label="2">投注次数</Radio>
         <Radio label="3">退款金额</Radio>
         <Radio label="4">返还金额</Radio>
-      </RadioGroup>
+      </RadioGroup>   
+    </div>
+    <!-- <div :style="{height:'600px',width:'100%'}" ref="dynamic"></div> --> 
+  </div>
+
   <Spin size="large" fix v-if="spinShow">
       <Icon type="load-c" size="18" class="demo-spin-icon-load"></Icon>
       <div>加载中...</div>
@@ -135,8 +138,9 @@ export default {
       worldAllData: '',
       chinaSplitList: [],
       worldSplitList: [],
-      dayCompany: [],
+      reportData: [],
       worldData: [],
+      dynamicData:[],
       spinShow: false,
       model1: '全部',
       gameCode: '',
@@ -154,7 +158,8 @@ export default {
     };
   },
   mounted() {
-    this.getGameList();
+    //console.log(new Date(1555551234703))
+    this.getGameList()
     this.init()
   },
   methods: {
@@ -562,39 +567,20 @@ export default {
       });
     },
     reportConfigure() {
+      let betAmount = this.reportData.betAmount.map(item => {return item.y})
+      let betCount = this.reportData.betCount.map(item => {return item.y})
+      let playerCount = this.reportData.playerCount.map(item => {return item.y})
+      let refundAmount = this.reportData.refundAmount.map(item => {return item.y})
+      let retAmount = this.reportData.retAmount.map(item => {return item.y})
+      let winloseAmount = this.reportData.winloseAmount.map(item => {return item.y})
+      let reportArr = this.reportData.playerCount.map(item => {return item.x})
+      
       let myChart = this.$echarts.init(this.$refs.report)
-      let _this = this;
-
-      let betCountArr = _this.dayCompany.map(item => {
-        return item.betCount;
-      });
-      let betAmountArr = _this.dayCompany.map(item => {
-        return item.betAmount;
-      });
-      let retAmountArr = _this.dayCompany.map(item => {
-        return item.retAmount;
-      });
-      let refundAmountArr = _this.dayCompany.map(item => {
-        return item.refundAmount;
-      });
-      let winloseAmountArr = _this.dayCompany.map(item => {
-        return item.winloseAmount;
-      });
-
-      let xArr = _this.dayCompany.map(item => {
-        return item.createdDate;
-      });
-
       // 绘制图表
       myChart.setOption({
-        title: {
-          text: "公司日报表",
-          subtext: "",
-          x: "center"
-        },
         xAxis: {
           type: "category",
-          data: xArr
+          data: reportArr
         },
         tooltip: {
           trigger: "axis"
@@ -603,66 +589,78 @@ export default {
           type: "value"
         },
         legend: {
-          data: ["投注次数", "投注金额", "返还金额", "退款金额", "输赢金额"],
+          data: ['玩家数量','投注金额','投注次数','退款金额','返回金额','输赢金额'],
           selectedMode: "single"
         },
         series: [
           {
-            name: "投注次数",
-            data: betCountArr,
-            type: "line"
+            name:'玩家数量',
+            type:'line',
+            data: playerCount
           },
           {
-            name: "投注金额",
-            data: betAmountArr,
-            type: "line"
+            name:'投注金额',
+            type:'line',
+            data: betAmount
           },
           {
-            name: "返还金额",
-            data: retAmountArr,
-            type: "line"
+            name:'投注次数',
+            type:'line',
+            data: betCount
           },
           {
-            name: "退款金额",
-            data: refundAmountArr,
-            type: "line"
+            name:'退款金额',
+            type:'line',
+            data: refundAmount
           },
           {
-            name: "输赢金额",
-            data: winloseAmountArr,
-            type: "line"
-          }
+            name:'返回金额',
+            type:'line',
+            data: retAmount
+          },
+          {
+            name:'输赢金额',
+            type:'line',
+            data: winloseAmount
+          },
         ]
-      });
+      })
     },
     realTimeDynamicConfigure() {
       let myChart = this.$echarts.init(this.$refs.dynamic)
       myChart.setOption({
         title: {
-          text: "累计输赢金额近5分钟动态曲线",
-          subtext: "",
-          x: "center"
+          text: '动态数据 + 时间坐标轴'
+        },
+        tooltip: {
+          trigger: 'axis',
+          
+          axisPointer: {
+              animation: false
+          }
         },
         xAxis: {
           type: 'time',
-          data: this.xArr
-        },
-        tooltip: {
-          trigger: "axis"
+          splitLine: {
+              show: false
+          }
         },
         yAxis: {
-          type: 'value'
-        },
-        animationEasing: 'elasticOut',
-        animationDelayUpdate: function (idx) {
-          return idx * 100;
+          type: 'value',
+          boundaryGap: [0, '100%'],
+          splitLine: {
+              show: false
+          }
         },
         series: [{
-          data: this.realData,
+          name: '模拟数据',
           type: 'line',
-          symbol: 'circle', // 拐点类型
-          smooth: true, // 当为true时，就是光滑的曲线（默认为true）；当为false，就是折线不是曲线的了，那这个设为true，下面的（吃饭）数据中设置smooth为false，这个就不是光滑的曲线了。
-          symbolSize: 3, // 拐点圆的大小
+          showSymbol: false,
+          hoverAnimation: false,
+          symbol: 'circle',
+          smooth: true,
+          symbolSize: 3,
+          data: this.dynamicData
         }]
       })
     },
@@ -678,7 +676,7 @@ export default {
         title: {
           text: "时刻分布柱状图",
           subtext: "",
-          x: "center"
+          x: "left"
         },
         tooltip: {
           trigger: 'axis',
@@ -690,10 +688,11 @@ export default {
           }
         },
         legend: {
-          orient: 'vertical',
-          left: 'left',
+          //orient: 'vertical',
+          //left: 'left',
           data:['玩家数量','投注金额','投注次数','退款金额','返回金额','输赢金额'],
-          selectedMode: "single"
+          selectedMode: "single",
+          padding: 10, 
         },
         xAxis: [
           {
@@ -758,7 +757,7 @@ export default {
         legend: {
           orient: 'vertical',
           left: 'left',
-          data: this.valueTP
+          data: this.valueTP,
         },
         series : [
           {
@@ -780,16 +779,26 @@ export default {
     },
     
     realChange() {
-      let num = 8
+      let params = {}
+      if (this.gameCode == '') {
+        params = {
+        startTime: new Date(this.defaultTime[0]).getTime(),
+        endTime: new Date(this.defaultTime[1]).getTime(),
+        }
+      } else {
+        params = {
+        startTime: new Date(this.defaultTime[0]).getTime(),
+        endTime: new Date(this.defaultTime[1]).getTime(),
+        gameTypeL: this.gameCode
+        }
+      }
+      
       this.hander = setInterval(() => {
-        let randomData = Math.round(Math.random()*1000)
-        this.realData.push(randomData)
-        this.realData.splice(0,1)
-        this.xArr.push(num)
-        this.xArr.splice(0,1)
+        httpRequest("get", "/visual/line/winloseAmount", params, "map").then(res => {
+        this.dynamicData = res.data
         this.realTimeDynamicConfigure()
-        num++
-      }, 3000)
+      })
+      }, 1000)
     },
     async init() {
       this.spinShow = true
@@ -806,21 +815,23 @@ export default {
         gameTypeL: this.gameCode
         }
       }    
-      let [perms1,perms2,perms3,perms4] = await this.axios.all([
+      let [perms1,perms2,perms3,perms4,perms5] = await this.axios.all([
         httpRequest("get", "/visual/map/china", params, "map"),
         httpRequest("get", "/visual/map/world", params, "map"),
         httpRequest("get", "/visual/pie/game", params, "map"),
         httpRequest("get", "/visual/line/graph", params, "map"),
+        httpRequest("get", "/visual/line/day", params, "map"),
         ])
       this.chinaAllData = perms1.data
       this.worldAllData = perms2.data
       this.gameDtributedData = perms3.data
-      console.log(perms3);
       this.playerActiveData = perms4.data
-    
+      this.reportData = perms5.data      
       this.spinShow = false
-      //this.reportConfigure()
-      this.realTimeDynamicConfigure()
+      console.log(perms5);
+      
+      this.reportConfigure()
+      //this.realTimeDynamicConfigure()
       this.momentBarConfigure()
       this.changeGameDtributedDataType()
       this.changeChinaDataType()
@@ -885,8 +896,8 @@ export default {
   .gameDtributedEcharts {
     width: 50%;
     position: absolute;
-    top:3600px;
-    left: 55%;
+    top:600px;
+    left: 5%;
     z-index: 100;
   }
   .demo-spin-icon-load {
@@ -894,6 +905,12 @@ export default {
   }
   .map {
     display: flex;
+   // justify-content: space-around;
+  }
+  .distribution {
+    position: relative;
+    display: flex;
+    margin-bottom: 100px;
    // justify-content: space-around;
   }
 }

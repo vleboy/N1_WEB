@@ -171,6 +171,7 @@ export default {
         { company: "AG", code: "1050000", name: "AG真人游戏" },
         { company: "SA", code: "1060000", name: "SA真人游戏" },
         { company: "SA", code: "1110000", name: "SA捕鱼游戏" },
+        { company: "KY", code: "1070000", name: "KY棋牌游戏" },
         { company: "PG", code: "1090000", name: "PG电子游戏" },
         { company: "YSB", code: "1130000", name: "YSB体育游戏" },
         { company: "RTG", code: "1140000", name: "RTG电子游戏" },

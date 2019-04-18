@@ -170,7 +170,34 @@ export default {
         },
         {
           title:'商户数量',
-          key:'merchantCount'
+          key:'merchantCount',
+          render: (h, params) => {
+            console.log(params);
+            
+            return h(
+              'Tooltip',
+              {
+                style: {
+                  color: "#20a0ff",
+                  cursor:'pointer'
+                },
+                props: {
+                  content: "前往商户列表",
+                  placement: "top"
+                },
+              },
+              [
+                h('span',{
+                  on: {
+                  click: () => {
+                     this.$router.push({name: "merchantList",query:{suffix:params.row.suffix}})
+                     localStorage.setItem('merchantList','merchantList')
+                  }
+                }
+                },params.row.merchantCount)
+              ]
+              )
+          }
         },
         {
           title: "剩余点数",
