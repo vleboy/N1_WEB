@@ -51,10 +51,10 @@ export default {
         expand: true,
         checked: false,
         children: [
-          {
+          /* {
             title: "看板",
             checked: false
-          },
+          }, */
           {
             title: "新看板",
             checked: false

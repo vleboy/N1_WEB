@@ -111,6 +111,7 @@ export default {
       //console.log(vm);//当前组件的实例
       if (localStorage.merchantList == 'merchantList') {
         vm.supSuffix = vm.$route.query.suffix;
+        vm.displayId = vm.$route.query.buId;
         vm.init()
       }
 

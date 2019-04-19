@@ -41,7 +41,7 @@
       </Col>
       <Col span="12">
          <Card>
-          <h3 slot="title">平台日报表</h3>
+          <h3 slot="title">平台每日趋势</h3>
           <div :style="{height:'300px',width:'100%'}" ref="report"></div>
         </Card>
       </Col>

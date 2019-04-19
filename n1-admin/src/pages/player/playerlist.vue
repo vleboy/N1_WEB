@@ -141,7 +141,32 @@ export default {
         {
           title: "商户ID",
           key: "buId",
-          sortable: true
+          sortable: true,
+          render: (h, params) => {
+            return h(
+              "Tooltip",
+              {
+                style: {
+                  color: "#20a0ff",
+                  cursor: "pointer"
+                },
+                props: {
+                  content: "前往商户列表",
+                  placement: "top"
+                }
+                
+              },
+              [h('span',{
+                on: {
+                  click: () => {
+                    this.$router.push({name: "merchantList",query:{buId:params.row.buId}})
+                     localStorage.setItem('merchantList','merchantList')
+                  }
+                }
+              },params.row.buId)]
+              
+            );
+          }
         },
         {
           title: "所属商户",

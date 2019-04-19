@@ -125,19 +125,19 @@ export const appRouter = [
            component: main,
            children: [{ path: 'index', title: '个人中心', name: 'ownspace-index', component: ownSpace }]
          },
-         {
+         /* {
            path: '/boards',
            title: '看板',
            name: 'boards',
            component: main,
            children: [{ path: 'board', title: '看板', name: 'board', component: board }]
-         },
+         }, */
          {
            path: '/newBoard',
-           title: '看板(新)',
+           title: '看板',
            name: 'newBoard',
            component: main,
-           children: [{ path: 'newBoard', title: '看板(新)', name: 'newBoard', component: newBoard }]
+           children: [{ path: 'newBoard', title: '看板', name: 'newBoard', component: newBoard }]
          },
          {
            path: '/allreport',
