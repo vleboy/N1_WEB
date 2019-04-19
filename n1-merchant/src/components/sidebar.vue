@@ -30,6 +30,10 @@
                         <MenuItem name="nanomsy" v-if='gameList.includes("H5电子游戏-无神秘奖")'>NA电子H5无神秘奖报表</MenuItem>
                        <!--  <MenuItem name="natruehfive" v-if='gameList.includes("H5真人视讯")'>NA真人H5报表</MenuItem> -->
                     </Submenu>
+                    <Submenu name='kyreport' v-if="gameList.includes('KY棋牌游戏')">
+                        <template slot="title">KY游戏报表</template>
+                        <MenuItem name="kychess">KY棋牌游戏报表</MenuItem>
+                    </Submenu>
                     <Submenu name='ttgreport' v-if="gameList.includes('TTG电子游戏')">
                         <template slot="title">TTG游戏报表</template>
                         <MenuItem name="ttgvideo">TTG电子游戏报表</MenuItem>

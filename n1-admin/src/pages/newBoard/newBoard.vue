@@ -49,20 +49,6 @@
     <Row>
       <Col span="12">
         <Card style="position:relative">
-          <h3 slot="title">世界地图大数据</h3>
-          <RadioGroup v-model="worldDataType" @on-change="changeWorldDataType"  class="worldEcharts" size="small">
-            <Radio label="0">玩家数量</Radio>
-            <Radio label="1">投注金额</Radio>
-            <Radio label="2">投注次数</Radio>
-            <Radio label="3">退款金额</Radio>
-            <Radio label="4">返还金额</Radio>
-            <Radio label="5">输赢金额</Radio>
-          </RadioGroup>
-          <div :style="{height:'500px',width:'100%'}" ref="worldEchart"></div>
-        </Card>  
-      </Col>
-      <Col span="12">
-        <Card style="position:relative">
           <h3 slot="title">全国地图大数据</h3>
           <RadioGroup v-model="chinaDataType" @on-change="changeChinaDataType"  class="chinaEcharts" size="small">
             <Radio label="0">玩家数量</Radio>
@@ -74,6 +60,20 @@
           </RadioGroup>
           <div :style="{height:'500px',width:'100%'}" ref="chinaEchart"></div>
         </Card>
+      </Col>
+      <Col span="12">
+        <Card style="position:relative">
+          <h3 slot="title">世界地图大数据</h3>
+          <RadioGroup v-model="worldDataType" @on-change="changeWorldDataType"  class="worldEcharts" size="small">
+            <Radio label="0">玩家数量</Radio>
+            <Radio label="1">投注金额</Radio>
+            <Radio label="2">投注次数</Radio>
+            <Radio label="3">退款金额</Radio>
+            <Radio label="4">返还金额</Radio>
+            <Radio label="5">输赢金额</Radio>
+          </RadioGroup>
+          <div :style="{height:'500px',width:'100%'}" ref="worldEchart"></div>
+        </Card>  
       </Col>
     </Row> 
     <Row>
@@ -910,7 +910,7 @@ export default {
         params = {
         startTime: new Date(this.defaultTime[0]).getTime(),
         endTime: new Date(this.defaultTime[1]).getTime(),
-        gameTypeL: this.gameCode
+        gameTyple: this.gameCode
         }
       }
       
@@ -933,7 +933,7 @@ export default {
         params = {
         startTime: new Date(this.defaultTime[0]).getTime(),
         endTime: new Date(this.defaultTime[1]).getTime(),
-        gameTypeL: this.gameCode
+        gameTyple: this.gameCode
         }
       }    
       let [perms1,perms2,perms3,perms4,perms5,perms6] = await this.axios.all([

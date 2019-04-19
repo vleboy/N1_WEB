@@ -1,51 +1,53 @@
   export const menuOpen = function (name) {
     let openName = []
     if (name.includes('na')) {
-      openName = ["report", "nareport"];
-    } else if (name == "ttgvideo") {
-      openName = ["report", "ttgreport"];
+      openName = ['report', 'nareport']
+    } else if (name == 'kychess') {
+      openName = ['report', 'kyreport']
+    } else if (name == 'ttgvideo') {
+      openName = ['report', 'ttgreport']
     } else if (name.includes('sa')) {
-      openName = ["report", "sareport"];
-    } else if (name == "sbvideo" || name == "sbtrue" || name == "sbAll") {
-      openName = ["report", "sbreport"];
-    } else if (name == "mgvideo") {
-      openName = ["report", "mgreport"];
+      openName = ['report', 'sareport']
+    } else if (name == 'sbvideo' || name == 'sbtrue' || name == 'sbAll') {
+      openName = ['report', 'sbreport']
+    } else if (name == 'mgvideo') {
+      openName = ['report', 'mgreport']
     } else if (name == 'pgGame') {
-      openName = ["report", "pgReport"];
+      openName = ['report', 'pgReport']
     } else if (name == 'habaGame') {
-      openName = ["report", "habaReport"];
+      openName = ['report', 'habaReport']
     } else if (name == 'pngGame') {
-      openName = ["report", "pngReport"];
-    } else if (name == "agtrue") {
-      openName = ["report", "agreport"];
+      openName = ['report', 'pngReport']
+    } else if (name == 'agtrue') {
+      openName = ['report', 'agreport']
     } else if (name == 'ysbSport') {
-      openName = ["report", "ysbReport"];
+      openName = ['report', 'ysbReport']
     } else if (name == 'rtgGame') {
-      openName = ["report", "rtgReport"];
+      openName = ['report', 'rtgReport']
     } else if (name == 'dtGame') {
-      openName = ["report", "dtReport"];
+      openName = ['report', 'dtReport']
     } else if (name == 'ppGame') {
-      openName = ["report", "ppReport"];
-    } else if (name == "ugsport") {
-      openName = ["report", "ugreport"];
-    } else if (name == "allreport") {
-      openName = ["report"];
-    } else if (name == "businessList" || name == "lineBusiness" || name == "warnList") {
-      openName = ["businessCenter"];
-    } else if (name == "ownspace-index") {
-      openName = [];
-    } else if (name == "adminList" || name == "lineNumList" || name == "adminRole") {
-      openName = ["adminCenter"];
-    } else if (name.includes("Log")) {
-      openName = ["logCenter"];
-    } else if (name == "playList") {
-      openName = ["playerCenter"];
-    } else if (name == "boothList" || name == "gameMailList" || name == "horseRaceLampList" || name == "gameNoticeList") {
-      openName = ["operation"];
-    } else if (name == "board") {
-      openName = ["board"];
-    } else if(name=='flow'||name=='noTransferReport'){
-      openName=['noTransfer']
+      openName = ['report', 'ppReport']
+    } else if (name == 'ugsport') {
+      openName = ['report', 'ugreport']
+    } else if (name == 'allreport') {
+      openName = ['report']
+    } else if (name == 'businessList' || name == 'lineBusiness' || name == 'warnList') {
+      openName = ['businessCenter']
+    } else if (name == 'ownspace-index') {
+      openName = []
+    } else if (name == 'adminList' || name == 'lineNumList' || name == 'adminRole') {
+      openName = ['adminCenter']
+    } else if (name.includes('Log')) {
+      openName = ['logCenter']
+    } else if (name == 'playList') {
+      openName = ['playerCenter']
+    } else if (name == 'boothList' || name == 'gameMailList' || name == 'horseRaceLampList' || name == 'gameNoticeList') {
+      openName = ['operation']
+    } else if (name == 'board') {
+      openName = ['board']
+    } else if (name == 'flow' || name == 'noTransferReport') {
+      openName = ['noTransfer']
     } else if (name == 'dayMergent') {
       openName = ['dayReport']
     }
