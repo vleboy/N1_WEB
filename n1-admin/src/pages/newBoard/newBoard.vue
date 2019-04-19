@@ -1,6 +1,6 @@
 <template>
 <div class="newBoard">   
-  <Spin size="large" fix v-if="spinShow" style="z-index:200;">
+  <Spin size="large" fix v-if="spinShow" style="z-index:200;top:-25rem">
       <Icon type="load-c" size="18" class="demo-spin-icon-load"></Icon>
       <div>加载中...</div>
   </Spin> 
