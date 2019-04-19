@@ -21,38 +21,65 @@
     </div>    
   </div>
   <div class="echarts">
-    <div class="map">
-      <div :style="{height:'600px',width:'45%'}" ref="worldEchart"></div>
-      <div :style="{height:'600px',width:'45%'}" ref="chinaEchart"></div>
-      <RadioGroup v-model="worldDataType" @on-change="changeWorldDataType"  class="worldEcharts" size="small">
-        <Radio label="0">玩家数量</Radio>
-        <Radio label="1">投加注金额</Radio>
-        <Radio label="2">投注次数</Radio>
-        <Radio label="3">退款金额</Radio>
-        <Radio label="4">返还金额</Radio>
-        <Radio label="5">输赢金额</Radio>
-      </RadioGroup>
-      <RadioGroup v-model="chinaDataType" @on-change="changeChinaDataType"  class="chinaEcharts" size="small">
-        <Radio label="0">玩家数量</Radio>
-        <Radio label="1">投加注金额</Radio>
-        <Radio label="2">投注次数</Radio>
-        <Radio label="3">退款金额</Radio>
-        <Radio label="4">返还金额</Radio>
-        <Radio label="5">输赢金额</Radio>
-      </RadioGroup>
-    </div>
-    <div :style="{height:'300px',width:'80%',marginTop:'100px'}" ref="report"></div>
-    <div class="distribution">
-      <div :style="{height:'600px',width:'40%'}" ref="gameDtributed"></div>
-      <div :style="{height:'600px',width:'60%'}" ref="momentBar"></div>
-      <RadioGroup v-model="gameDtributedDataType" @on-change="changeGameDtributedDataType"  class="gameDtributedEcharts" size="small">
-        <Radio label="0">玩家数量GAME</Radio>
-        <Radio label="1">投加注金额</Radio>
-        <Radio label="2">投注次数</Radio>
-        <Radio label="3">退款金额</Radio>
-        <Radio label="4">返还金额</Radio>
-      </RadioGroup>   
-    </div>
+    <Row>
+      <Col span="12">
+        <Card style="position:relative">
+          <h3 slot="title">游戏比例分布</h3>
+          <RadioGroup v-model="gameDtributedDataType" @on-change="changeGameDtributedDataType"  class="gameDtributedEcharts" size="small">
+            <Radio label="0">玩家数量</Radio>
+            <Radio label="1">投加注金额</Radio>
+            <Radio label="2">投注次数</Radio>
+            <Radio label="3">退款金额</Radio>
+            <Radio label="4">返还金额</Radio>
+          </RadioGroup> 
+          <div :style="{height:'300px',width:'100%'}" ref="gameDtributed"></div>
+        </Card>
+      </Col>
+      <Col span="12">
+         <Card>
+          <h3 slot="title">公司日报表</h3>
+          <div :style="{height:'300px',width:'100%'}" ref="report"></div>
+        </Card>
+      </Col>
+    </Row> 
+    <Row>
+      <Col span="12">
+        <Card style="position:relative">
+          <h3 slot="title">世界地图大数据</h3>
+          <RadioGroup v-model="worldDataType" @on-change="changeWorldDataType"  class="worldEcharts" size="small">
+            <Radio label="0">玩家数量</Radio>
+            <Radio label="1">投加注金额</Radio>
+            <Radio label="2">投注次数</Radio>
+            <Radio label="3">退款金额</Radio>
+            <Radio label="4">返还金额</Radio>
+            <Radio label="5">输赢金额</Radio>
+          </RadioGroup>
+          <div :style="{height:'500px',width:'100%'}" ref="worldEchart"></div>
+        </Card>  
+      </Col>
+      <Col span="12">
+        <Card style="position:relative">
+          <h3 slot="title">全国地图大数据</h3>
+          <RadioGroup v-model="chinaDataType" @on-change="changeChinaDataType"  class="chinaEcharts" size="small">
+            <Radio label="0">玩家数量</Radio>
+            <Radio label="1">投加注金额</Radio>
+            <Radio label="2">投注次数</Radio>
+            <Radio label="3">退款金额</Radio>
+            <Radio label="4">返还金额</Radio>
+            <Radio label="5">输赢金额</Radio>
+          </RadioGroup>
+          <div :style="{height:'500px',width:'100%'}" ref="chinaEchart"></div>
+        </Card>
+      </Col>
+    </Row> 
+    <Row>
+      <Col span="12">
+        <Card style="position:relative">
+          <h3 slot="title">时刻分布柱状图</h3>
+          <div :style="{height:'300px',width:'100%'}" ref="momentBar"></div>
+        </Card>  
+      </Col>
+    </Row>
     <!-- <div :style="{height:'600px',width:'100%'}" ref="dynamic"></div> --> 
   </div>
 
@@ -107,7 +134,7 @@ export default {
         ]
       }, 
       GameListEnum: [
-        { company: "全部", code: "", name: "全部" },
+        { company: "全部", code: "", name: "全部游戏" },
         /*  { company: "NA", code: "10000", name: "NA棋牌游戏" },
         { company: "NA", code: "30000", name: "NA真人视讯" },
         { company: "NA", code: "40000", name: "NA电子游戏" },
@@ -143,7 +170,7 @@ export default {
       worldData: [],
       dynamicData:[],
       spinShow: false,
-      model1: '全部',
+      model1: '全部游戏',
       gameCode: '',
       dateType: '1',
       chinaDataType: '0',
@@ -298,11 +325,11 @@ export default {
       let myChart = this.$echarts.init(this.$refs.chinaEchart); //这里是为了获得容器所在位置
       myChart.setOption({
         backgroundColor: "#FFFFFF",
-        title: {
+        /* title: {
           text: "全国地图大数据",
           subtext: "",
           x: "center"
-        },
+        }, */
         tooltip: {
           trigger: "item"
         },
@@ -346,11 +373,11 @@ export default {
       this.$echarts.registerMap("world", worldJson);
       let myChart = this.$echarts.init(this.$refs.worldEchart); //这里是为了获得容器所在位置
       myChart.setOption({
-        title: {
+        /* title: {
           text: '世界地图大数据',
           left: "center",
           x: "center"
-        },
+        }, */
         tooltip: {
           trigger: "item"
         },
@@ -674,11 +701,11 @@ export default {
       let retAmount = this.playerActiveData.retAmount.map(item => {return item.y})
       let winloseAmount = this.playerActiveData.winloseAmount.map(item => {return item.y})
       myChart.setOption({
-        title: {
+        /* title: {
           text: "时刻分布柱状图",
           subtext: "",
           x: "left"
-        },
+        }, */
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -690,7 +717,7 @@ export default {
         },
         legend: {
           //orient: 'vertical',
-          bottom: 'bottom',
+          top: 'top',
           data:['玩家数量','投注金额','投注次数','退款金额','返回金额','输赢金额'],
           selectedMode: "single",
           padding: 10, 
@@ -746,11 +773,11 @@ export default {
     gameDtributedConfigure() {
       let myChart = this.$echarts.init(this.$refs.gameDtributed)
       myChart.setOption({
-        title : {
+        /* title : {
           text: '游戏分布比例',
           subtext: '纯属虚构',
           x:'center'
-        },
+        }, */
         tooltip : {
           trigger: 'item',
           formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -881,24 +908,24 @@ export default {
     }
   }
   .worldEcharts {
-    width: 50%;
+    width: 100%;
     position: absolute;
-    top:650px;
-    left: 3rem;
+    top:80px;
+    left: 4rem;
     z-index: 100;
   }
   .chinaEcharts {
-    width: 50%;
+    width: 100%;
     position: absolute;
-    top:650px;
-    left: 55%;
+    top:80px;
+    left: 4rem;
     z-index: 100;
   }
   .gameDtributedEcharts {
-    width: 50%;
+    width: 100%;
     position: absolute;
-    top:575px;
-    left: 5%;
+    top:60px;
+    left: 30%;
     z-index: 100;
   }
   .demo-spin-icon-load {

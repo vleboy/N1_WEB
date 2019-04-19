@@ -77,11 +77,11 @@ export default {
                 expand: true,
                 checked: false,
                 children: [
-                 /*  {
+                  {
                     title: "NA游戏总报表",
                     checked: false
                   },
-                  {
+                 /*  {
                     title: "NA电子游戏报表",
                     checked: false
                   },
