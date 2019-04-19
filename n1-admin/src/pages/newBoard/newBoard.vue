@@ -1,5 +1,9 @@
 <template>
-<div class="newBoard">    
+<div class="newBoard">   
+  <Spin size="large" fix v-if="spinShow">
+      <Icon type="load-c" size="18" class="demo-spin-icon-load"></Icon>
+      <div>加载中...</div>
+  </Spin> 
   <div class="top">
     <Select style="width:200px;" ref="resetSelect" clearable v-model="model1">
       <Option
@@ -82,11 +86,6 @@
     </Row>
     <!-- <div :style="{height:'600px',width:'100%'}" ref="dynamic"></div> --> 
   </div>
-
-  <Spin size="large" fix v-if="spinShow">
-      <Icon type="load-c" size="18" class="demo-spin-icon-load"></Icon>
-      <div>加载中...</div>
-  </Spin>
 </div>  
 </template>
 
