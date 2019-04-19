@@ -217,6 +217,7 @@ export default {
           { company: "NA", code: "70000", name: "H5电子游戏" },
           //{ company: "NA", code: "80000", name: "H5真人视讯" },
           { company: "NA", code: "90000", name: "H5电子游戏-无神秘奖" },
+          { company: "KY", code: "1070000", name: "KY棋牌游戏" },
           { company: "TTG", code: "1010000", name: "TTG电子游戏" },
           { company: "PNG", code: "1020000", name: "PNG电子游戏" },
           { company: "MG", code: "10300000", name: "MG电子游戏" },
@@ -243,6 +244,9 @@ export default {
           { company: "NA", code: "70000", name: "H5电子游戏" },
           //{ company: "NA", code: "80000", name: "H5真人视讯" },
           { company: "NA", code: "90000", name: "H5电子游戏-无神秘奖" }
+        ],
+        KY: [
+          { company: "KY", code: "1070000", name: "KY棋牌游戏" },
         ],
         TTG: [{ company: "全部", code: "", name: "全部" },{ company: "TTG", code: "1010000", name: "TTG电子游戏" }],
         PNG: [{ company: "全部", code: "", name: "全部" },{ company: "PNG", code: "1020000", name: "PNG电子游戏" }],

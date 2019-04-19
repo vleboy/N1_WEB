@@ -20,6 +20,7 @@ import agtrue from '@/pages/reports/agTrueGame'
 import mgvideo from '@/pages/reports/mgVideoGame'
 import nacard from '@/pages/reports/naCardGame'
 import nastreet from '@/pages/reports/naStreetGame'
+import kyChess from '@/pages/reports/kyChess'
 import nahfive from '@/pages/reports/nahfive'
 import nanomys from '@/pages/reports/nanomys'
 import natrue from '@/pages/reports/naTrueGame'
@@ -211,6 +212,13 @@ export const appRouter = [
            name: 'ttggame',
            component: main,
            children: [{ path: 'video', title: 'TTG电子游戏报表', name: 'ttgvideo', component: ttgvideo }]
+         },
+         {
+           path: '/kygame',
+           title: 'KY游戏报表',
+           name: 'kygame',
+           component: main,
+           children: [{ path: 'chess', title: 'KY棋牌游戏报表', name: 'chess', component: kyChess }]
          },
          {
            path: '/pg',

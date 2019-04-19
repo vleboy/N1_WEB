@@ -22,8 +22,8 @@
   </div>
   <div class="echarts">
     <div class="map">
-      <div :style="{height:'600px',width:'50%'}" ref="worldEchart"></div>
-      <div :style="{height:'600px',width:'50%'}" ref="chinaEchart"></div>
+      <div :style="{height:'600px',width:'45%'}" ref="worldEchart"></div>
+      <div :style="{height:'600px',width:'45%'}" ref="chinaEchart"></div>
       <RadioGroup v-model="worldDataType" @on-change="changeWorldDataType"  class="worldEcharts" size="small">
         <Radio label="0">玩家数量</Radio>
         <Radio label="1">投加注金额</Radio>
@@ -41,7 +41,7 @@
         <Radio label="5">输赢金额</Radio>
       </RadioGroup>
     </div>
-    <div :style="{height:'600px',width:'100%',marginTop:'150px'}" ref="report"></div>
+    <div :style="{height:'300px',width:'80%',marginTop:'100px'}" ref="report"></div>
     <div class="distribution">
       <div :style="{height:'600px',width:'40%'}" ref="gameDtributed"></div>
       <div :style="{height:'600px',width:'60%'}" ref="momentBar"></div>
@@ -116,6 +116,7 @@ export default {
         { company: "NA", code: "80000", name: "H5真人视讯" }, */
         { company: "NA", code: "70000", name: "H5电子游戏" },
         { company: "NA", code: "90000", name: "H5电子游戏-无神秘奖" },
+        { company: "KY", code: "1070000", name: "KY棋牌游戏" },
         { company: "TTG", code: "1010000", name: "TTG电子游戏" },
         { company: "PNG", code: "1020000", name: "PNG电子游戏" },
         { company: "MG", code: "10300000", name: "MG电子游戏" },
@@ -689,7 +690,7 @@ export default {
         },
         legend: {
           //orient: 'vertical',
-          //left: 'left',
+          bottom: 'bottom',
           data:['玩家数量','投注金额','投注次数','退款金额','返回金额','输赢金额'],
           selectedMode: "single",
           padding: 10, 
@@ -896,7 +897,7 @@ export default {
   .gameDtributedEcharts {
     width: 50%;
     position: absolute;
-    top:600px;
+    top:575px;
     left: 5%;
     z-index: 100;
   }

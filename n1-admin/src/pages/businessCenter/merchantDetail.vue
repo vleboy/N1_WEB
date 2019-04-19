@@ -608,6 +608,9 @@ export default {
           { company: "NA", code: "70000", name: "H5电子游戏" },
           { company: "NA", code: "90000", name: "H5电子游戏-无神秘奖" }
         ],
+        KY: [
+          { company: "KY", code: "1070000", name: "KY棋牌游戏" },
+        ],
         TTG: [
           { company: "TTG", code: "1010000", name: "TTG电子游戏" }
         ],

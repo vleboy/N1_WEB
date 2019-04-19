@@ -2,6 +2,8 @@
     let openName = []
     if (name.includes('na') && name != 'managerOpreateLog' && name != 'dayManager' && name != 'gameManager') {
       openName = ['report', 'nareport']
+    } else if (name == 'kychess') {
+      openName = ['report', 'kyreport']
     } else if (name == 'ttgvideo') {
       openName = ['report', 'ttgreport']
     } else if (name.includes('sa')) {
