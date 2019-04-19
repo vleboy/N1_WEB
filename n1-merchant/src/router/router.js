@@ -185,7 +185,7 @@ export const appRouter = [
            title: 'KY棋牌游戏报表',
            name: 'kygame',
            component: main,
-           children: [{ path: 'chess', title: 'KY棋牌游戏报表', name: 'chess', component: kyChess }]
+           children: [{ path: 'chess', title: 'KY棋牌游戏报表', name: 'kychess', component: kyChess }]
          },
          {
            path: '/rtg',
