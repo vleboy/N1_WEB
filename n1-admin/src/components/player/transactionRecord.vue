@@ -194,6 +194,7 @@ export default {
         {company: '全部厂商'},
         {company: 'NA'},
         {company: 'MG'},
+        {company: 'KY'},
         {company: 'DT'},
         {company: 'RTG'},
         {company: 'PP'},

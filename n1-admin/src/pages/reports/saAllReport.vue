@@ -4,7 +4,7 @@
       <div class="top">
         <p class="title">
           当前用户列表
-          <RadioGroup v-model="source" class="radioGroup" type="button" @on-change='changeSource'>
+          <RadioGroup v-model="source" class="radioGroup" type="button" @on-change="changeSource">
             <Radio label="0" v-if="permission.includes('正式数据')">正式</Radio>
             <Radio label="1">测试</Radio>
             <Radio label="2" v-if="permission.includes('正式数据')">全部</Radio>
@@ -12,19 +12,27 @@
           <Button type="ghost" @click="exportdata('table_0')">导出数据</Button>
         </p>
         <div class="right">
-          <DatePicker type="datetimerange" :options="options" :editable='false' v-model="defaultTime" placeholder="选择日期时间范围(默认最近一周)" style="width: 300px" @on-ok="confirm"></DatePicker>
+          <DatePicker
+            type="datetimerange"
+            :options="options"
+            :editable="false"
+            v-model="defaultTime"
+            placeholder="选择日期时间范围(默认最近一周)"
+            style="width: 300px"
+            @on-ok="confirm"
+          ></DatePicker>
           <Button type="primary" @click="search">搜索</Button>
           <Button type="ghost" @click="reset">重置</Button>
         </div>
       </div>
-      <Table :columns="columns1" :data="user" size="small" ref='table_0'></Table>
+      <Table :columns="columns1" :data="user" size="small" ref="table_0"></Table>
     </div>
     <div class="childList">
       <p class="title">
         直属下级列表
         <Button type="ghost" @click="exportdata('table_1')">导出数据</Button>
       </p>
-      <Table :columns="columns1" :data="child" size="small" ref='table_1'></Table>
+      <Table :columns="columns1" :data="child" size="small" ref="table_1"></Table>
     </div>
     <div class="childList" v-for="(item,index) in reportChild" :key="index">
       <p class="title">
@@ -35,13 +43,13 @@
     </div>
     <div class="playerList" id="playerList">
       <p class="title">
-        <span v-show="showName"> ({{ userName }})</span>所属玩家列表
+        <span v-show="showName">({{ userName }})</span>所属玩家列表
         <Button type="ghost" @click="exportdata('table_2')">导出数据</Button>
       </p>
-      <Table :columns="columns2" :data="playerList" size="small" ref='table_2'></Table>
+      <Table :columns="columns2" :data="playerList" size="small" ref="table_2"></Table>
     </div>
     <Spin size="large" fix v-if="spinShow">
-      <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
+      <Icon type="load-c" size="18" class="demo-spin-icon-load"></Icon>
       <div>加载中...</div>
     </Spin>
   </div>
@@ -54,35 +62,85 @@ import { thousandFormatter } from "@/config/format";
 export default {
   data() {
     return {
-       options: {
+      options: {
         shortcuts: [
           {
             text: "本周",
             value() {
-              return [new Date(dayjs().startOf('week').valueOf() + 24 * 60 * 60 * 1000), new Date(dayjs().endOf('second').valueOf())]
+              return [
+                new Date(
+                  dayjs()
+                    .startOf("week")
+                    .valueOf() +
+                    24 * 60 * 60 * 1000
+                ),
+                new Date(
+                  dayjs()
+                    .endOf("second")
+                    .valueOf()
+                )
+              ];
             }
           },
           {
             text: "本月",
             value() {
-              return [new Date(dayjs().startOf('month').valueOf()), new Date(dayjs().endOf('second').valueOf())]
+              return [
+                new Date(
+                  dayjs()
+                    .startOf("month")
+                    .valueOf()
+                ),
+                new Date(
+                  dayjs()
+                    .endOf("second")
+                    .valueOf()
+                )
+              ];
             }
           },
           {
             text: "上周",
             value() {
-              return [new Date(dayjs().add(-1, 'week').startOf('week').valueOf() + 24 * 60 * 60 * 1000), new Date(dayjs().startOf('week').valueOf() + 24 * 60 * 60 * 1000 - 1)]
+              return [
+                new Date(
+                  dayjs()
+                    .add(-1, "week")
+                    .startOf("week")
+                    .valueOf() +
+                    24 * 60 * 60 * 1000
+                ),
+                new Date(
+                  dayjs()
+                    .startOf("week")
+                    .valueOf() +
+                    24 * 60 * 60 * 1000 -
+                    1
+                )
+              ];
             }
           },
           {
             text: "上月",
             value() {
               //-1 上月
-              return [new Date(dayjs().add(-1, 'month').startOf('month').valueOf()), new Date(dayjs().startOf('month').valueOf() - 1)]
+              return [
+                new Date(
+                  dayjs()
+                    .add(-1, "month")
+                    .startOf("month")
+                    .valueOf()
+                ),
+                new Date(
+                  dayjs()
+                    .startOf("month")
+                    .valueOf() - 1
+                )
+              ];
             }
           }
         ]
-      }, 
+      },
       defaultTime: getDefaultTime(),
       spinShow: false, //加载spin
       showName: false, //上级商家
@@ -114,96 +172,107 @@ export default {
           key: "uname",
           render: (h, params) => {
             return h(
-              "span",
+              "Tooltip",
               {
                 style: {
                   cursor: "pointer",
                   color: "#20a0ff"
                 },
-                on: {
-                  click: async () => {
-                    this.spinShow = true;
-                    if (params.row.role == "1") {
-                      //管理员
-                      this.$store
-                        .dispatch("getUserChild", {
-                          parent: "01",
-                          isTest:+this.source,
-                          gameType: this.gameType,
-                          query: {
-                            createdAt: this.changedTime
-                          }
-                        })
-                        .then(res => {
-                          this.child = res.payload;
-                          this.reportChild = [];
-                          this.showName=false
-                          this.playerList=[]
-                          this.spinShow = false;
-                        });
-                    } else if (params.row.role == "100") {
-                      //商户
-                      this.userName = params.row.displayName;
-                      this.showName = true;
-                      let userId = params.row.userId;
-                      let level = params.row.level;
-                      let oldArr = this.reportChild;
-                      let len = oldArr.length;
-                      if (len > 0) {
-                        while (len--) {
-                          if (oldArr[len][0].level >= level + 1) {
-                            oldArr.splice(len, 1);
-                          }
-                        }
-                      }
-                      this.$store
-                        .dispatch("getPlayerList", {
-                          parentId: userId,
-                          gameType: this.gameType,
-                          query: {
-                            createdAt: this.changedTime
-                          }
-                        })
-                        .then(res => {
-                          this.playerList = res.payload;
-                          this.spinShow = false;
-                        });
-                      let anchor = this.$el.querySelector("#playerList");
-                      document.documentElement.scrollTop = anchor.offsetTop;
-                    } else if (params.row.role == "10") {
-                      //线路商
-                      this.playerList = [];
-                      this.showName = false;
-                      let userId = params.row.userId;
-                      let level = params.row.level;
-                      if (level == 1) {
-                        this.reportChild = [];
-                      }
-                      let oldArr = this.reportChild;
-                      let len = oldArr.length;
-                      if (len > 0) {
-                        while (len--) {
-                          if (oldArr[len][0].level > level + 1) {
-                            oldArr.splice(len, 1);
-                          }
-                        }
-                      }
-                      let showList = await this.getNextLevel(
-                        this.reportChild,
-                        userId
-                      );
-                      showList = _.filter(showList, function(o) {
-                        return o.length;
-                      });
-                      // console.log(showList);
-
-                      this.reportChild = showList;
-                    }
-                    // console.log(params.row);
-                  }
+                props: {
+                  content: "显示下一级",
+                  placement: "top"
                 }
               },
-              params.row.uname
+              [
+                h(
+                  "span",
+                  {
+                    on: {
+                      click: async () => {
+                        this.spinShow = true;
+                        if (params.row.role == "1") {
+                          //管理员
+                          this.$store
+                            .dispatch("getUserChild", {
+                              parent: "01",
+                              isTest: +this.source,
+                              gameType: this.gameType,
+                              query: {
+                                createdAt: this.changedTime
+                              }
+                            })
+                            .then(res => {
+                              this.child = res.payload;
+                              this.reportChild = [];
+                              this.showName = false;
+                              this.playerList = [];
+                              this.spinShow = false;
+                            });
+                        } else if (params.row.role == "100") {
+                          //商户
+                          this.userName = params.row.displayName;
+                          this.showName = true;
+                          let userId = params.row.userId;
+                          let level = params.row.level;
+                          let oldArr = this.reportChild;
+                          let len = oldArr.length;
+                          if (len > 0) {
+                            while (len--) {
+                              if (oldArr[len][0].level >= level + 1) {
+                                oldArr.splice(len, 1);
+                              }
+                            }
+                          }
+                          this.$store
+                            .dispatch("getPlayerList", {
+                              parentId: userId,
+                              gameType: this.gameType,
+                              query: {
+                                createdAt: this.changedTime
+                              }
+                            })
+                            .then(res => {
+                              this.playerList = res.payload;
+                              this.spinShow = false;
+                            });
+                          let anchor = this.$el.querySelector("#playerList");
+                          document.documentElement.scrollTop = anchor.offsetTop;
+                        } else if (params.row.role == "10") {
+                          //线路商
+                          this.playerList = [];
+                          this.showName = false;
+                          let userId = params.row.userId;
+                          let level = params.row.level;
+                          if (level == 1) {
+                            this.reportChild = [];
+                          }
+                          let oldArr = this.reportChild;
+                          let len = oldArr.length;
+                          if (len > 0) {
+                            while (len--) {
+                              if (oldArr[len][0].level > level + 1) {
+                                oldArr.splice(len, 1);
+                              }
+                            }
+                          }
+                          let showList = await this.getNextLevel(
+                            this.reportChild,
+                            userId
+                          );
+                          showList = _.filter(showList, function(o) {
+                            return o.length;
+                          });
+                          // console.log(showList);
+
+                          this.reportChild = showList;
+                        }
+                        // console.log(params.row);
+                      }
+                    }
+                  },
+                  params.row.uname
+                )
+              ]
             );
           }
         },
@@ -408,25 +477,36 @@ export default {
           render: (h, params) => {
             let name = params.row.userName;
             return h(
-              "span",
+              "Tooltip",
               {
                 style: {
                   color: "#20a0ff",
-                  cursor:'pointer'
+                  cursor: "pointer"
                 },
-                on: {
-                  click: () => {
-                    localStorage.setItem("playerName", name);
-                    this.$router.push({
-                      name: "playDetail",
-                      query: {
-                        name:name
-                      }
-                    });
-                  }
+                props: {
+                  content: "前往玩家详情",
+                  placement: "top"
                 }
               },
-              name
+              [
+                h(
+                  "span",
+                  {
+                    on: {
+                      click: () => {
+                        localStorage.setItem("playerName", name);
+                        this.$router.push({
+                          name: "playDetail",
+                          query: {
+                            name: name
+                          }
+                        });
+                      }
+                    }
+                  },
+                  name
+                )
+              ]
             );
           }
         },
@@ -588,7 +668,7 @@ export default {
         this.$store
           .dispatch("getUserChild", {
             parent: userId,
-            isTest:+this.source,
+            isTest: +this.source,
             gameType: this.gameType,
             query: {
               createdAt: this.changedTime
