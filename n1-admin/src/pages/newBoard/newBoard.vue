@@ -27,7 +27,7 @@
           <h3 slot="title">游戏比例分布</h3>
           <RadioGroup v-model="gameDtributedDataType" @on-change="changeGameDtributedDataType"  class="gameDtributedEcharts" size="small">
             <Radio label="0">玩家数量</Radio>
-            <Radio label="1">投加注金额</Radio>
+            <Radio label="1">投注金额</Radio>
             <Radio label="2">投注次数</Radio>
             <Radio label="3">退款金额</Radio>
             <Radio label="4">返还金额</Radio>
@@ -48,7 +48,7 @@
           <h3 slot="title">世界地图大数据</h3>
           <RadioGroup v-model="worldDataType" @on-change="changeWorldDataType"  class="worldEcharts" size="small">
             <Radio label="0">玩家数量</Radio>
-            <Radio label="1">投加注金额</Radio>
+            <Radio label="1">投注金额</Radio>
             <Radio label="2">投注次数</Radio>
             <Radio label="3">退款金额</Radio>
             <Radio label="4">返还金额</Radio>
@@ -62,7 +62,7 @@
           <h3 slot="title">全国地图大数据</h3>
           <RadioGroup v-model="chinaDataType" @on-change="changeChinaDataType"  class="chinaEcharts" size="small">
             <Radio label="0">玩家数量</Radio>
-            <Radio label="1">投加注金额</Radio>
+            <Radio label="1">投注金额</Radio>
             <Radio label="2">投注次数</Radio>
             <Radio label="3">退款金额</Radio>
             <Radio label="4">返还金额</Radio>
@@ -170,6 +170,9 @@ export default {
       reportData: [],
       worldData: [],
       dynamicData:[],
+      gameUnit: '',
+      chinaMapUnit: '',
+      worldMapUnit: '',
       spinShow: false,
       model1: '全部游戏',
       gameCode: '',
@@ -228,25 +231,31 @@ export default {
       }
       switch (val) {
         case '0':
+          this.chinaMapUnit = '玩家数量'
           this.chinaSplitList =  this.chinaAllData.playerCount[1]
           this.chinaData = this.chinaAllData.playerCount[0]
           break;
         case '1':
+          this.chinaMapUnit = '投注金额'
           this.chinaSplitList =  this.chinaAllData.betAmount[1]
           this.chinaData = this.chinaAllData.betAmount[0]
           break;
         case '2':
+          this.chinaMapUnit = '投注次数'
           this.chinaSplitList =  this.chinaAllData.betCount[1]
           this.chinaData = this.chinaAllData.betCount[0]
           break;
         case '3':
+          this.chinaMapUnit = '退款金额'
           this.chinaSplitList =  this.chinaAllData.refundAmount[1]
           this.chinaData = this.chinaAllData.refundAmount[0]
         case '4':
+          this.chinaMapUnit = '返还金额'
           this.chinaSplitList =  this.chinaAllData.retAmount[1]
           this.chinaData = this.chinaAllData.retAmount[0]
           break;
         case '5':
+          this.chinaMapUnit = '输赢金额'
           this.chinaSplitList =  this.chinaAllData.winloseAmount[1]
           this.chinaData = this.chinaAllData.winloseAmount[0]             
           break;
@@ -259,25 +268,31 @@ export default {
       }
       switch (val) {
         case '0':
+          this.worldMapUnit = '玩家数量'
           this.worldSplitList =  this.worldAllData.playerCount[1]
           this.worldData = this.worldAllData.playerCount[0]
           break;
         case '1':
+          this.worldMapUnit = '投注金额'
           this.worldSplitList =  this.worldAllData.betAmount[1]
           this.worldData = this.worldAllData.betAmount[0]
           break;
         case '2':
+          this.worldMapUnit = '投注次数'
           this.worldSplitList =  this.worldAllData.betCount[1]
           this.worldData = this.worldAllData.betCount[0]
           break;
         case '3':
+          this.worldMapUnit = '退款金额'
           this.worldSplitList =  this.worldAllData.refundAmount[1]
           this.worldData = this.worldAllData.refundAmount[0]
         case '4':
+          this.worldMapUnit = '返还金额'
           this.worldSplitList =  this.worldAllData.retAmount[1]
           this.worldData = this.worldAllData.retAmount[0]
           break;
         case '5':
+          this.worldMapUnit = '输赢金额'
           this.worldSplitList =  this.worldAllData.winloseAmount[1]
           this.worldData = this.worldAllData.winloseAmount[0]        
           break;
@@ -290,22 +305,27 @@ export default {
       }
       switch (val) {
         case '0':
+          this.gameUnit = '玩家数量'
           this.valueGD = this.gameDtributedData.playerCount.map(item => {return item})
           this.valueTP = this.gameDtributedData.playerCount.map(item => {return item.name})
           break;
         case '1':
+          this.gameUnit = '投注金额'
           this.valueGD = this.gameDtributedData.betAmount.map(item => {return item})
           this.valueTP = this.gameDtributedData.betAmount.map(item => {return item.name})
           break;
         case '2':
+          this.gameUnit = '投注次数'
           this.valueGD = this.gameDtributedData.betCount.map(item => {return item})
           this.valueTP = this.gameDtributedData.betCount.map(item => {return item.name})
           break;
         case '3':
+          this.gameUnit = '退款金额'
           this.valueGD = this.gameDtributedData.refundAmount.map(item => {return item})
           this.valueTP = this.gameDtributedData.refundAmount.map(item => {return item.name})
           break;
         case '4':
+          this.gameUnit = '返还金额'
           this.valueGD = this.gameDtributedData.retAmount.map(item => {return item})
           this.valueTP = this.gameDtributedData.retAmount.map(item => {return item.name})
           break;
@@ -357,7 +377,7 @@ export default {
         //配置属性
         series: [
           {
-            name: "数据",
+            name: this.chinaMapUnit,
             type: "map",
             mapType: "china",
             roam: false,
@@ -403,7 +423,7 @@ export default {
         },
         series: [
           {
-            name: "数据",
+            name: this.worldMapUnit,
             type: "map",
             mapType: "world",
             roam: false,
@@ -796,7 +816,7 @@ export default {
         },
         series : [
           {
-            name: '数据',
+            name: this.gameUnit,
             type: 'pie',
             radius : '55%',
             center: ['50%', '60%'],
