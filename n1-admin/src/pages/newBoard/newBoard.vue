@@ -37,7 +37,7 @@
       </Col>
       <Col span="12">
          <Card>
-          <h3 slot="title">公司日报表</h3>
+          <h3 slot="title">平台日报表</h3>
           <div :style="{height:'300px',width:'100%'}" ref="report"></div>
         </Card>
       </Col>
@@ -75,7 +75,7 @@
     <Row>
       <Col span="12">
         <Card style="position:relative">
-          <h3 slot="title">时刻分布柱状图</h3>
+          <h3 slot="title">时刻比例分布</h3>
           <div :style="{height:'300px',width:'100%'}" ref="momentBar"></div>
         </Card>  
       </Col>
@@ -929,10 +929,10 @@ export default {
     z-index: 100;
   }
   .gameDtributedEcharts {
-    width: 100%;
+    width: 50%;
     position: absolute;
     top:60px;
-    left: 30%;
+    left: 18rem;
     z-index: 100;
   }
   .demo-spin-icon-load {
