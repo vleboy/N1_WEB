@@ -619,7 +619,9 @@ export default {
     reset() {
       this.sn = "";
       this.displayName = "";
+      this.displayId = "";
       this.msn = "";
+      this.supSuffix = '';
       if (this.permission.includes("正式数据")) {
         this.source = '0';
       }
