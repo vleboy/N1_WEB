@@ -1,6 +1,6 @@
 <template>
 <div class="newBoard">   
-  <Spin size="large" fix v-if="spinShow">
+  <Spin size="large" fix v-if="spinShow" style="z-index:200;">
       <Icon type="load-c" size="18" class="demo-spin-icon-load"></Icon>
       <div>加载中...</div>
   </Spin> 
@@ -80,7 +80,13 @@
       <Col span="12">
         <Card style="position:relative">
           <h3 slot="title">时刻比例分布</h3>
-          <div :style="{height:'300px',width:'100%'}" ref="momentBar"></div>
+          <div :style="{height:'300px',width:'90%'}" ref="momentBar"></div>
+        </Card>  
+      </Col>
+      <Col span="12">
+        <Card style="position:relative">
+          <h3 slot="title">玩家注册趋势</h3>
+          <div :style="{height:'300px',width:'100%'}" ref="playerCount"></div>
         </Card>  
       </Col>
     </Row>
@@ -167,6 +173,7 @@ export default {
       chinaSplitList: [],
       worldSplitList: [],
       reportData: [],
+      playerCountData: [],
       worldData: [],
       dynamicData:[],
       gameUnit: '',
@@ -679,6 +686,63 @@ export default {
         ]
       })
     },
+    playerCountConfigure() {
+      
+      let myChart = this.$echarts.init(this.$refs.playerCount)
+      myChart.setOption({
+        /* title: {
+          text: '动态数据 + 时间坐标轴'
+        }, */
+        tooltip: {
+          trigger: 'axis',
+          
+          axisPointer: {
+              animation: false
+          }
+        },
+        xAxis: {
+          type: 'time',
+          splitLine: {
+              show: false
+          },
+          name: '日期'
+        },
+        yAxis: {
+          type: 'value',
+          boundaryGap: [0, '100%'],
+          splitLine: {
+              show: false
+          }
+        },
+        legend: {
+          //orient: 'vertical',
+          top: 'top',
+          data:['每日注册人数','累计注册人数'],
+          selectedMode: "single",
+          padding: 10, 
+        },
+        series: [
+          {
+          name: '每日注册人数',
+          type: 'line',
+          showSymbol: false,
+          hoverAnimation: false,
+          smooth: true,
+          symbolSize: 3,
+          data: this.playerCountData.everyDay
+        },
+        {
+          name: '累计注册人数',
+          type: 'line',
+          showSymbol: false,
+          hoverAnimation: false,
+          smooth: true,
+          symbolSize: 3,
+          data: this.playerCountData.sumDay
+        }
+        ]
+      })
+    },
     realTimeDynamicConfigure() {
       let myChart = this.$echarts.init(this.$refs.dynamic)
       myChart.setOption({
@@ -739,6 +803,9 @@ export default {
               color: '#999'
             }
           }
+        },
+        grid: {
+          left: '15%'
         },
         legend: {
           //orient: 'vertical',
@@ -869,12 +936,13 @@ export default {
         gameTypeL: this.gameCode
         }
       }    
-      let [perms1,perms2,perms3,perms4,perms5] = await this.axios.all([
+      let [perms1,perms2,perms3,perms4,perms5,perms6] = await this.axios.all([
         httpRequest("get", "/visual/map/china", params, "map"),
         httpRequest("get", "/visual/map/world", params, "map"),
         httpRequest("get", "/visual/pie/game", params, "map"),
         httpRequest("get", "/visual/line/graph", params, "map"),
         httpRequest("get", "/visual/line/day", params, "map"),
+        httpRequest("get", "/visual/line/player", params, "map"),
         ])
       this.chinaAllData = perms1.data
       this.worldAllData = perms2.data
@@ -882,11 +950,12 @@ export default {
       this.playerActiveData = perms4.data
       this.reportData = perms5.data      
       this.spinShow = false
-      console.log(perms5);
+      this.playerCountData = perms6.data
       
       this.reportConfigure()
       //this.realTimeDynamicConfigure()
       this.momentBarConfigure()
+      this.playerCountConfigure()
       this.changeGameDtributedDataType()
       this.changeChinaDataType()
       this.changeWorldDataType()
