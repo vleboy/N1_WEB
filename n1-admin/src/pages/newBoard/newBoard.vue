@@ -159,7 +159,8 @@ export default {
         { company: "DT", code: "1150000", name: "DT电子游戏" },
         { company: "PP", code: "1160000", name: "PP电子游戏" }
       ],
-      defaultTime: getDefaultTime(),
+      //defaultTime: getDefaultTime(),
+      defaultTime: '',
       gameType: [],
       chinaData: [],
       chinaAllData: '',
@@ -172,7 +173,7 @@ export default {
       spinShow: false,
       model1: '全部游戏',
       gameCode: '',
-      dateType: '1',
+      dateType: '3',
       chinaDataType: '0',
       worldDataType: '0',
       gameDtributedDataType: '0',
@@ -188,7 +189,8 @@ export default {
   mounted() {
     //console.log(new Date(1555551234703))
     this.getGameList()
-    this.init()
+    this.changeDate()
+    //this.init()
   },
   methods: {
     getGameList() {
@@ -199,6 +201,9 @@ export default {
       this.init()
     },
     changeDate (val) {
+      if (val == undefined) {
+        val = this.dateType
+      }
       let nowDate = new Date()
       this.defaultTime = []
       switch (val) {
@@ -343,10 +348,10 @@ export default {
           color: [
             "#E3170D",
             "#FF8000",
+            'yellowgreen',
             "#FFD700",
             "#FFFFCD",
             "#ccc",
-            "#eee"
           ]
         },
         //配置属性
@@ -390,10 +395,10 @@ export default {
           color: [
             "#E3170D",
             "#FF8000",
+            'yellowgreen',
             "#FFD700",
             "#FFFFCD",
             "#ccc",
-            "#eee"
           ]
         },
         series: [
@@ -607,6 +612,7 @@ export default {
       // 绘制图表
       myChart.setOption({
         xAxis: {
+          name: '日期',
           type: "category",
           data: reportArr
         },
@@ -724,6 +730,7 @@ export default {
         },
         xAxis: [
           {
+            name: '小时',
             type: 'category',
             data: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],
             axisPointer: {
