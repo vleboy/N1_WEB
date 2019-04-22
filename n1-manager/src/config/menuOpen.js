@@ -4,6 +4,8 @@ export const menuOpen = function(name) {
     openName = ['businessCenter']
   } else if (name == 'ownspace-index') {
     openName = []
+  } else if (name == 'kychess') {
+    openName = ['report', 'kyreport']
   } else if (name.includes('Log')) {
     openName = ['logCenter']
   } else if (name == 'playList') {

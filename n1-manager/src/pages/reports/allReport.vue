@@ -95,7 +95,7 @@ export default {
       source: "0",
       gameType: [
         70000,90000,
-        1010000,1090000,1040000,1020000,
+        1010000,1090000,1040000,1020000,1070000,
         10300000,
         1050000,
         1060000,
@@ -746,6 +746,43 @@ export default {
             return h("span", thousandFormatter(count.toFixed(2)));
           }
         },
+        {
+          title: "KY游戏(输赢金额)",
+          key: "winloseAmount",
+          render: (h, params) => {
+            let obj = params.row.gameTypeMap;
+            let count = 0;
+            for (let key in obj) {
+              if (key == "1070000") {
+                count = obj[key].winloseAmount;
+              }
+            }
+            let color = count < 0 ? "#f30" : "#0c0";
+            return h(
+              "span",
+              {
+                style: {
+                  color: color
+                }
+              },
+              thousandFormatter(count.toFixed(2))
+            );
+          }
+        },
+        {
+          title: "KY游戏(商家交公司)",
+          key: "submitAmount",
+          render: (h, params) => {
+            let obj = params.row.gameTypeMap;
+            let count = 0;
+            for (let key in obj) {
+              if (key == "1070000") {
+                count = obj[key].submitAmount;
+              }
+            }
+            return h("span", thousandFormatter(count.toFixed(2)));
+          }
+        },
       ],
       columns2: [
         {
@@ -1103,6 +1140,29 @@ export default {
             );
           }
         },
+        {
+          title: "PNG游戏(输赢金额)",
+          key: "winloseAmount",
+          render: (h, params) => {
+            let obj = params.row.gameTypeMap;
+            let count = 0;
+            for (let key in obj) {
+              if (["1070000"].includes(key)) {
+                count += obj[key].winloseAmount;
+              }
+            }
+            let color = count < 0 ? "#f30" : "#0c0";
+            return h(
+              "span",
+              {
+                style: {
+                  color: color
+                }
+              },
+              thousandFormatter(count.toFixed(2))
+            );
+          }
+        },
       ]
     };
   },
@@ -1285,6 +1345,10 @@ export default {
       if (getWinloseAmount(arr, ["1130000"]) == 0) {
         removeArr.push(31,32)
         removeArr1.push(17)
+      }
+      if (getWinloseAmount(arr, ["1070000"]) == 0) {
+        removeArr.push(33,34)
+        removeArr1.push(18)
       }
 
 
