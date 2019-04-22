@@ -6,11 +6,11 @@
     </Spin>
     <div class="top">
       <!--  当前用户列表--- -->
-      <RadioGroup v-model="source" class="radioGroup" type="button" style="margin-right:1rem">
+      <!-- <RadioGroup v-model="source" class="radioGroup" type="button" style="margin-right:1rem">
         <Radio label="0">正式</Radio>
         <Radio label="1">测试</Radio>
         <Radio label="2">全部</Radio>
-      </RadioGroup>
+      </RadioGroup>-->
       <Select style="width:200px;" ref="resetSelect" clearable v-model="model1">
         <Option
           v-for="(item, index) in gameType"
@@ -39,7 +39,7 @@
       </div>
     </div>
     <Tabs type="card" @on-click="changeBoard">
-      <TabPane label="报表">
+      <TabPane label="趋势">
         <div class="echarts">
           <Row>
             <Col span="12">
@@ -124,7 +124,73 @@
           <!-- <div :style="{height:'600px',width:'100%'}" ref="dynamic"></div> -->
         </div>
       </TabPane>
-      <TabPane label="榜单">标签二的内容</TabPane>
+      <TabPane label="榜单">
+        <div class="echarts">
+          <Row>
+            <Col span="8">
+              <Card style="position:relative">
+                <h3 slot="title">商户玩家数量榜</h3>
+                <div :style="{height:'500px',width:'100%'}" ref="merchantPlayerCount"></div>
+              </Card>
+            </Col>
+            <Col span="8">
+              <Card style="position:relative">
+                <h3 slot="title">商户投注次数榜</h3>
+                <div :style="{height:'500px',width:'100%'}" ref="merchantBetCount"></div>
+              </Card>
+            </Col>
+            <Col span="8">
+              <Card style="position:relative">
+                <h3 slot="title">商户投注金额榜</h3>
+                <div :style="{height:'500px',width:'100%'}" ref="merchantBetAmount"></div>
+              </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col span="8">
+              <Card style="position:relative">
+                <h3 slot="title">商户返还金额榜</h3>
+                <div :style="{height:'500px',width:'100%'}" ref="merchantRetAmount"></div>
+              </Card>
+            </Col>
+            <Col span="16">
+              <Card style="position:relative">
+                <h3 slot="title">商户输赢金额榜</h3>
+                <div :style="{height:'500px',width:'100%'}" ref="merchantWinloseAmount"></div>
+              </Card>
+            </Col>
+          </Row>
+
+          <Row style="margin-top:2rem">
+            <Col span="8">
+              <Card style="position:relative">
+                <h3 slot="title">玩家投注次数榜(TOP10)</h3>
+                <div :style="{height:'500px',width:'100%'}" ref="playerBetCount"></div>
+              </Card>
+            </Col>
+            <Col span="8">
+              <Card style="position:relative">
+                <h3 slot="title">玩家投注金额榜(TOP10)</h3>
+                <div :style="{height:'500px',width:'100%'}" ref="playerBetAmount"></div>
+              </Card>
+            </Col>
+            <Col span="8">
+              <Card style="position:relative">
+                <h3 slot="title">玩家返还金额榜(TOP10)</h3>
+                <div :style="{height:'500px',width:'100%'}" ref="playerRetAmount"></div>
+              </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col span="24">
+              <Card style="position:relative">
+                <h3 slot="title">玩家输赢金额榜(ALL)</h3>
+                <div :style="{height:'500px',width:'100%'}" ref="playerWinloseAmount"></div>
+              </Card>
+            </Col>
+          </Row>
+        </div>
+      </TabPane>
     </Tabs>
   </div>
 </template>
@@ -144,6 +210,7 @@ export default {
   data() {
     return {
       source: "0",
+      rankShow: false,
       options: {
         shortcuts: [
           {
@@ -251,6 +318,15 @@ export default {
       ],
       //defaultTime: getDefaultTime(),
       defaultTime: "",
+      mcPlayerCountData: [],
+      mcBetCountData: [],
+      mcBetAmountData: [],
+      mcRetAmountData: [],
+      mcWinloseAmountData: [],
+      pyBetCountData: [],
+      pyBetAmountData: [],
+      pyRetAmountData: [],
+      pyWinloseAmountData: [],
       gameType: [],
       chinaData: [],
       chinaAllData: "",
@@ -284,11 +360,15 @@ export default {
     //console.log(new Date(1555551234703))
     this.getGameList();
     this.changeDate();
+
     //this.init()
   },
   methods: {
     changeBoard(val) {
-      console.log(val);
+      if (val == 1) {
+        this.rankShow = !this.rankShow;
+        this.rankInit();
+      }
     },
     getGameList() {
       this.gameType = this.GameListEnum;
@@ -368,6 +448,7 @@ export default {
           );
           break;
       }
+      this.rankShow = false
       this.init();
     },
     changeChinaDataType(val) {
@@ -501,15 +582,27 @@ export default {
     },
     confirm() {
       this.defaultTime = this.changedTime;
+      this.rankShow = false
       this.init();
     },
     search() {
-      this.init();
+      this.rankShow = false
+      this.init()
     },
     reset() {
-      this.defaultTime = getDefaultTime();
-      this.gameCode = "";
-      this.$refs.resetSelect.clearSingleSelect();
+      this.rankShow = false
+      let nowDate = new Date()
+      this.defaultTime = [
+        new Date(nowDate.getTime() - 24 * 3600 * 1000).setHours(0, 0, 0, 0) -
+          89 * 24 * 3600 * 1000,
+        new Date(nowDate.getTime() - 24 * 3600 * 1000).setHours(0, 0, 0, 0) +
+          24 * 3600 * 1000 -
+          1
+      ]
+      this.dateType = '3'
+      this.gameCode = ""
+      this.$refs.resetSelect.clearSingleSelect()
+      this.model1 = '全部游戏'
       this.init();
     },
     chinaConfigure() {
@@ -1125,7 +1218,6 @@ export default {
         ]
       });
     },
-
     realChange() {
       let params = {};
       if (this.gameCode == "") {
@@ -1150,6 +1242,310 @@ export default {
         );
       }, 1000);
     },
+
+    //商户排行榜柱状图
+    mcPlayerCount() {
+      let myChart = this.$echarts.init(this.$refs.merchantPlayerCount);
+      let merchant = this.mcPlayerCountData.map(item => {
+        return item.x;
+      });
+      let datas = this.mcPlayerCountData.map(item => {
+        return item.y;
+      });
+      myChart.setOption({
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow"
+          }
+        },
+        xAxis: {
+          type: "value"
+        },
+        yAxis: {
+          type: "category",
+          data: merchant,
+          nameGap: 60
+        },
+        grid: {
+          left: "15%"
+        },
+        series: [
+          {
+            type: "bar",
+            data: datas
+          }
+        ]
+      });
+    },
+    mcBetCount() {
+      let myChart = this.$echarts.init(this.$refs.merchantBetCount);
+      let merchant = this.mcBetCountData.map(item => {
+        return item.x;
+      });
+      let datas = this.mcBetCountData.map(item => {
+        return item.y;
+      });
+      myChart.setOption({
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow"
+          }
+        },
+        xAxis: {
+          type: "value"
+        },
+        yAxis: {
+          type: "category",
+          data: merchant
+        },
+        grid: {
+          left: "15%"
+        },
+        series: [
+          {
+            type: "bar",
+            data: datas
+          }
+        ]
+      });
+    },
+    mcBetAmount() {
+      let myChart = this.$echarts.init(this.$refs.merchantBetAmount);
+      let merchant = this.mcBetAmountData.map(item => {
+        return item.x;
+      });
+      let datas = this.mcBetAmountData.map(item => {
+        return item.y;
+      });
+      myChart.setOption({
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow"
+          }
+        },
+        xAxis: {
+          type: "value"
+        },
+        yAxis: {
+          type: "category",
+          data: merchant
+        },
+        grid: {
+          left: "15%"
+        },
+        series: [
+          {
+            type: "bar",
+            data: datas
+          }
+        ]
+      });
+    },
+    mcRetAmount() {
+      let myChart = this.$echarts.init(this.$refs.merchantRetAmount);
+      let merchant = this.mcRetAmountData.map(item => {
+        return item.x;
+      });
+      let datas = this.mcRetAmountData.map(item => {
+        return item.y;
+      });
+      myChart.setOption({
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow"
+          }
+        },
+        xAxis: {
+          type: "value"
+        },
+        yAxis: {
+          type: "category",
+          data: merchant
+        },
+        grid: {
+          left: "15%"
+        },
+        series: [
+          {
+            type: "bar",
+            data: datas
+          }
+        ]
+      });
+    },
+    mcWinloseAmount() {
+      let myChart = this.$echarts.init(this.$refs.merchantWinloseAmount);
+      let merchant = this.mcWinloseAmountData.map(item => {
+        return item.x;
+      });
+      let datas = this.mcWinloseAmountData.map(item => {
+        return item.y;
+      });
+      myChart.setOption({
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow"
+          }
+        },
+        xAxis: {
+          type: "value"
+        },
+        yAxis: {
+          type: "category",
+          data: merchant
+        },
+        series: [
+          {
+            type: "bar",
+            data: datas
+          }
+        ]
+      });
+    },
+    //玩家排行榜柱状图
+    pyBetCount() {
+      let myChart = this.$echarts.init(this.$refs.playerBetCount);
+      let merchant = this.pyBetCountData.map(item => {
+        return item.x;
+      });
+      let datas = this.pyBetCountData.map(item => {
+        return item.y;
+      });
+      myChart.setOption({
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow"
+          }
+        },
+        xAxis: {
+          type: "value"
+        },
+        yAxis: {
+          type: "category",
+          data: merchant,
+          nameGap: 60
+        },
+        grid: {
+          left: "35%"
+        },
+        series: [
+          {
+            type: "bar",
+            data: datas
+          }
+        ]
+      });
+    },
+    pyBetAmount() {
+      let myChart = this.$echarts.init(this.$refs.playerBetAmount);
+      let merchant = this.pyBetAmountData.map(item => {
+        return item.x;
+      });
+      let datas = this.pyBetAmountData.map(item => {
+        return item.y;
+      });
+      myChart.setOption({
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow"
+          }
+        },
+        xAxis: {
+          type: "value"
+        },
+        yAxis: {
+          type: "category",
+          data: merchant,
+          nameGap: 60
+        },
+        grid: {
+          left: "35%"
+        },
+        series: [
+          {
+            type: "bar",
+            data: datas
+          }
+        ]
+      });
+    },
+    pyRetAmount() {
+      let myChart = this.$echarts.init(this.$refs.playerRetAmount);
+      let merchant = this.pyRetAmountData.map(item => {
+        return item.x;
+      });
+      let datas = this.pyRetAmountData.map(item => {
+        return item.y;
+      });
+      myChart.setOption({
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow"
+          }
+        },
+        xAxis: {
+          type: "value"
+        },
+        yAxis: {
+          type: "category",
+          data: merchant,
+          nameGap: 60
+        },
+        grid: {
+          left: "35%"
+        },
+        series: [
+          {
+            type: "bar",
+            data: datas
+          }
+        ]
+      });
+    },
+    pyWinloseAmount() {
+      let myChart = this.$echarts.init(this.$refs.playerWinloseAmount);
+      let merchant = this.pyWinloseAmountData.map(item => {
+        return item.x;
+      });
+      let datas = this.pyWinloseAmountData
+        .map(item => {
+          return item.y;
+        })
+        .reverse();
+      //console.log(datas);
+
+      myChart.setOption({
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow"
+          }
+        },
+        xAxis: {
+          type: "value"
+        },
+        yAxis: {
+          type: "category",
+          data: merchant,
+          nameGap: 60
+        },
+        series: [
+          {
+            type: "bar",
+            data: datas
+          }
+        ]
+      });
+    },
+
     init() {
       this.spinShow = true;
       let params = {};
@@ -1192,6 +1588,57 @@ export default {
         this.playerCountData = res.data;
         this.playerCountConfigure();
       });
+    },
+    rankInit() {
+      let params = {};
+      if (this.gameCode == "") {
+        params = {
+          startTime: new Date(this.defaultTime[0]).getTime(),
+          endTime: new Date(this.defaultTime[1]).getTime()
+        };
+      } else {
+        params = {
+          startTime: new Date(this.defaultTime[0]).getTime(),
+          endTime: new Date(this.defaultTime[1]).getTime(),
+          gameType: this.gameCode
+        };
+      }
+
+      //榜单
+      if (this.rankShow) {
+        console.log(this.rankShow);
+
+        this.spinShow = true;
+        httpRequest("get", "/visual/rank/merchant", params, "map").then(res => {
+          this.mcPlayerCountData = res.data.playerCount;
+          this.mcBetCountData = res.data.betCount;
+          this.mcBetAmountData = res.data.betAmount;
+          this.mcRetAmountData = res.data.retAmount;
+          this.mcWinloseAmountData = res.data.winloseAmount;
+
+          this.mcPlayerCount();
+          this.mcBetCount();
+          this.mcBetAmount();
+          this.mcRetAmount();
+          this.mcWinloseAmount();
+
+          // console.log(this.mcPlayerCountData);
+
+          this.spinShow = false;
+        });
+        httpRequest("get", "/visual/rank/player", params, "map").then(res => {
+          this.pyBetCountData = res.data.betCount;
+          this.pyBetAmountData = res.data.betAmount;
+          this.pyRetAmountData = res.data.retAmount;
+          this.pyWinloseAmountData = res.data.winloseAmount;
+
+          this.pyBetCount();
+          this.pyBetAmount();
+          this.pyRetAmount();
+          this.pyWinloseAmount();
+        });
+        this.rankShow = true;
+      }
     }
   },
   computed: {
