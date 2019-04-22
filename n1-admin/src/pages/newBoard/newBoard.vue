@@ -394,6 +394,7 @@ export default {
           this.chinaMapUnit = "退款金额";
           this.chinaSplitList = this.chinaAllData.refundAmount[1];
           this.chinaData = this.chinaAllData.refundAmount[0];
+          break;
         case "4":
           this.chinaMapUnit = "返还金额";
           this.chinaSplitList = this.chinaAllData.retAmount[1];
@@ -431,6 +432,7 @@ export default {
           this.worldMapUnit = "退款金额";
           this.worldSplitList = this.worldAllData.refundAmount[1];
           this.worldData = this.worldAllData.refundAmount[0];
+          break;
         case "4":
           this.worldMapUnit = "返还金额";
           this.worldSplitList = this.worldAllData.retAmount[1];
