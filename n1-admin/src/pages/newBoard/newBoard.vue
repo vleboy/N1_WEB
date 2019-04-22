@@ -1289,7 +1289,7 @@ export default {
       });
       let datas = this.mcPlayerCountData.map(item => {
         return item.y;
-      }).reverse();
+      });
       myChart.setOption({
         tooltip: {
           trigger: "axis",
@@ -1323,7 +1323,7 @@ export default {
       });
       let datas = this.mcBetCountData.map(item => {
         return item.y;
-      }).reverse();
+      });
       myChart.setOption({
         tooltip: {
           trigger: "axis",
@@ -1356,7 +1356,7 @@ export default {
       });
       let datas = this.mcBetAmountData.map(item => {
         return item.y;
-      }).reverse();
+      });
       myChart.setOption({
         tooltip: {
           trigger: "axis",
@@ -1389,7 +1389,7 @@ export default {
       });
       let datas = this.mcRetAmountData.map(item => {
         return item.y;
-      }).reverse();
+      });
       myChart.setOption({
         tooltip: {
           trigger: "axis",
@@ -1422,7 +1422,7 @@ export default {
       });
       let datas = this.mcWinloseAmountData.map(item => {
         return item.y;
-      }).reverse();
+      });
       myChart.setOption({
         tooltip: {
           trigger: "axis",
@@ -1453,7 +1453,7 @@ export default {
       });
       let datas = this.pyBetCountData.map(item => {
         return item.y;
-      }).reverse();
+      });
       myChart.setOption({
         tooltip: {
           trigger: "axis",
@@ -1487,7 +1487,7 @@ export default {
       });
       let datas = this.pyBetAmountData.map(item => {
         return item.y;
-      }).reverse();
+      });
       myChart.setOption({
         tooltip: {
           trigger: "axis",
@@ -1521,7 +1521,7 @@ export default {
       });
       let datas = this.pyRetAmountData.map(item => {
         return item.y;
-      }).reverse();
+      });
       myChart.setOption({
         tooltip: {
           trigger: "axis",
@@ -1557,7 +1557,6 @@ export default {
         .map(item => {
           return item.y;
         })
-        .reverse();
 
       myChart.setOption({
         tooltip: {
@@ -1644,11 +1643,11 @@ export default {
       if (this.rankShow == 1) {
         // this.spinShow = true;
         httpRequest("get", "/visual/rank/merchant", params, "map").then(res => {
-          this.mcPlayerCountData = res.data.playerCount;
-          this.mcBetCountData = res.data.betCount;
-          this.mcBetAmountData = res.data.betAmount;
-          this.mcRetAmountData = res.data.retAmount;
-          this.mcWinloseAmountData = res.data.winloseAmount;
+          this.mcPlayerCountData = res.data.playerCount.reverse();
+          this.mcBetCountData = res.data.betCount.reverse();
+          this.mcBetAmountData = res.data.betAmount.reverse();
+          this.mcRetAmountData = res.data.retAmount.reverse();
+          this.mcWinloseAmountData = res.data.winloseAmount.reverse();
           this.mcPlayerCount();
           this.mcBetCount();
           this.mcBetAmount();
@@ -1657,10 +1656,10 @@ export default {
           // this.spinShow = false;
         });
         httpRequest("get", "/visual/rank/player", params, "map").then(res => {
-          this.pyBetCountData = res.data.betCount;
-          this.pyBetAmountData = res.data.betAmount;
-          this.pyRetAmountData = res.data.retAmount;
-          this.pyWinloseAmountData = res.data.winloseAmount;
+          this.pyBetCountData = res.data.betCount.reverse();
+          this.pyBetAmountData = res.data.betAmount.reverse();
+          this.pyRetAmountData = res.data.retAmount.reverse();
+          this.pyWinloseAmountData = res.data.winloseAmount.reverse();
           this.pyBetCount();
           this.pyBetAmount();
           this.pyRetAmount();
