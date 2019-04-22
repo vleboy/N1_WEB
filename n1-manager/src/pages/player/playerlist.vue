@@ -85,6 +85,27 @@ export default {
       isFetching: false,
       isLastMessage: false, // 主要判断是否是后台返回最后一次信息
       playerList: [],
+      GameListEnum: [
+        {code: "0",name: '离线'},
+        {code: '1', name: '大厅'},
+        { company: "NA", code: "70000", name: "H5电子游戏" },
+        { company: "NA", code: "90000", name: "H5电子游戏-无神秘奖" },
+        { company: "KY", code: "1070000", name: "KY棋牌游戏" },
+        { company: "TTG", code: "1010000", name: "TTG电子游戏" },
+        { company: "PNG", code: "1020000", name: "PNG电子游戏" },
+        { company: "MG", code: "10300000", name: "MG电子游戏" },
+        { company: "HABA", code: "1040000", name: "HABA电子游戏" },
+        { company: "AG", code: "1050000", name: "AG真人游戏" },
+        { company: "SA", code: "1060000", name: "SA真人游戏" },
+        { company: "SA", code: "1110000", name: "SA捕鱼游戏" },
+        { company: "PG", code: "1090000", name: "PG电子游戏" },
+        { company: "YSB", code: "1130000", name: "YSB体育游戏" },
+        { company: "RTG", code: "1140000", name: "RTG电子游戏" },
+        { company: "SB", code: "1080000", name: "SB电子游戏" },
+        { company: "SB", code: "1120000", name: "SB真人游戏" },
+        { company: "DT", code: "1150000", name: "DT电子游戏" },
+        { company: "PP", code: "1160000", name: "PP电子游戏" }
+      ],
       playerListStorage: [],
       playerListStartKey: "",
       playerStatus: ["已停用", "正常"],
@@ -393,7 +414,7 @@ export default {
       this.getPlayList();
     },
     getGameTypeList() {
-      httpRequest(
+      /* httpRequest(
         "post",
         "/gameBigType",
         {
@@ -417,7 +438,8 @@ export default {
           }
         );
         // this.$store.commit('closeLoading')
-      });
+      }); */
+      this.gameTypeList = this.GameListEnum
     }
   }
 };

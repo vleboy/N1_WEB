@@ -38,6 +38,7 @@ import pgVideo from '@/pages/reports/pgVideo'
 import habaVideo from '@/pages/reports/habaVideo'
 import pngVideo from '@/pages/reports/pngVideo'
 import natruehfive from '@/pages/reports/naTrueHfive'
+import kyChess from '@/pages/reports/kyChess'
 // import prizeList from '@/pages/opreateCenter/prizeList'
 import agentList from '@/pages/agentCenter/agentList'
 import warnList from '@/pages/agentCenter/warnList'
@@ -181,6 +182,13 @@ export const appRouter = [
         name:'ttggame',
         component:main,
         children:[{path:'video',title:'TTG电子游戏报表',name:'ttgvideo',component:ttgvideo}]
+    },
+    {
+        path: '/kygame',
+        title: 'KY游戏报表',
+        name: 'kygame',
+        component: main,
+        children: [{ path: 'chess', title: 'KY棋牌游戏报表', name: 'kychess', component: kyChess }]
     },
     {
         path:'/ysb',

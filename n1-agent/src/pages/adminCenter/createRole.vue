@@ -97,6 +97,15 @@ export default {
                   ]
                 },
                 {
+                  title: "KY游戏报表",
+                  expand: true,
+                  children: [
+                    {
+                      title: "KY棋牌游戏报表"
+                    }
+                  ]
+                },
+                {
                   title: "TTG游戏报表",
                   expand: true,
                   children: [

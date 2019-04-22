@@ -6,7 +6,7 @@ $
         <div class="from-search">
           <RadioGroup v-model="companyInfo" type="button" @on-change="changeCompany" size="small">
             <Radio
-              v-for="(item,index) of companyList"
+              v-for="(item,index) of getGameTypeList"
               :key="index"
               :label="item.company"
             >{{item.company}}</Radio>
@@ -15,7 +15,7 @@ $
         <div class="from-search">
           <RadioGroup v-model="radioInfo" type="button" size="small" @on-change="changeGameType">
             <Radio
-              v-for="(item,index) of getGameTypeList"
+              v-for="(item,index) of gameTypeList"
               :key="index"
               :label="item.code"
             >{{item.name}}</Radio>
