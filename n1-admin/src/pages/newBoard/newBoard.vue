@@ -39,159 +39,157 @@
       </div>
     </div>
     <Tabs type="card" @on-click="changeBoard">
-      <TabPane label="趋势">
-        <div class="echarts">
-          <Row>
-            <Col span="12">
-              <Card style="position:relative">
-                <h3 slot="title">游戏比例分布</h3>
-                <RadioGroup
-                  v-model="gameDtributedDataType"
-                  @on-change="changeGameDtributedDataType"
-                  class="gameDtributedEcharts"
-                  size="small"
-                >
-                  <Radio label="0">玩家数量</Radio>
-                  <Radio label="2">投注次数</Radio>
-                  <Radio label="1">投注金额</Radio>
-                  <Radio label="3">退款金额</Radio>
-                  <Radio label="4">返还金额</Radio>
-                </RadioGroup>
-                <div :style="{height:'300px',width:'100%'}" ref="gameDtributed"></div>
-              </Card>
-            </Col>
-            <Col span="12">
-              <Card>
-                <h3 slot="title">平台每日趋势</h3>
-                <div :style="{height:'300px',width:'100%'}" ref="report"></div>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col span="12">
-              <Card style="position:relative">
-                <h3 slot="title">全国地图大数据</h3>
-                <RadioGroup
-                  v-model="chinaDataType"
-                  @on-change="changeChinaDataType"
-                  class="chinaEcharts"
-                  size="small"
-                >
-                  <Radio label="0">玩家数量</Radio>
-                  <Radio label="2">投注次数</Radio>
-                  <Radio label="1">投注金额</Radio>
-                  <Radio label="3">退款金额</Radio>
-                  <Radio label="4">返还金额</Radio>
-                  <Radio label="5">输赢金额</Radio>
-                </RadioGroup>
-                <div :style="{height:'500px',width:'100%'}" ref="chinaEchart"></div>
-              </Card>
-            </Col>
-            <Col span="12">
-              <Card style="position:relative">
-                <h3 slot="title">世界地图大数据</h3>
-                <RadioGroup
-                  v-model="worldDataType"
-                  @on-change="changeWorldDataType"
-                  class="worldEcharts"
-                  size="small"
-                >
-                  <Radio label="0">玩家数量</Radio>
-                  <Radio label="2">投注次数</Radio>
-                  <Radio label="1">投注金额</Radio>
-                  <Radio label="3">退款金额</Radio>
-                  <Radio label="4">返还金额</Radio>
-                  <Radio label="5">输赢金额</Radio>
-                </RadioGroup>
-                <div :style="{height:'500px',width:'100%'}" ref="worldEchart"></div>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col span="12">
-              <Card style="position:relative">
-                <h3 slot="title">时刻比例分布</h3>
-                <div :style="{height:'300px',width:'90%'}" ref="momentBar"></div>
-              </Card>
-            </Col>
-            <Col span="12">
-              <Card style="position:relative">
-                <h3 slot="title">玩家注册趋势</h3>
-                <div :style="{height:'300px',width:'100%'}" ref="playerCount"></div>
-              </Card>
-            </Col>
-          </Row>
-          <!-- <div :style="{height:'600px',width:'100%'}" ref="dynamic"></div> -->
-        </div>
-      </TabPane>
-      <TabPane label="榜单">
-        <div class="echarts">
-          <Row>
-            <Col span="8">
-              <Card style="position:relative">
-                <h3 slot="title">商户玩家数量榜</h3>
-                <div :style="{height:'500px',width:'100%'}" ref="merchantPlayerCount"></div>
-              </Card>
-            </Col>
-            <Col span="8">
-              <Card style="position:relative">
-                <h3 slot="title">商户投注次数榜</h3>
-                <div :style="{height:'500px',width:'100%'}" ref="merchantBetCount"></div>
-              </Card>
-            </Col>
-            <Col span="8">
-              <Card style="position:relative">
-                <h3 slot="title">商户投注金额榜</h3>
-                <div :style="{height:'500px',width:'100%'}" ref="merchantBetAmount"></div>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col span="8">
-              <Card style="position:relative">
-                <h3 slot="title">商户返还金额榜</h3>
-                <div :style="{height:'500px',width:'100%'}" ref="merchantRetAmount"></div>
-              </Card>
-            </Col>
-            <Col span="16">
-              <Card style="position:relative">
-                <h3 slot="title">商户输赢金额榜</h3>
-                <div :style="{height:'500px',width:'100%'}" ref="merchantWinloseAmount"></div>
-              </Card>
-            </Col>
-          </Row>
-
-          <Row style="margin-top:2rem">
-            <Col span="8">
-              <Card style="position:relative">
-                <h3 slot="title">玩家投注次数榜(TOP10)</h3>
-                <div :style="{height:'500px',width:'100%'}" ref="playerBetCount"></div>
-              </Card>
-            </Col>
-            <Col span="8">
-              <Card style="position:relative">
-                <h3 slot="title">玩家投注金额榜(TOP10)</h3>
-                <div :style="{height:'500px',width:'100%'}" ref="playerBetAmount"></div>
-              </Card>
-            </Col>
-            <Col span="8">
-              <Card style="position:relative">
-                <h3 slot="title">玩家返还金额榜(TOP10)</h3>
-                <div :style="{height:'500px',width:'100%'}" ref="playerRetAmount"></div>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col span="24">
-              <Card style="position:relative">
-                <h3 slot="title">玩家输赢金额榜(ALL)</h3>
-                <div :style="{height:'500px',width:'100%'}" ref="playerWinloseAmount"></div>
-              </Card>
-            </Col>
-          </Row>
-        </div>
-      </TabPane>
+      <TabPane label="趋势"></TabPane>
+      <TabPane label="榜单"></TabPane>
     </Tabs>
+    <div class="echarts" v-if="contentShow">
+      <Row>
+        <Col span="12">
+          <Card style="position:relative">
+            <h3 slot="title">游戏比例分布</h3>
+            <RadioGroup
+              v-model="gameDtributedDataType"
+              @on-change="changeGameDtributedDataType"
+              class="gameDtributedEcharts"
+              size="small"
+            >
+              <Radio label="0">玩家数量</Radio>
+              <Radio label="2">投注次数</Radio>
+              <Radio label="1">投注金额</Radio>
+              <Radio label="3">退款金额</Radio>
+              <Radio label="4">返还金额</Radio>
+            </RadioGroup>
+            <div :style="{height:'300px',width:'100%'}" ref="gameDtributed"></div>
+          </Card>
+        </Col>
+        <Col span="12">
+          <Card>
+            <h3 slot="title">平台每日趋势</h3>
+            <div :style="{height:'300px',width:'100%'}" ref="report"></div>
+          </Card>
+        </Col>
+      </Row>
+      <Row>
+        <Col span="12">
+          <Card style="position:relative">
+            <h3 slot="title">全国地图大数据</h3>
+            <RadioGroup
+              v-model="chinaDataType"
+              @on-change="changeChinaDataType"
+              class="chinaEcharts"
+              size="small"
+            >
+              <Radio label="0">玩家数量</Radio>
+              <Radio label="2">投注次数</Radio>
+              <Radio label="1">投注金额</Radio>
+              <Radio label="3">退款金额</Radio>
+              <Radio label="4">返还金额</Radio>
+              <Radio label="5">输赢金额</Radio>
+            </RadioGroup>
+            <div :style="{height:'500px',width:'100%'}" ref="chinaEchart"></div>
+          </Card>
+        </Col>
+        <Col span="12">
+          <Card style="position:relative">
+            <h3 slot="title">世界地图大数据</h3>
+            <RadioGroup
+              v-model="worldDataType"
+              @on-change="changeWorldDataType"
+              class="worldEcharts"
+              size="small"
+            >
+              <Radio label="0">玩家数量</Radio>
+              <Radio label="2">投注次数</Radio>
+              <Radio label="1">投注金额</Radio>
+              <Radio label="3">退款金额</Radio>
+              <Radio label="4">返还金额</Radio>
+              <Radio label="5">输赢金额</Radio>
+            </RadioGroup>
+            <div :style="{height:'500px',width:'100%'}" ref="worldEchart"></div>
+          </Card>
+        </Col>
+      </Row>
+      <Row>
+        <Col span="12">
+          <Card style="position:relative">
+            <h3 slot="title">时刻比例分布</h3>
+            <div :style="{height:'300px',width:'90%'}" ref="momentBar"></div>
+          </Card>
+        </Col>
+        <Col span="12">
+          <Card style="position:relative">
+            <h3 slot="title">玩家注册趋势</h3>
+            <div :style="{height:'300px',width:'100%'}" ref="playerCount"></div>
+          </Card>
+        </Col>
+      </Row>
+      <!-- <div :style="{height:'600px',width:'100%'}" ref="dynamic"></div> -->
+    </div>
+    <div v-else>
+      <Row>
+        <Col span="8">
+          <Card style="position:relative">
+            <h3 slot="title">商户玩家数量榜</h3>
+            <div :style="{height:'800px',width:'100%'}" ref="merchantPlayerCount"></div>
+          </Card>
+        </Col>
+        <Col span="8">
+          <Card style="position:relative">
+            <h3 slot="title">商户投注次数榜</h3>
+            <div :style="{height:'800px',width:'100%'}" ref="merchantBetCount"></div>
+          </Card>
+        </Col>
+        <Col span="8">
+          <Card style="position:relative">
+            <h3 slot="title">商户投注金额榜</h3>
+            <div :style="{height:'800px',width:'100%'}" ref="merchantBetAmount"></div>
+          </Card>
+        </Col>
+      </Row>
+      <Row>
+        <Col span="8">
+          <Card style="position:relative">
+            <h3 slot="title">商户返还金额榜</h3>
+            <div :style="{height:'800px',width:'100%'}" ref="merchantRetAmount"></div>
+          </Card>
+        </Col>
+        <Col span="16">
+          <Card style="position:relative">
+            <h3 slot="title">商户输赢金额榜</h3>
+            <div :style="{height:'800px',width:'100%'}" ref="merchantWinloseAmount"></div>
+          </Card>
+        </Col>
+      </Row>
+
+      <Row style="margin-top:2rem">
+        <Col span="8">
+          <Card style="position:relative">
+            <h3 slot="title">玩家投注次数榜(TOP10)</h3>
+            <div :style="{height:'500px',width:'100%'}" ref="playerBetCount"></div>
+          </Card>
+        </Col>
+        <Col span="8">
+          <Card style="position:relative">
+            <h3 slot="title">玩家投注金额榜(TOP10)</h3>
+            <div :style="{height:'500px',width:'100%'}" ref="playerBetAmount"></div>
+          </Card>
+        </Col>
+        <Col span="8">
+          <Card style="position:relative">
+            <h3 slot="title">玩家返还金额榜(TOP10)</h3>
+            <div :style="{height:'500px',width:'100%'}" ref="playerRetAmount"></div>
+          </Card>
+        </Col>
+      </Row>
+      <Row>
+        <Col span="24">
+          <Card style="position:relative">
+            <h3 slot="title">玩家输赢金额榜(ALL)</h3>
+            <div :style="{height:'500px',width:'100%'}" ref="playerWinloseAmount"></div>
+          </Card>
+        </Col>
+      </Row>
+    </div>
   </div>
 </template>
 
@@ -210,7 +208,8 @@ export default {
   data() {
     return {
       source: "0",
-      rankShow: false,
+      rankShow: 0,
+      contentShow: true,
       options: {
         shortcuts: [
           {
@@ -357,18 +356,57 @@ export default {
     };
   },
   mounted() {
-    //console.log(new Date(1555551234703))
     this.getGameList();
     this.changeDate();
-
-    //this.init()
   },
   methods: {
     changeBoard(val) {
-      if (val == 1) {
+      if (val == 0) {
+        this.contentShow = true
+        this.$nextTick(
+          function () {
+            this.changeGameDtributedDataType();
+            this.reportConfigure();
+            this.changeChinaDataType();
+            this.changeWorldDataType();
+            this.momentBarConfigure();
+            this.playerCountConfigure();
+          }
+				)
+      } else {
+        this.contentShow = false
+        this.rankShow++;
+        this.rankInit();
+        /* this.$nextTick(
+          function () {
+            this.changeGameDtributedDataType();
+            this.reportConfigure();
+            this.changeChinaDataType();
+            this.changeWorldDataType();
+            this.momentBarConfigure();
+            this.playerCountConfigure();
+            this.rankShow = !this.rankShow;
+            this.rankInit();
+          }
+				) */
+      }
+       /* else {
+        this.contentShow = false
+        this.$nextTick(
+          function () {
+            this.changeGameDtributedDataType();
+            this.reportConfigure();
+            this.changeChinaDataType();
+            this.changeWorldDataType();
+            this.momentBarConfigure();
+            this.playerCountConfigure();
+          }
+				)
+      } */
+      /* if (val == 1) {
         this.rankShow = !this.rankShow;
         this.rankInit();
-      }
+      } */
     },
     getGameList() {
       this.gameType = this.GameListEnum;
@@ -448,7 +486,7 @@ export default {
           );
           break;
       }
-      this.rankShow = false
+      this.rankShow = 0;
       this.init();
     },
     changeChinaDataType(val) {
@@ -582,27 +620,27 @@ export default {
     },
     confirm() {
       this.defaultTime = this.changedTime;
-      this.rankShow = false
+      this.rankShow = 0;
       this.init();
     },
     search() {
-      this.rankShow = false
-      this.init()
+      this.rankShow = 0;
+      this.init();
     },
     reset() {
-      this.rankShow = false
-      let nowDate = new Date()
+      this.rankShow = 0;
+      let nowDate = new Date();
       this.defaultTime = [
         new Date(nowDate.getTime() - 24 * 3600 * 1000).setHours(0, 0, 0, 0) -
           89 * 24 * 3600 * 1000,
         new Date(nowDate.getTime() - 24 * 3600 * 1000).setHours(0, 0, 0, 0) +
           24 * 3600 * 1000 -
           1
-      ]
-      this.dateType = '3'
-      this.gameCode = ""
-      this.$refs.resetSelect.clearSingleSelect()
-      this.model1 = '全部游戏'
+      ];
+      this.dateType = "3";
+      this.gameCode = "";
+      this.$refs.resetSelect.clearSingleSelect();
+      this.model1 = "全部游戏";
       this.init();
     },
     chinaConfigure() {
@@ -961,7 +999,7 @@ export default {
         ]
       });
     },
-    playerCountConfigure() {
+    playerCountConfigure() {      
       let myChart = this.$echarts.init(this.$refs.playerCount);
       myChart.setOption({
         /* title: {
@@ -1251,7 +1289,7 @@ export default {
       });
       let datas = this.mcPlayerCountData.map(item => {
         return item.y;
-      });
+      }).reverse();
       myChart.setOption({
         tooltip: {
           trigger: "axis",
@@ -1285,7 +1323,7 @@ export default {
       });
       let datas = this.mcBetCountData.map(item => {
         return item.y;
-      });
+      }).reverse();
       myChart.setOption({
         tooltip: {
           trigger: "axis",
@@ -1318,7 +1356,7 @@ export default {
       });
       let datas = this.mcBetAmountData.map(item => {
         return item.y;
-      });
+      }).reverse();
       myChart.setOption({
         tooltip: {
           trigger: "axis",
@@ -1351,7 +1389,7 @@ export default {
       });
       let datas = this.mcRetAmountData.map(item => {
         return item.y;
-      });
+      }).reverse();
       myChart.setOption({
         tooltip: {
           trigger: "axis",
@@ -1384,7 +1422,7 @@ export default {
       });
       let datas = this.mcWinloseAmountData.map(item => {
         return item.y;
-      });
+      }).reverse();
       myChart.setOption({
         tooltip: {
           trigger: "axis",
@@ -1415,7 +1453,7 @@ export default {
       });
       let datas = this.pyBetCountData.map(item => {
         return item.y;
-      });
+      }).reverse();
       myChart.setOption({
         tooltip: {
           trigger: "axis",
@@ -1449,7 +1487,7 @@ export default {
       });
       let datas = this.pyBetAmountData.map(item => {
         return item.y;
-      });
+      }).reverse();
       myChart.setOption({
         tooltip: {
           trigger: "axis",
@@ -1483,7 +1521,7 @@ export default {
       });
       let datas = this.pyRetAmountData.map(item => {
         return item.y;
-      });
+      }).reverse();
       myChart.setOption({
         tooltip: {
           trigger: "axis",
@@ -1520,7 +1558,6 @@ export default {
           return item.y;
         })
         .reverse();
-      //console.log(datas);
 
       myChart.setOption({
         tooltip: {
@@ -1593,51 +1630,56 @@ export default {
       let params = {};
       if (this.gameCode == "") {
         params = {
-          startTime: new Date(this.defaultTime[0]).getTime(),
-          endTime: new Date(this.defaultTime[1]).getTime()
+          startTime: this.defaultTime[0],
+          endTime: this.defaultTime[1]
         };
       } else {
         params = {
-          startTime: new Date(this.defaultTime[0]).getTime(),
-          endTime: new Date(this.defaultTime[1]).getTime(),
+          startTime: this.defaultTime[0],
+          endTime: this.defaultTime[1],
           gameType: this.gameCode
         };
       }
-
       //榜单
-      if (this.rankShow) {
-        console.log(this.rankShow);
-
-        this.spinShow = true;
+      if (this.rankShow == 1) {
+        // this.spinShow = true;
         httpRequest("get", "/visual/rank/merchant", params, "map").then(res => {
           this.mcPlayerCountData = res.data.playerCount;
           this.mcBetCountData = res.data.betCount;
           this.mcBetAmountData = res.data.betAmount;
           this.mcRetAmountData = res.data.retAmount;
           this.mcWinloseAmountData = res.data.winloseAmount;
-
           this.mcPlayerCount();
           this.mcBetCount();
           this.mcBetAmount();
           this.mcRetAmount();
           this.mcWinloseAmount();
-
-          // console.log(this.mcPlayerCountData);
-
-          this.spinShow = false;
+          // this.spinShow = false;
         });
         httpRequest("get", "/visual/rank/player", params, "map").then(res => {
           this.pyBetCountData = res.data.betCount;
           this.pyBetAmountData = res.data.betAmount;
           this.pyRetAmountData = res.data.retAmount;
           this.pyWinloseAmountData = res.data.winloseAmount;
-
           this.pyBetCount();
           this.pyBetAmount();
           this.pyRetAmount();
           this.pyWinloseAmount();
         });
-        this.rankShow = true;
+      } else {
+        this.$nextTick(
+          function () {
+            this.mcPlayerCount();
+            this.mcBetCount();
+            this.mcBetAmount();
+            this.mcRetAmount();
+            this.mcWinloseAmount();
+            this.pyBetCount();
+            this.pyBetAmount();
+            this.pyRetAmount();
+            this.pyWinloseAmount();
+          }
+				)
       }
     }
   },
@@ -1654,9 +1696,9 @@ export default {
       return time;
     }
   },
-  beforeDestroy() {
+  /* beforeDestroy() {
     clearInterval(this.hander);
-  }
+  } */
 };
 </script>
 
@@ -1713,6 +1755,25 @@ export default {
     display: flex;
     margin-bottom: 100px;
     // justify-content: space-around;
+  }
+
+  /deep/ .ivu-tabs-bar {
+    height: 2.25rem;
+  }
+  /deep/ .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-nav-container {
+    height: 2.25rem;
+  }
+  /deep/ .ivu-tabs-nav {
+    height: 2.25rem;
+  }
+  /deep/ .ivu-tabs-nav-scroll {
+    height: 2.25rem;
+  }
+  /deep/ .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab {
+    width: 6rem;
+    height: 2.25rem;
+    font-size: 1.2rem;
+    text-align: center;
   }
 }
 </style>
