@@ -18,6 +18,7 @@
       <div class="right">
         <RadioGroup v-model="dateType" @on-change="changeDate" type="button">
           <Radio label="0">昨日</Radio>
+          <Radio label="4">今日</Radio>
           <Radio label="1">近一周</Radio>
           <Radio label="2">近一个月</Radio>
           <Radio label="3">近三个月</Radio>
@@ -452,6 +453,19 @@ export default {
               1
           );
           break;
+        case "4":
+          this.defaultTime.push(
+            new Date(nowDate.getTime()).setHours(
+              0,
+              0,
+              0,
+              0
+            )
+          );
+          this.defaultTime.push(
+            new Date(nowDate.getTime() - 3 * 60 * 1000)
+          );
+          break;  
         case "1":
           this.defaultTime.push(
             new Date(nowDate.getTime() - 24 * 3600 * 1000).setHours(
@@ -1738,15 +1752,15 @@ export default {
       if (this.gameCode == "") {
         params = {
           parent: JSON.parse(localStorage.getItem('userInfo')).parent,
-          startTime: this.defaultTime[0],
-          endTime: this.defaultTime[1]
+          startTime: new Date(this.defaultTime[0]).getTime(),
+          endTime: new Date(this.defaultTime[1]).getTime()
         };
       } else {
         params = {
           parent: JSON.parse(localStorage.getItem('userInfo')).parent,
           startTime: this.defaultTime[0],
-          endTime: this.defaultTime[1],
-          gameType: this.gameCode
+          startTime: new Date(this.defaultTime[0]).getTime(),
+          endTime: new Date(this.defaultTime[1]).getTime()
         };
       }
       //榜单
