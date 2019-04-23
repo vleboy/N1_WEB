@@ -704,6 +704,7 @@ export default {
             name: this.chinaMapUnit,
             type: "map",
             mapType: "china",
+            zoom : 1.2,
             roam: false,
             label: {
               normal: {
@@ -750,6 +751,7 @@ export default {
             name: this.worldMapUnit,
             type: "map",
             mapType: "world",
+            zoom : 1.2,
             roam: false,
             label: {
               normal: {
@@ -980,6 +982,9 @@ export default {
         yAxis: {
           type: "value"
         },
+        grid: {
+          bottom: "6%"
+        },
         legend: {
           data: [
             "玩家数量",
@@ -1047,10 +1052,12 @@ export default {
         },
         yAxis: {
           type: "value",
-          boundaryGap: [0, "100%"],
           splitLine: {
             show: false
           }
+        },
+        grid: {
+          bottom: "6%"
         },
         legend: {
           //orient: 'vertical',
@@ -1158,6 +1165,7 @@ export default {
         },
         grid: {
           left: "15%",
+          bottom: "6%"
         },
         legend: {
           //orient: 'vertical',
