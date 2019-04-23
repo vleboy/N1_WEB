@@ -95,13 +95,13 @@ export const appRouter = [
         component:main,
         children:[{path:'index',title:'个人中心', name:'ownspace-index',component:ownSpace}]
     },
-    {
+    /* {
       path:'/boards',
       title:'看板',
       name:'boards',
       component:main,
       children:[{path:'board',title:'看板', name:'board',component:board}]
-    },
+    }, */
     {
         path:'/allreport',
         title:'公司输赢总报表',

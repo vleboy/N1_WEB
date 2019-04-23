@@ -8,7 +8,7 @@
                   <span>看板</span>
                 </MenuItem> -->
                 <MenuItem name="newBoard" v-if='permission.includes("新看板")'>
-                <Icon type="stats-bars"></Icon>
+                  <Icon type="stats-bars"></Icon>
                   <span>看板</span>
                 </MenuItem>
                 <MenuItem name="ownspace-index" v-if='permission.includes("个人中心")'>

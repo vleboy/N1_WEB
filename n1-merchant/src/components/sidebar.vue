@@ -3,13 +3,17 @@
         <Sider width='256px' collapsible hide-trigger :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto'}">
             <img class="logoimg" src="../../static/logo.png" alt="">
             <Menu ref="sideMenu" :active-name="$route.name" :open-names="openName" theme="dark" width="auto" @on-select='selectMenu'>
-                <MenuItem name="board">
-                <Icon type="stats-bars"></Icon>
-                <span>看板</span>
+                <!-- <MenuItem name="board">
+                  <Icon type="stats-bars"></Icon>
+                  <span>看板</span>
+                </MenuItem> -->
+                <MenuItem name="newBoard">
+                  <Icon type="stats-bars"></Icon>
+                  <span>看板(新)</span>
                 </MenuItem>
                 <MenuItem name="ownspace-index">
-                <Icon type="person"></Icon>
-                <span>个人中心</span>
+                  <Icon type="person"></Icon>
+                  <span>个人中心</span>
                 </MenuItem>
                 <Submenu name="report" v-if="gameList.length>0">
                     <template slot="title">

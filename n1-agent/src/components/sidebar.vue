@@ -3,10 +3,10 @@
         <Sider width='256px' collapsible hide-trigger :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto'}">
             <img class="logoimg" src="../../static/logo.png" alt="">
             <Menu ref="sideMenu" :active-name="$route.name" :open-names="openName" theme="dark" width="auto" @on-select='selectMenu'>
-                <MenuItem name="board" v-if='permission.includes("看板") || level!=0'>
+                <!-- <MenuItem name="board" v-if='permission.includes("看板") || level!=0'>
                     <Icon type="stats-bars"></Icon>
                     <span>看板</span>
-                </MenuItem>
+                </MenuItem> -->
                 <MenuItem name="ownspace-index" v-if='permission.includes("个人中心")|| level!=0'>
                     <Icon type="person"></Icon>
                     <span>个人中心</span>

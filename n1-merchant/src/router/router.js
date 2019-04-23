@@ -7,6 +7,7 @@ import playerDetail from '@/pages/player/playerdetail'
 // appRouter
 import ownSpace from '@/pages/ownSpace'
 import board from '@/pages/board/board'
+import newBoard from '@/pages/newBoard/newBoard'
 import allReport from '@/pages/reports/allReport'
 import agtrue from '@/pages/reports/agTrueGame'
 import mgvideo from '@/pages/reports/mgVideoGame'
@@ -85,13 +86,20 @@ export const appRouter = [
            component: main,
            children: [{ path: 'index', title: '个人中心', name: 'ownspace-index', component: ownSpace }]
          },
-         {
+         /* {
            path: '/boards',
            title: '看板',
            name: 'boards',
            component: main,
            children: [{ path: 'board', title: '看板', name: 'board', component: board }]
-         },
+         }, */
+         {
+          path: '/newBoard',
+          title: '看板',
+          name: 'newBoard',
+          component: main,
+          children: [{ path: 'newBoard', title: '看板', name: 'newBoard', component: newBoard }]
+        },
          {
            path: '/allreport',
            title: '公司输赢总报表',
