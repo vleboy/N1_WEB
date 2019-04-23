@@ -41,9 +41,10 @@
     </div>
     <Tabs type="card" @on-click="changeBoard">
       <TabPane label="趋势"></TabPane>
-      <TabPane label="榜单"></TabPane>
+      <TabPane label="商户榜单"></TabPane>
+      <TabPane label="玩家榜单"></TabPane>
     </Tabs>
-    <div class="echarts" v-if="contentShow">
+    <div class="echarts" v-if="initNum == 0">
       <Row>
         <Col span="12">
           <Card style="position:relative">
@@ -126,7 +127,7 @@
       </Row>
       <!-- <div :style="{height:'600px',width:'100%'}" ref="dynamic"></div> -->
     </div>
-    <div v-else>
+    <div v-else-if="initNum == 1">
       <Row>
         <Col span="8">
           <Card style="position:relative">
@@ -161,24 +162,25 @@
           </Card>
         </Col>
       </Row>
-
-      <Row style="margin-top:2rem">
+    </div>
+    <div v-else>
+      <Row>
         <Col span="8">
           <Card style="position:relative">
             <h3 slot="title">玩家投注次数榜(TOP10)</h3>
-            <div :style="{height:'500px',width:'100%'}" ref="playerBetCount"></div>
+            <div :style="{height:'550px',width:'100%'}" ref="playerBetCount"></div>
           </Card>
         </Col>
         <Col span="8">
           <Card style="position:relative">
             <h3 slot="title">玩家投注金额榜(TOP10)</h3>
-            <div :style="{height:'500px',width:'100%'}" ref="playerBetAmount"></div>
+            <div :style="{height:'550px',width:'100%'}" ref="playerBetAmount"></div>
           </Card>
         </Col>
         <Col span="8">
           <Card style="position:relative">
             <h3 slot="title">玩家返还金额榜(TOP10)</h3>
-            <div :style="{height:'500px',width:'100%'}" ref="playerRetAmount"></div>
+            <div :style="{height:'550px',width:'100%'}" ref="playerRetAmount"></div>
           </Card>
         </Col>
       </Row>
@@ -186,16 +188,21 @@
         <Col span="8">
           <Card style="position:relative">
             <h3 slot="title">玩家输赢金额榜(TOP10 & LAST10)</h3>
-            <div :style="{height:'500px',width:'100%'}" ref="playerWinloseAmount"></div>
+            <div :style="{height:'550px',width:'100%'}" ref="playerWinloseAmount"></div>
           </Card>
         </Col>
       </Row>
     </div>
+
     <Spin size="large" fix v-show="spinShow" style="z-index:200;margin-top:-350px">
       <Icon type="load-c" size="18" class="demo-spin-icon-load" style=""></Icon>
       <div style="">加载中...</div>
     </Spin>
-    <Spin size="large" fix v-show="spinShow1" style="z-index:200;margin-top:-900px">
+    <Spin size="large" fix v-show="spinShow1" style="z-index:200;margin-top:-350px">
+      <Icon type="load-c" size="18" class="demo-spin-icon-load" style=""></Icon>
+      <div style="">加载中...</div>
+    </Spin>
+    <Spin size="large" fix v-show="spinShow2" style="z-index:200;margin-top:-150px">
       <Icon type="load-c" size="18" class="demo-spin-icon-load" style=""></Icon>
       <div style="">加载中...</div>
     </Spin>
@@ -218,8 +225,9 @@ export default {
     return {
       source: "0",
       initNum: "0",
-      contentShow: true,
       spinShow1: false,
+      spinShow2: false,
+      rankCount: 0,
       options: {
         shortcuts: [
           {
@@ -371,52 +379,26 @@ export default {
   },
   methods: {
     changeBoard(val) {
-      this.initNum = val;
+      this.initNum = val
+      if (this.initNum == undefined) {
+        this.initNum = '0'
+      } else {
+        this.initNum = val
+      }
+
+      console.log(this.initNum);
       if (this.initNum == 0) {
-        this.contentShow = true;
         this.$nextTick(function() {
-          /* this.changeGameDtributedDataType();
-            this.reportConfigure();
-            this.changeChinaDataType();
-            this.changeWorldDataType();
-            this.momentBarConfigure();
-            this.playerCountConfigure(); */
           this.init();
         });
+      } else if (this.initNum == 1){
+        //this.rankInit();
+        this.$nextTick(function () {
+          this.mcRankInit()
+        })
       } else {
-        this.contentShow = false;
-
-        this.rankInit();
-        /* this.$nextTick(
-          function () {
-            this.changeGameDtributedDataType();
-            this.reportConfigure();
-            this.changeChinaDataType();
-            this.changeWorldDataType();
-            this.momentBarConfigure();
-            this.playerCountConfigure();
-            this.rankShow = !this.rankShow;
-            this.rankInit();
-          }
-				) */
+        this.pyRankInit()
       }
-      /* else {
-        this.contentShow = false
-        this.$nextTick(
-          function () {
-            this.changeGameDtributedDataType();
-            this.reportConfigure();
-            this.changeChinaDataType();
-            this.changeWorldDataType();
-            this.momentBarConfigure();
-            this.playerCountConfigure();
-          }
-				)
-      } */
-      /* if (val == 1) {
-        this.rankShow = !this.rankShow;
-        this.rankInit();
-      } */
     },
     getGameList() {
       this.gameType = this.GameListEnum;
@@ -425,11 +407,14 @@ export default {
       this.gameCode = code;
       if (this.initNum == 0) {
         this.init();
+      } else if (this.initNum == 1){
+        this.mcRankInit();
       } else {
-        this.rankInit();
+        this.pyRankInit()
       }
     },
     changeDate(val) {
+      
       if (val == undefined) {
         val = this.dateType;
       }
@@ -533,12 +518,16 @@ export default {
           );
           break;
       }
-
+      console.log(this.initNum);
+      
       if (this.initNum == 0) {
-        this.init();
-      } else {
-        this.rankInit();
+        this.changeBoard();
+      } else if (this.initNum == 1) {
+        this.mcRankInit()
+      }else {
+        this.pyRankInit();
       }
+      this.rankCount ++
     },
     changeChinaDataType(val) {
       if (val == undefined) {
@@ -673,15 +662,19 @@ export default {
       this.defaultTime = this.changedTime;
       if (this.initNum == 0) {
         this.init();
-      } else {
-        this.rankInit();
+      } else if (this.initNum == 1) {
+        this.mcRankInit();
+      }else {
+        this.pyRankInit();
       }
     },
     search() {
       if (this.initNum == 0) {
         this.init();
-      } else {
-        this.rankInit();
+      } else if (this.initNum == 1) {
+        this.mcRankInit()
+      }else {
+        this.pyRankInit()
       }
     },
     reset() {
@@ -700,8 +693,10 @@ export default {
 
       if (this.initNum == 0) {
         this.init();
-      } else {
-        this.rankInit();
+      } else if(this.initNum == 1) {
+        this.mcRankInit();
+      }else {
+        this.pyRankInit();
       }
     },
     chinaConfigure() {
@@ -1746,7 +1741,7 @@ export default {
         });
       });
     },
-    rankInit() {
+    mcRankInit() {
       let params = {};
       if (this.gameCode == "") {
         params = {
@@ -1775,6 +1770,22 @@ export default {
         this.mcWinloseAmount();
         this.spinShow1 = false;
       });
+    },
+    pyRankInit() {
+      let params = {};
+      if (this.gameCode == "") {
+        params = {
+          startTime: new Date(this.defaultTime[0]).getTime(),
+          endTime: new Date(this.defaultTime[1]).getTime()
+        };
+      } else {
+        params = {
+          startTime: new Date(this.defaultTime[0]).getTime(),
+          endTime: new Date(this.defaultTime[1]).getTime(),
+          gameType: this.gameCode
+        };
+      }
+      this.spinShow2 = true;
       httpRequest("get", "/visual/rank/player", params, "map").then(res => {
         this.pyBetCountData = res.data.betCount.reverse();
         this.pyBetAmountData = res.data.betAmount.reverse();
@@ -1784,6 +1795,7 @@ export default {
         this.pyBetAmount();
         this.pyRetAmount();
         this.pyWinloseAmount();
+        this.spinShow2 = false;
       });
     }
   },
@@ -1876,7 +1888,7 @@ export default {
   /deep/ .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab {
     width: 6rem;
     height: 2.25rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-align: center;
   }
 }
