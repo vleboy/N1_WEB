@@ -10,14 +10,11 @@ const get = (urls, type, params) => {
     'Content-Type': 'application/json; charset=utf-8',
     Authorization: token
   }
-  let getHeaders = {
-    Authorization: token
-  }
   return {
     method: 'get',
     url: URL(type) + urls,
     params: params,
-    headers: getHeaders
+    headers
   }
 }
 
