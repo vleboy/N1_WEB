@@ -7,6 +7,9 @@
         <Radio label="1">测试</Radio>
         <Radio label="2">全部</Radio>
       </RadioGroup>-->
+      <!-- 1553356800000, 1555948799999-->
+      <!-- 155586240000, 1555948799999-->
+
       <Select style="width:200px;" ref="resetSelect" clearable v-model="model1">
         <Option
           v-for="(item, index) in gameType"
@@ -18,6 +21,7 @@
       <div class="right">
         <RadioGroup v-model="dateType" @on-change="changeDate" type="button">
           <Radio label="0">昨日</Radio>
+          <Radio label="4">今日</Radio>
           <Radio label="1">近一周</Radio>
           <Radio label="2">近一个月</Radio>
           <Radio label="3">近三个月</Radio>
@@ -452,6 +456,19 @@ export default {
               1
           );
           break;
+        case "4":
+          this.defaultTime.push(
+            new Date(nowDate.getTime()).setHours(
+              0,
+              0,
+              0,
+              0
+            )
+          );
+          this.defaultTime.push(
+            new Date(nowDate.getTime() - 3 * 60 * 1000)
+          );
+          break;  
         case "1":
           this.defaultTime.push(
             new Date(nowDate.getTime() - 24 * 3600 * 1000).setHours(
@@ -1733,13 +1750,13 @@ export default {
       let params = {};
       if (this.gameCode == "") {
         params = {
-          startTime: this.defaultTime[0],
-          endTime: this.defaultTime[1]
+          startTime: new Date(this.defaultTime[0]).getTime(),
+          endTime: new Date(this.defaultTime[1]).getTime()
         };
       } else {
         params = {
-          startTime: this.defaultTime[0],
-          endTime: this.defaultTime[1],
+          startTime: new Date(this.defaultTime[0]).getTime(),
+          endTime: new Date(this.defaultTime[1]).getTime(),
           gameType: this.gameCode
         };
       }
