@@ -1,9 +1,5 @@
 <template>
   <div class="newBoard">
-    <Spin size="large" fix v-show="spinShow" style="z-index:200;">
-      <Icon type="load-c" size="18" class="demo-spin-icon-load" style="top:-80rem"></Icon>
-      <div style="top:-80rem">加载中...</div>
-    </Spin>
     <div class="top">
       <!--  当前用户列表--- -->
       <!-- <RadioGroup v-model="source" class="radioGroup" type="button" style="margin-right:1rem">
@@ -21,6 +17,7 @@
       </Select>
       <div class="right">
         <RadioGroup v-model="dateType" @on-change="changeDate" type="button">
+          <Radio label="0">昨日</Radio>
           <Radio label="1">近一周</Radio>
           <Radio label="2">近一个月</Radio>
           <Radio label="3">近三个月</Radio>
@@ -190,6 +187,14 @@
         </Col>
       </Row>
     </div>
+    <Spin size="large" fix v-show="spinShow" style="z-index:200;margin-top:-350px">
+      <Icon type="load-c" size="18" class="demo-spin-icon-load" style=""></Icon>
+      <div style="">加载中...</div>
+    </Spin>
+    <Spin size="large" fix v-show="spinShow1" style="z-index:200;margin-top:-900px">
+      <Icon type="load-c" size="18" class="demo-spin-icon-load" style=""></Icon>
+      <div style="">加载中...</div>
+    </Spin>
   </div>
 </template>
 
@@ -208,8 +213,9 @@ export default {
   data() {
     return {
       source: "0",
-      initNum: '0',
+      initNum: "0",
       contentShow: true,
+      spinShow1: false,
       options: {
         shortcuts: [
           {
@@ -342,7 +348,7 @@ export default {
       spinShow: false,
       model1: "全部游戏",
       gameCode: "",
-      dateType: "3",
+      dateType: "2",
       chinaDataType: "0",
       worldDataType: "0",
       gameDtributedDataType: "0",
@@ -361,23 +367,21 @@ export default {
   },
   methods: {
     changeBoard(val) {
-      this.initNum = val
+      this.initNum = val;
       if (this.initNum == 0) {
-        this.contentShow = true
-        this.$nextTick(
-          function () {
-            /* this.changeGameDtributedDataType();
+        this.contentShow = true;
+        this.$nextTick(function() {
+          /* this.changeGameDtributedDataType();
             this.reportConfigure();
             this.changeChinaDataType();
             this.changeWorldDataType();
             this.momentBarConfigure();
             this.playerCountConfigure(); */
-            this.init()
-          }
-				)
+          this.init();
+        });
       } else {
-        this.contentShow = false
-        
+        this.contentShow = false;
+
         this.rankInit();
         /* this.$nextTick(
           function () {
@@ -392,7 +396,7 @@ export default {
           }
 				) */
       }
-       /* else {
+      /* else {
         this.contentShow = false
         this.$nextTick(
           function () {
@@ -418,9 +422,8 @@ export default {
       if (this.initNum == 0) {
         this.init();
       } else {
-        this.rankInit()
+        this.rankInit();
       }
-      
     },
     changeDate(val) {
       if (val == undefined) {
@@ -429,6 +432,26 @@ export default {
       let nowDate = new Date();
       this.defaultTime = [];
       switch (val) {
+        case "0":
+          this.defaultTime.push(
+            new Date(nowDate.getTime() - 24 * 3600 * 1000).setHours(
+              0,
+              0,
+              0,
+              0
+            )
+          );
+          this.defaultTime.push(
+            new Date(nowDate.getTime() - 24 * 3600 * 1000).setHours(
+              0,
+              0,
+              0,
+              0
+            ) +
+              24 * 3600 * 1000 -
+              1
+          );
+          break;
         case "1":
           this.defaultTime.push(
             new Date(nowDate.getTime() - 24 * 3600 * 1000).setHours(
@@ -493,13 +516,12 @@ export default {
           );
           break;
       }
-      
+
       if (this.initNum == 0) {
         this.init();
       } else {
-        this.rankInit()
+        this.rankInit();
       }
-      
     },
     changeChinaDataType(val) {
       if (val == undefined) {
@@ -635,20 +657,17 @@ export default {
       if (this.initNum == 0) {
         this.init();
       } else {
-        this.rankInit()
+        this.rankInit();
       }
-      
     },
     search() {
       if (this.initNum == 0) {
         this.init();
       } else {
-        this.rankInit()
+        this.rankInit();
       }
-      
     },
     reset() {
-      
       let nowDate = new Date();
       this.defaultTime = [
         new Date(nowDate.getTime() - 24 * 3600 * 1000).setHours(0, 0, 0, 0) -
@@ -657,7 +676,7 @@ export default {
           24 * 3600 * 1000 -
           1
       ];
-      this.dateType = "3";
+      this.dateType = "2";
       this.gameCode = "";
       this.$refs.resetSelect.clearSingleSelect();
       this.model1 = "全部游戏";
@@ -665,9 +684,8 @@ export default {
       if (this.initNum == 0) {
         this.init();
       } else {
-        this.rankInit()
+        this.rankInit();
       }
-      
     },
     chinaConfigure() {
       this.$echarts.registerMap("china", chinaJson);
@@ -704,7 +722,7 @@ export default {
             name: this.chinaMapUnit,
             type: "map",
             mapType: "china",
-            zoom : 1.2,
+            zoom: 1.2,
             roam: false,
             label: {
               normal: {
@@ -751,7 +769,7 @@ export default {
             name: this.worldMapUnit,
             type: "map",
             mapType: "world",
-            zoom : 1.2,
+            zoom: 1.2,
             roam: false,
             label: {
               normal: {
@@ -1030,7 +1048,7 @@ export default {
         ]
       });
     },
-    playerCountConfigure() {      
+    playerCountConfigure() {
       let myChart = this.$echarts.init(this.$refs.playerCount);
       myChart.setOption({
         /* title: {
@@ -1170,7 +1188,7 @@ export default {
         legend: {
           //orient: 'vertical',
           top: "top",
-          left:0,
+          left: 0,
           data: [
             "玩家数量",
             "投注次数",
@@ -1331,10 +1349,10 @@ export default {
           axisPointer: {
             type: "shadow"
           },
-          formatter: '{b0}</br>{c0} 人'
+          formatter: "{b0}</br>{c0} 人"
         },
         xAxis: {
-          name: '单位\n人',
+          name: "单位\n人",
           type: "value"
         },
         yAxis: {
@@ -1344,9 +1362,9 @@ export default {
         },
         grid: {
           left: "18%",
-          right:"12%",
-          top: '0',
-          bottom: '5%',
+          right: "12%",
+          top: "0",
+          bottom: "5%"
         },
         series: [
           {
@@ -1370,11 +1388,11 @@ export default {
           axisPointer: {
             type: "shadow"
           },
-          formatter: '{b0}</br>{c0} 万次'
+          formatter: "{b0}</br>{c0} 万次"
         },
         xAxis: {
-          name: '单位\n万次',
-          type: "value",
+          name: "单位\n万次",
+          type: "value"
         },
         yAxis: {
           type: "category",
@@ -1382,9 +1400,9 @@ export default {
         },
         grid: {
           left: "18%",
-          right:"12%",
-          top: '0',
-          bottom: '5%',
+          right: "12%",
+          top: "0",
+          bottom: "5%"
         },
         series: [
           {
@@ -1408,11 +1426,11 @@ export default {
           axisPointer: {
             type: "shadow"
           },
-          formatter: '{b0}</br>{c0} 万元'
+          formatter: "{b0}</br>{c0} 万元"
         },
         xAxis: {
-          name: '单位\n万元',
-          type: "value",
+          name: "单位\n万元",
+          type: "value"
         },
         yAxis: {
           type: "category",
@@ -1420,9 +1438,9 @@ export default {
         },
         grid: {
           left: "18%",
-          right:"12%",
-          top: '0',
-          bottom: '5%',
+          right: "12%",
+          top: "0",
+          bottom: "5%"
         },
         series: [
           {
@@ -1446,10 +1464,10 @@ export default {
           axisPointer: {
             type: "shadow"
           },
-          formatter: '{b0}</br>{c0} 万元'
+          formatter: "{b0}</br>{c0} 万元"
         },
         xAxis: {
-          name: '单位\n万元',
+          name: "单位\n万元",
           type: "value"
         },
         yAxis: {
@@ -1458,9 +1476,9 @@ export default {
         },
         grid: {
           left: "18%",
-          right:"12%",
-          top: '0',
-          bottom: '5%',
+          right: "12%",
+          top: "0",
+          bottom: "5%"
         },
         series: [
           {
@@ -1484,10 +1502,10 @@ export default {
           axisPointer: {
             type: "shadow"
           },
-          formatter: '{b0}</br>{c0} 万元'
+          formatter: "{b0}</br>{c0} 万元"
         },
         xAxis: {
-          name: '单位\n万元',
+          name: "单位\n万元",
           type: "value"
         },
         yAxis: {
@@ -1496,9 +1514,9 @@ export default {
         },
         grid: {
           left: "18%",
-          right:"12%",
-          top: '0',
-          bottom: '5%',
+          right: "12%",
+          top: "0",
+          bottom: "5%"
         },
         series: [
           {
@@ -1523,10 +1541,10 @@ export default {
           axisPointer: {
             type: "shadow"
           },
-          formatter: '{b0}</br>{c0} 万次'
+          formatter: "{b0}</br>{c0} 万次"
         },
         xAxis: {
-          name: '单位\n万次',
+          name: "单位\n万次",
           type: "value"
         },
         yAxis: {
@@ -1536,9 +1554,9 @@ export default {
         },
         grid: {
           left: "35%",
-          right:"12%",
-          top: '0',
-          bottom: '5%',
+          right: "12%",
+          top: "0",
+          bottom: "5%"
         },
         series: [
           {
@@ -1562,10 +1580,10 @@ export default {
           axisPointer: {
             type: "shadow"
           },
-          formatter: '{b0}</br>{c0} 万元'
+          formatter: "{b0}</br>{c0} 万元"
         },
         xAxis: {
-          name: '单位\n万元',
+          name: "单位\n万元",
           type: "value"
         },
         yAxis: {
@@ -1575,9 +1593,9 @@ export default {
         },
         grid: {
           left: "35%",
-          right:"12%",
-          top: '0',
-          bottom: '5%',
+          right: "12%",
+          top: "0",
+          bottom: "5%"
         },
         series: [
           {
@@ -1601,10 +1619,10 @@ export default {
           axisPointer: {
             type: "shadow"
           },
-          formatter: '{b0}</br>{c0} 万元'
+          formatter: "{b0}</br>{c0} 万元"
         },
         xAxis: {
-          name: '单位\n万元',
+          name: "单位\n万元",
           type: "value"
         },
         yAxis: {
@@ -1614,9 +1632,9 @@ export default {
         },
         grid: {
           left: "35%",
-          right:"12%",
-          top: '0',
-          bottom: '5%',
+          right: "12%",
+          top: "0",
+          bottom: "5%"
         },
         series: [
           {
@@ -1631,10 +1649,9 @@ export default {
       let merchant = this.pyWinloseAmountData.map(item => {
         return item.x;
       });
-      let datas = this.pyWinloseAmountData
-        .map(item => {
-          return (item.y / 10000).toFixed(2);
-        })
+      let datas = this.pyWinloseAmountData.map(item => {
+        return (item.y / 10000).toFixed(2);
+      });
 
       myChart.setOption({
         tooltip: {
@@ -1642,17 +1659,17 @@ export default {
           axisPointer: {
             type: "shadow"
           },
-          formatter: '{b0}</br>{c0} 万元'
+          formatter: "{b0}</br>{c0} 万元"
         },
         xAxis: {
-          name: '单位\n万元',
+          name: "单位\n万元",
           type: "value"
         },
         grid: {
           left: "35%",
-          right:"12%",
-          top: '0',
-          bottom: '5%',
+          right: "12%",
+          top: "0",
+          bottom: "5%"
         },
         yAxis: {
           type: "category",
@@ -1703,14 +1720,13 @@ export default {
         this.changeWorldDataType();
 
         httpRequest("get", "/visual/line/graph", params, "map").then(res => {
-        this.playerActiveData = res.data;
-        this.momentBarConfigure();
+          this.playerActiveData = res.data;
+          this.momentBarConfigure();
         });
         httpRequest("get", "/visual/line/player", params, "map").then(res => {
           this.playerCountData = res.data;
           this.playerCountConfigure();
         });
-        
       });
     },
     rankInit() {
@@ -1728,7 +1744,7 @@ export default {
         };
       }
       //榜单
-      this.spinShow = true;
+      this.spinShow1 = true;
       httpRequest("get", "/visual/rank/merchant", params, "map").then(res => {
         this.mcPlayerCountData = res.data.playerCount.reverse();
         this.mcBetCountData = res.data.betCount.reverse();
@@ -1740,7 +1756,7 @@ export default {
         this.mcBetAmount();
         this.mcRetAmount();
         this.mcWinloseAmount();
-        this.spinShow = false;
+        this.spinShow1 = false;
       });
       httpRequest("get", "/visual/rank/player", params, "map").then(res => {
         this.pyBetCountData = res.data.betCount.reverse();
@@ -1766,7 +1782,7 @@ export default {
       this.defaultTime = [new Date(time[0]), new Date(time[1])];
       return time;
     }
-  },
+  }
   /* beforeDestroy() {
     clearInterval(this.hander);
   } */
