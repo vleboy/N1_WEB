@@ -13,12 +13,12 @@
           <Input v-model="buID" placeholder="请输入"></Input>
           </Col>
           </Row>
-        </p>
         <Select style="width:200px;margin-right:2rem;" placeholder="选择游戏类别" ref="resetSelect" clearable v-model="model1">
           <Option v-for="(item, index) in gameType" :value="item.name" :key="item.name" @click.native="selGame(item.code)">{{item.name}}</Option>
         </Select>
+        <DatePicker type="daterange" :options="options" :editable='false' :value="defaultTime" placeholder="选择日期时间范围(默认最近一个月)" style="width: 300px" confirm @on-ok="confirms" @on-change="handle"></DatePicker>
+        </p>
         <div class="right">
-          <DatePicker type="daterange" :options="options" :editable='false' :value="defaultTime" placeholder="选择日期时间范围(默认最近一个月)" style="width: 300px" confirm @on-ok="confirms" @on-change="handle"></DatePicker>
           <Button type="primary" @click="search">搜索</Button>
           <Button type="ghost" @click="reset">重置</Button>
         </div>
@@ -384,8 +384,10 @@ export default {
   }
   .top {
     display: flex;
+    justify-content: space-between;
     margin-bottom: 1rem;
     .title {
+      display: flex;
       margin: 0;
     }
   }

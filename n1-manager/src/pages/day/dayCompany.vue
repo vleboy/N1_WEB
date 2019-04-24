@@ -3,8 +3,8 @@
     <div class="nowList">
       <div class="top">
         <div style="margin-bottom:1rem" class="title1">
-      
-          <p span="5">
+          <div style="display:flex">
+            <p span="5">
             <RadioGroup v-model="source" class="radioGroup" type="button" @on-change="changeSource" style="">
               <Radio label="0">正式</Radio>
               <Radio label="1">测试</Radio>
@@ -29,16 +29,12 @@
           <Select style="width:200px;margin-left:2rem" placeholder="选择游戏类别" ref="resetSelect" clearable v-model="model1">
               <Option v-for="(item, index) in gameType" :value="item.name" :key="item.name" @click.native="selGame(item.code)">{{item.name}}</Option>
             </Select>
-          
-          <p span="1" style="margin-left:2rem;">
+          </div>
+          <div style="">
             <Button type="primary" @click="search">搜索</Button>
-            
-          </p> 
-          <p>
-
-          <Button type="ghost" @click="reset">重置</Button>
-
-          </p>
+            <Button type="ghost" @click="reset">重置</Button>
+          </div>
+          
         </div>
          <!--  当前用户列表---{{this.identity}} -->
       
@@ -423,6 +419,7 @@ export default {
   .top {
     .title1 {
       display: flex;
+      justify-content: space-between
     }
     .title2 {
       display: flex;
