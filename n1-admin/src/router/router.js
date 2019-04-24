@@ -57,6 +57,8 @@ import adminList from '@/pages/adminCenter/adminList'
 import adminRole from '@/pages/adminCenter/adminRole'
 // import lineNumList from '@/pages/adminCenter/lineNumList'
 
+import operationLog from '@/pages/log/operationLog'
+import loginLog from '@/pages/log/loginLog'
 import lineLoginLog from '@/pages/log/lineLoginLog'
 import merchantLog from '@/pages/log/merchantLog'
 import adminLog from '@/pages/log/adminLog'
@@ -325,12 +327,14 @@ export const appRouter = [
            name: 'log',
            component: main,
            children: [
-             { path: 'lineLogin', title: '线路商登录日志', name: 'lineLoginLog', component: lineLoginLog },
+             { path: 'loginLog', title: '登录日志', name: 'loginLog', component: loginLog },
+             { path: 'operationLog', title: '操作日志', name: 'operationLog', component: operationLog },
+             /* { path: 'lineLogin', title: '线路商登录日志', name: 'lineLoginLog', component: lineLoginLog },
              { path: 'merchant', title: '商户登录日志', name: 'merchantLog', component: merchantLog },
              { path: 'managerOpreate', title: '线路商操作日志', name: 'managerOpreateLog', component: managerOpreateLog },
              { path: 'merchantOpreate', title: '商户操作日志', name: 'merchantOpreateLog', component: merchantOpreateLog },
              { path: 'adminOpreate', title: '管理员操作日志', name: 'adminLog', component: adminLog },
-             { path: 'adminlogin', title: '管理员登录日志', name: 'adminLoginLog', component: adminLoginLog },
+             { path: 'adminlogin', title: '管理员登录日志', name: 'adminLoginLog', component: adminLoginLog }, */
              { path: 'debug', title: 'DEBUG日志', name: 'debugLog', component: debugLog },
              { path: 'dataRepair', title: 'DEBUG修正', name: 'dataRepair', component: dataRepair }
            ]
