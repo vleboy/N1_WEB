@@ -1,8 +1,8 @@
 <template>
   <div class="dayReport">
     <div class="nowList">
-      <div class="top">
-        <div style="margin-bottom:1rem" class="title1">
+      <div class="top" >
+        <Row style="margin-bottom:1rem" class="title1" type="flex" align="middle">
           <p style="width:11rem;">
             <RadioGroup v-model="source" class="radioGroup" type="button" @on-change="changeSource" style="">
             <Radio label="0" v-if="permission.includes('正式数据')">正式</Radio>
@@ -19,7 +19,7 @@
           <Select style="width:8rem;" placeholder="选择游戏类别" ref="resetSelect" clearable v-model="model1">
               <Option v-for="(item, index) in gameType" :value="item.name" :key="item.name" @click.native="selGame(item.code)">{{item.name}}</Option>
           </Select> 
-          <p style="font-size:1.3rem;width:7.5rem;margin-left:1rem">线路商标识</p>
+          <Col style="font-size:0.95rem;width:5.5rem;margin-left:1rem">线路商标识</Col>
           <p style="">
             <Input  v-model="managerName" placeholder="请输入"></Input>
           </p>
@@ -34,10 +34,8 @@
           <Button type="ghost" @click="reset">重置</Button>
           </p>
         </div> 
-        </div>
+        </Row>
          <!--  当前用户列表---{{this.identity}} -->
-        
-    
       </div>
     </div>
     <div v-if="showBox">
@@ -406,9 +404,8 @@ export default {
 .dayReport {
   min-height: 90vh;
   .title {
-    font-size: 1.2rem;
+    font-size: 0.95rem;
     margin: 0.5rem 0 0.5rem;
-    font-weight: 600;
     display: inline-block;
   }
   .top {
@@ -417,7 +414,6 @@ export default {
     }
     .title2 {
       display: flex;
-      margin-bottom: 1rem;
     }
   }
   .demo-spin-icon-load {

@@ -3,15 +3,15 @@
     <div class="nowList">
       <div class="top">
         <p class="title">
-          <Row class="row -search-row" :gutter="12">
-          <Col span="5">商户标识</Col>
-          <Col span="6">
-          <Input v-model="buSN" placeholder="请输入"></Input>
-          </Col>
-          <Col span="4">商户ID</Col>
-          <Col span="6">
-          <Input v-model="buID" placeholder="请输入"></Input>
-          </Col>
+          <Row class="row -search-row" type="flex" align="middle">
+            <Col span="5">商户标识</Col>
+            <Col span="6">
+              <Input v-model="buSN" placeholder="请输入"></Input>
+            </Col>
+            <Col span="4">商户ID</Col>
+            <Col span="6">
+              <Input v-model="buID" placeholder="请输入"></Input>
+            </Col>
           </Row>
         </p>
         <Select style="width:200px;margin-right:2rem;" placeholder="选择游戏类别" ref="resetSelect" clearable v-model="model1">
@@ -378,14 +378,14 @@ export default {
 .dayReport {
   min-height: 90vh;
   .title {
-    font-size: 1.2rem;
+    font-size: 0.95rem;
     margin: 0.5rem 0 0.5rem;
-    font-weight: 600;
     display: inline-block;
   }
   .top {
     display: flex;
     margin-bottom: 1rem;
+    align-items: center;
     .title {
       margin: 0;
     }

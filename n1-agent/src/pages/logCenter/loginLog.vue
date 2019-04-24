@@ -20,7 +20,7 @@
         <Col span="4">
         <div class="btns">
           <Button type="primary" class="searchbtn" @click="search">搜索</Button>
-          <Button type="primary" class="searchbtn" @click="reset">重置</Button>
+          <Button type="ghost" class="searchbtn" @click="reset">重置</Button>
         </div>
         </Col>
       </Row>
@@ -235,5 +235,8 @@ export default {
 .demo-spin-icon-load {
     animation: ani-demo-spin 1s linear infinite;
   }
+.adminLogin .search .row .searchbtn[data-v-53c16cb5] {
+  margin:0; 
+}
 </style>
 

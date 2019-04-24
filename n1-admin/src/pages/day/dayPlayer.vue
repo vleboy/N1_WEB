@@ -3,12 +3,12 @@
     <div class="nowList">
       <div class="top">
         <p class="title">
-        <Row class="row -search-row" :gutter="16">
+        <Row class="row -search-row" :gutter="16" type="flex" align="middle">
         <Col span="4"  style="margin-left:0.5rem;">玩家ID</Col>
         <Col span="6">
         <Input v-model="playerID" placeholder="请输入"></Input>
         </Col>
-        <Col span="5">玩家账号</Col>
+        <Col span="4">玩家账号</Col>
         <Col span="7">
         <Input v-model="playerName" placeholder="请输入"></Input>
         </Col>
@@ -368,9 +368,8 @@ export default {
 .dayReport {
   min-height: 90vh;
   .title {
-    font-size: 1.2rem;
+    font-size: 0.95rem;
     margin: 0.5rem 0 0.5rem;
-    font-weight: 600;
     display: inline-block;
   }
   .top {
