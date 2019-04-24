@@ -8,7 +8,7 @@
             <Col span="6">
               <Input v-model="buSN" placeholder="请输入"></Input>
             </Col>
-            <Col span="4">商户ID</Col>
+            <Col span="4" offset="1">商户ID</Col>
             <Col span="6">
               <Input v-model="buID" placeholder="请输入"></Input>
             </Col>
