@@ -8,7 +8,7 @@
         <Col span="6">
         <Input v-model="playerID" placeholder="请输入"></Input>
         </Col>
-        <Col span="4">玩家账号</Col>
+        <Col span="5">玩家账号</Col>
         <Col span="7">
         <Input v-model="playerName" placeholder="请输入"></Input>
         </Col>
