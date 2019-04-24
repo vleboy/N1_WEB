@@ -239,10 +239,12 @@
                         <Icon type="bug"></Icon>
                         日志中心
                     </template>
-                    <MenuItem name="adminLoginLog" v-if='permission.includes("管理员登录日志")'>管理员登录日志</MenuItem>
+                    <MenuItem name="loginLog" v-if='permission.includes("登录日志")'>登录日志</MenuItem>
+                    <MenuItem name="operationLog" v-if='permission.includes("操作日志")'>操作日志</MenuItem>
+                    <!-- <MenuItem name="adminLoginLog" v-if='permission.includes("管理员登录日志")'>管理员登录日志</MenuItem>
                     <MenuItem name="adminOpreateLog" v-if='permission.includes("管理员操作日志")'>管理员操作日志</MenuItem>
                     <MenuItem name="agentLoginLog" v-if='permission.includes("代理登录日志")'>代理登录日志</MenuItem>
-                    <MenuItem name="agentOpreateLog" v-if='permission.includes("代理操作日志")'>代理操作日志</MenuItem>
+                    <MenuItem name="agentOpreateLog" v-if='permission.includes("代理操作日志")'>代理操作日志</MenuItem> -->
                 </Submenu>
                 <Submenu name="logCenter" v-else>
                     <template slot="title">

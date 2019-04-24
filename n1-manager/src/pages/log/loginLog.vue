@@ -4,7 +4,7 @@
       <Row class="row">
         <Col span="2">
           <Select v-model="model1" style="width:200px" >
-            <Option v-for="item in members" :value="item.value" :key="item.value" @click.native="selRole(item.role)">{{ item.label }}</Option>
+            <Option v-for="item in members" :value="item.value" :key="item.value" @click.native="selRole(item.role, item.levle)">{{ item.label }}</Option>
           </Select>
         </Col>
         <Col span='1' offset="1"> 账号:
@@ -45,26 +45,24 @@ export default {
   data() {
     return {
       spinShow: false,
-      role: '1',
+      role: '10',
+      level: '0',
       startKey: null,
       members: [
         {
-          role: '1',
-          value: "管理员",
-          label: "管理员"
-        },
-        {
           role: '10',
           value: "线路商",
-          label: "线路商"
+          label: "线路商",
+          level: 0,
         },
         {
           role: '100',
           value: "商户",
-          label: "商户"
+          label: "商户",
+          level: -1,
         },
       ],
-      model1: "管理员",
+      model1: "线路商",
       username: "",
       displayName: "",
       firstPage: true,
@@ -97,7 +95,7 @@ export default {
           }
         },
         {
-          title: "账号详情",
+          title: "详情",
           key: "",
           render: (h, params) => {
             if (params.row.ret == "Y") {
@@ -155,10 +153,11 @@ export default {
     };
   },
   methods: {
-    selRole(value) {
-      this.username = "";
-      this.displayName = "";
+    selRole(value,lev) {
+      this.username = ""
+      this.displayName = ""
       this.role = value
+      this.level = lev
       this.startKey = null
       this.init()
     },
@@ -184,6 +183,7 @@ export default {
         delete query.displayName;
       }
       let params = {
+        level: parseInt(this.level),
         role: this.role,
         type: "login",
         pageSize: "50",
@@ -203,8 +203,9 @@ export default {
     reset() {
       this.username = "";
       this.displayName = "";
-      this.model1 = '管理员';
-      this.role = '1';
+      this.model1 = '线路商';
+      this.role = '10';
+      this.level = 0;
       this.startKey = null
       this.init();
     }

@@ -45,6 +45,8 @@ import dayCompany from '@/pages/day/dayCompany'
 import dayMerchant from '@/pages/day/dayMerchant'
 
 //log
+import loginLog from '@/pages/log/loginLog'
+import operationLog from '@/pages/log/operationLog'
 import managerOpreateLog from '@/pages/log/managerOpreateLog'
 import merchantOpreateLog from '@/pages/log/merchantOpreateLog'
 import merchantLog from '@/pages/log/merchantLog'
@@ -188,13 +190,13 @@ export const appRouter = [
            component: main,
            children: [{ path: 'video', title: 'TTG电子游戏报表', name: 'ttgvideo', component: ttgvideo }]
          },
-          {
-            path: '/kygame',
-            title: 'KY游戏报表',
-            name: 'kygame',
-            component: main,
-            children: [{ path: 'chess', title: 'KY棋牌游戏报表', name: 'kychess', component: kyChess }]
-          },
+         {
+           path: '/kygame',
+           title: 'KY游戏报表',
+           name: 'kygame',
+           component: main,
+           children: [{ path: 'chess', title: 'KY棋牌游戏报表', name: 'kychess', component: kyChess }]
+         },
          {
            path: '/rtg',
            title: 'RTG游戏',
@@ -229,10 +231,12 @@ export const appRouter = [
            name: 'log',
            component: main,
            children: [
-             { path: 'managerOpreate', title: '线路商操作日志', name: 'managerOpreateLog', component: managerOpreateLog },
+             { path: 'loginLog', title: '登录日志', name: 'loginLog', component: loginLog },
+             { path: 'operationLog', title: '操作日志', name: 'operationLog', component: operationLog },
+             /* { path: 'managerOpreate', title: '线路商操作日志', name: 'managerOpreateLog', component: managerOpreateLog },
              { path: 'merchantOpreate', title: '商户操作日志', name: 'merchantOpreateLog', component: merchantOpreateLog },
              { path: 'manager', title: '线路商登录日志', name: 'managerLog', component: managerLog },
-             { path: 'merchant', title: '商户登录日志', name: 'merchantLog', component: merchantLog }
+             { path: 'merchant', title: '商户登录日志', name: 'merchantLog', component: merchantLog } */
            ]
          },
          {

@@ -301,6 +301,14 @@ export default {
               expand: true,
               children: [
                 {
+                title: "登录日志",
+                checked: false
+              },
+               {
+                title: "操作日志",
+                checked: false
+              },
+                {
                   title: "管理员登录日志"
                 },
                 {
