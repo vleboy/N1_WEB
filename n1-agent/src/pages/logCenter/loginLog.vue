@@ -17,7 +17,7 @@
         <Col span="3">
         <Input v-model="displayName" placeholder="请输入"></Input>
         </Col>
-        <Col span="3">
+        <Col span="4">
         <div class="btns">
           <Button type="primary" class="searchbtn" @click="search">搜索</Button>
           <Button type="primary" class="searchbtn" @click="reset">重置</Button>

@@ -1,6 +1,6 @@
 export const menuOpen = function(name) {
   let openName = []
-  if (name.includes('na')) {
+  if (name.includes('na') && name != 'dayMergent') {
     openName = ['report', 'nareport']
   } else if (name == 'kychess') {
     openName = ['report', 'kyreport']
@@ -50,7 +50,7 @@ export const menuOpen = function(name) {
     openName = ['newBoard']
   } else if (name == 'flow' || name == 'noTransferReport') {
     openName = ['noTransfer']
-  } else if (name == 'dayMergent') {
+  } else if (name == 'dayMerchant') {
     openName = ['dayReport']
   }
   return openName

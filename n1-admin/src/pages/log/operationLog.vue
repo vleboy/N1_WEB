@@ -12,11 +12,11 @@
             >{{ item.label }}</Option>
           </Select>
         </Col>
-        <Col span="1" offset="2">操作人</Col>
+        <Col span="1" offset="1">操作人:</Col>
         <Col span="4">
           <Input v-model.trim="userName" placeholder="请输入"></Input>
         </Col>
-        <Col span="2">
+        <Col span="3">
           <div class="btns">
             <Button type="primary" @click="search">搜索</Button>
             <Button type="ghost" @click="reset">重置</Button>

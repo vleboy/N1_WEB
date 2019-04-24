@@ -120,7 +120,7 @@ export default {
         {
           title: "交易对象",
           key: "toUser",
-          minWidth: 120,
+          minWidth: 100,
           render: (h, params) => {
             let row = params.row;
             if (row.fromLevel > row.toLevel) {
@@ -201,6 +201,7 @@ export default {
         {
           title: "备注",
           key: "remark",
+          width:60,
           render: (h, params) => {
             if (params.row.remark == "NULL!" || params.row.remark == null) {
               return h("span", "");
