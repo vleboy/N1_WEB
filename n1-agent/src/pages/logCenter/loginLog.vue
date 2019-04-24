@@ -2,8 +2,8 @@
   <div class="adminLogin">
     <div class="search">
       <Row class="row">
-        <Col span="2">
-          <Select v-model="model1" style="width:200px" >
+        <Col span="3">
+          <Select v-model="model1" style="width:100%">
             <Option v-for="item in members" :value="item.value" :key="item.value" @click.native="selLevel(item.level)">{{ item.label }}</Option>
           </Select>
         </Col>

@@ -30,6 +30,10 @@ export const menuOpen = function (name) {
     openName = ["report", "ugreport"];
   } else if (name == "allreport") {
     openName = ["report"];
+  } else if (name == 'dayCompany') {
+    openName = ['dayReport']
+  } else if (name == 'dayPlayer') {
+    openName = ['dayReport']
   } else if (name == 'ysbSport') {
     openName = ["report", "ysbReport"];
   } else if (name == "agentList" || name == "warnList") {

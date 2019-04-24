@@ -2,12 +2,12 @@
   <div class="adminLogin">
     <div class="search">
       <Row class="row">
-        <Col span="2">
-          <Select v-model="model1" style="width:200px" >
+        <Col span="3">
+          <Select v-model="model1" style="width:100%" >
             <Option v-for="item in members" :value="item.value" :key="item.value" @click.native="selRole(item.role)">{{ item.label }}</Option>
           </Select>
         </Col>
-        <Col span='1' offset="1"> 账号:
+        <Col span='1' offset="0"> 账号:
         </Col>
         <Col span="3">
         <Input v-model="username" placeholder="请输入"></Input>
