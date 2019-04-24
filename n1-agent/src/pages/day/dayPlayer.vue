@@ -3,7 +3,7 @@
     <div class="nowList">
       <div class="top">
         <p class="title">
-        <Row class="row -search-row" :gutter="16">
+        <Row class="row -search-row" :gutter="16" type="flex" align="middle">
         <Col span="5">玩家账号</Col>
         <Col span="6">
         <Input v-model="playerName" placeholder="请输入"></Input>
@@ -15,7 +15,7 @@
        
       </Row>
         </p>
-        <Select style="width:200px;margin-right:0.5rem;" placeholder="选择游戏类别" ref="resetSelect" clearable v-model="model1">
+        <Select style="width:150px;margin-right:0.5rem;" placeholder="选择游戏类别" ref="resetSelect" clearable v-model="model1">
           <Option v-for="(item, index) in gameType" :value="item.name" :key="item.name" @click.native="selGame(item.code)">{{item.name}}</Option>
         </Select>
         <div class="right">
@@ -368,9 +368,8 @@ export default {
 .dayReport {
   min-height: 90vh;
   .title {
-    font-size: 1.2rem;
+    font-size: 0.95rem;
     margin: 0.5rem 0 0.5rem;
-    font-weight: 600;
     display: inline-block;
   }
   .top {

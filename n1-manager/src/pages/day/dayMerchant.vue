@@ -3,7 +3,7 @@
     <div class="nowList">
       <div class="top">
         <p class="title">
-          <Row class="row -search-row" :gutter="12">
+          <Row class="row -search-row" :gutter="12" type="flex" align="middle">
           <Col span="5">商户标识</Col>
           <Col span="6">
           <Input v-model="buSN" placeholder="请输入"></Input>
@@ -377,9 +377,8 @@ export default {
 .dayReport {
   min-height: 90vh;
   .title {
-    font-size: 1.2rem;
+    font-size: 0.95rem;
     margin: 0.5rem 0 0.5rem;
-    font-weight: 600;
     display: inline-block;
   }
   .top {
