@@ -27,7 +27,7 @@
               <DatePicker type="daterange" :options="options" :editable='false' :value="defaultTime" placeholder="选择日期时间范围(默认最近一个月)" confirm @on-ok="confirms" @on-change="handle"></DatePicker>
             </p>
           <div class="title2">
-          <p style="margin-left:1rem">
+          <p style="margin-left:1rem;margin-right:.5rem">
             <Button type="primary" @click="search">搜索</Button>
           </p> 
           <p>

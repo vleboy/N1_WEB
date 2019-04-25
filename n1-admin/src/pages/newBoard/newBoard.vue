@@ -41,6 +41,7 @@
     </div>
     <Tabs type="card" @on-click="changeBoard">
       <TabPane label="趋势"></TabPane>
+      <TabPane label="分布"></TabPane>
       <TabPane label="商户榜单"></TabPane>
       <TabPane label="玩家榜单"></TabPane>
     </Tabs>
@@ -48,7 +49,7 @@
       <Row>
         <Col span="12">
           <Card style="position:relative">
-            <h3 slot="title">游戏比例分布</h3>
+            <h3 slot="title">游戏占比</h3>
             <RadioGroup
               v-model="gameDtributedDataType"
               @on-change="changeGameDtributedDataType"
@@ -114,12 +115,6 @@
       <Row>
         <Col span="12">
           <Card style="position:relative">
-            <h3 slot="title">时刻比例分布</h3>
-            <div :style="{height:'300px',width:'90%'}" ref="momentBar"></div>
-          </Card>
-        </Col>
-        <Col span="12">
-          <Card style="position:relative">
             <h3 slot="title">玩家注册趋势</h3>
             <div :style="{height:'300px',width:'100%'}" ref="playerCount"></div>
           </Card>
@@ -128,6 +123,30 @@
       <!-- <div :style="{height:'600px',width:'100%'}" ref="dynamic"></div> -->
     </div>
     <div v-else-if="initNum == 1">
+      <Row>
+        <Col span="12">
+          <Card style="position:relative">
+            <h3 slot="title">时刻比例分布(小时)</h3>
+            <div :style="{height:'500px',width:'100%'}" ref="houreMomentBar"></div>  
+          </Card>  
+        </Col>  
+        <Col span="12">
+          <Card style="position:relative">
+            <h3 slot="title">时刻比例分布(周)</h3>
+            <div :style="{height:'500px',width:'100%'}" ref="weekMomentBar"></div>    
+          </Card>  
+        </Col>  
+      </Row> 
+      <!-- <Row>
+        <Col span="24">
+          <Card style="position:relative">
+            <h3 slot="title">时刻比例分布(月)</h3>
+            <div :style="{height:'500px',width:'100%'}" ref="monthMomentBar"></div>    
+          </Card>  
+        </Col>  
+      </Row>   -->
+    </div> 
+    <div v-else-if="initNum == 2">
       <Row>
         <Col span="8">
           <Card style="position:relative">
@@ -206,6 +225,10 @@
       <Icon type="load-c" size="18" class="demo-spin-icon-load" style=""></Icon>
       <div style="">加载中...</div>
     </Spin>
+    <Spin size="large" fix v-show="spinShow4" style="z-index:200;margin-top:-400px">
+      <Icon type="load-c" size="18" class="demo-spin-icon-load" style=""></Icon>
+      <div style="">加载中...</div>
+    </Spin>
   </div>
 </template>
 
@@ -227,6 +250,7 @@ export default {
       initNum: "0",
       spinShow1: false,
       spinShow2: false,
+      spinShow4: false,
       rankCount: 0,
       options: {
         shortcuts: [
@@ -367,7 +391,9 @@ export default {
       realData: [932, 901, 934, 1290, 1330, 1320, 145],
       xArr: [1, 2, 3, 4, 5, 6, 7],
       hander: null,
-      playerActiveData: [],
+      houreMomentData: [],
+      weekMomentData: [],
+      monthMomentData: [],
       gameDtributedData: [],
       valueGD: [],
       valueTP: []
@@ -391,7 +417,11 @@ export default {
         this.$nextTick(function() {
           this.init();
         });
-      } else if (this.initNum == 1){
+      } else if (this.initNum == 1) {
+        this.$nextTick(function () {
+          this.distributionInit()
+        })
+      } else if (this.initNum == 2){
         //this.rankInit();
         this.$nextTick(function () {
           this.mcRankInit()
@@ -408,6 +438,8 @@ export default {
       if (this.initNum == 0) {
         this.init();
       } else if (this.initNum == 1){
+        this.distributionInit();
+      } else if (this.initNum == 2){
         this.mcRankInit();
       } else {
         this.pyRankInit()
@@ -523,8 +555,10 @@ export default {
       if (this.initNum == 0) {
         this.changeBoard();
       } else if (this.initNum == 1) {
+        this.distributionInit()
+      } else if (this.initNum == 2) {
         this.mcRankInit()
-      }else {
+      } else {
         this.pyRankInit();
       }
       this.rankCount ++
@@ -663,8 +697,10 @@ export default {
       if (this.initNum == 0) {
         this.init();
       } else if (this.initNum == 1) {
+        this.distributionInit();
+      } else if (this.initNum == 2) {
         this.mcRankInit();
-      }else {
+      } else {
         this.pyRankInit();
       }
     },
@@ -672,8 +708,10 @@ export default {
       if (this.initNum == 0) {
         this.init();
       } else if (this.initNum == 1) {
+        this.distributionInit()
+      } else if (this.initNum == 2) {
         this.mcRankInit()
-      }else {
+      } else {
         this.pyRankInit()
       }
     },
@@ -694,8 +732,10 @@ export default {
       if (this.initNum == 0) {
         this.init();
       } else if(this.initNum == 1) {
+        this.distributionInit();
+      } else if(this.initNum == 2) {
         this.mcRankInit();
-      }else {
+      } else {
         this.pyRankInit();
       }
     },
@@ -1158,25 +1198,28 @@ export default {
         ]
       });
     },
-    momentBarConfigure() {
-      let myChart = this.$echarts.init(this.$refs.momentBar);
-      let betAmount = this.playerActiveData.betAmount.map(item => {
+    houreMomentBarConfigure() {
+      let myChart = this.$echarts.init(this.$refs.houreMomentBar);
+      let betAmount = this.houreMomentData.betAmount.map(item => {
         return item.y;
       });
-      let betCount = this.playerActiveData.betCount.map(item => {
+      let betCount = this.houreMomentData.betCount.map(item => {
         return item.y;
       });
-      let playerCount = this.playerActiveData.playerCount.map(item => {
+      let playerCount = this.houreMomentData.playerCount.map(item => {
         return item.y;
       });
-      let refundAmount = this.playerActiveData.refundAmount.map(item => {
+      let refundAmount = this.houreMomentData.refundAmount.map(item => {
         return item.y;
       });
-      let retAmount = this.playerActiveData.retAmount.map(item => {
+      let retAmount = this.houreMomentData.retAmount.map(item => {
         return item.y;
       });
-      let winloseAmount = this.playerActiveData.winloseAmount.map(item => {
+      let winloseAmount = this.houreMomentData.winloseAmount.map(item => {
         return item.y;
+      });
+      let xArr = this.houreMomentData.betAmount.map(item => {
+        return item.x;
       });
       myChart.setOption({
         /* title: {
@@ -1200,7 +1243,7 @@ export default {
         legend: {
           //orient: 'vertical',
           top: "top",
-          left: 0,
+          left: 'center',
           data: [
             "玩家数量",
             "投注次数",
@@ -1216,32 +1259,219 @@ export default {
           {
             name: "单位\n小时",
             type: "category",
-            data: [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9,
-              10,
-              11,
-              12,
-              13,
-              14,
-              15,
-              16,
-              17,
-              18,
-              19,
-              20,
-              21,
-              22,
-              23
-            ],
+            data: xArr,
+            axisPointer: {
+              type: "shadow"
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: "value"
+          }
+        ],
+        series: [
+          {
+            name: "玩家数量",
+            type: "bar",
+            data: playerCount
+          },
+          {
+            name: "投注次数",
+            type: "bar",
+            data: betCount
+          },
+          {
+            name: "投注金额",
+            type: "bar",
+            data: betAmount
+          },
+          {
+            name: "退款金额",
+            type: "bar",
+            data: refundAmount
+          },
+          {
+            name: "返回金额",
+            type: "bar",
+            data: retAmount
+          },
+          {
+            name: "输赢金额",
+            type: "bar",
+            data: winloseAmount
+          }
+        ]
+      });
+    },
+    weekMomentBarConfigure() {
+      let myChart = this.$echarts.init(this.$refs.weekMomentBar);
+      let betAmount = this.weekMomentData.betAmount.map(item => {
+        return item.y;
+      });
+      let betCount = this.weekMomentData.betCount.map(item => {
+        return item.y;
+      });
+      let playerCount = this.weekMomentData.playerCount.map(item => {
+        return item.y;
+      });
+      let refundAmount = this.weekMomentData.refundAmount.map(item => {
+        return item.y;
+      });
+      let retAmount = this.weekMomentData.retAmount.map(item => {
+        return item.y;
+      });
+      let winloseAmount = this.weekMomentData.winloseAmount.map(item => {
+        return item.y;
+      });
+      let xArr = this.weekMomentData.betAmount.map(item => {
+        return item.x;
+      });
+      myChart.setOption({
+        /* title: {
+          text: "时刻分布柱状图",
+          subtext: "",
+          x: "left"
+        }, */
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "cross",
+            crossStyle: {
+              color: "#999"
+            }
+          }
+        },
+        grid: {
+          left: "15%",
+          bottom: "6%"
+        },
+        legend: {
+          //orient: 'vertical',
+          top: "top",
+          left: 'center',
+          data: [
+            "玩家数量",
+            "投注次数",
+            "投注金额",
+            "退款金额",
+            "返回金额",
+            "输赢金额"
+          ],
+          selectedMode: "single",
+          padding: 0
+        },
+        xAxis: [
+          {
+            name: "单位\n周",
+            type: "category",
+            data: xArr,
+            axisPointer: {
+              type: "shadow"
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: "value"
+          }
+        ],
+        series: [
+          {
+            name: "玩家数量",
+            type: "bar",
+            data: playerCount
+          },
+          {
+            name: "投注次数",
+            type: "bar",
+            data: betCount
+          },
+          {
+            name: "投注金额",
+            type: "bar",
+            data: betAmount
+          },
+          {
+            name: "退款金额",
+            type: "bar",
+            data: refundAmount
+          },
+          {
+            name: "返回金额",
+            type: "bar",
+            data: retAmount
+          },
+          {
+            name: "输赢金额",
+            type: "bar",
+            data: winloseAmount
+          }
+        ]
+      });
+    },
+    monthMomentBarConfigure() {
+      let myChart = this.$echarts.init(this.$refs.monthMomentBar);
+      let betAmount = this.monthMomentData.betAmount.map(item => {
+        return item.y;
+      });
+      let betCount = this.monthMomentData.betCount.map(item => {
+        return item.y;
+      });
+      let playerCount = this.monthMomentData.playerCount.map(item => {
+        return item.y;
+      });
+      let refundAmount = this.monthMomentData.refundAmount.map(item => {
+        return item.y;
+      });
+      let retAmount = this.monthMomentData.retAmount.map(item => {
+        return item.y;
+      });
+      let winloseAmount = this.monthMomentData.winloseAmount.map(item => {
+        return item.y;
+      });
+      let xArr = this.monthMomentData.betAmount.map(item => {
+        return item.x;
+      });
+      myChart.setOption({
+        /* title: {
+          text: "时刻分布柱状图",
+          subtext: "",
+          x: "left"
+        }, */
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "cross",
+            crossStyle: {
+              color: "#999"
+            }
+          }
+        },
+        grid: {
+          left: "15%",
+          bottom: "6%"
+        },
+        legend: {
+          //orient: 'vertical',
+          top: "top",
+          left: 'center',
+          data: [
+            "玩家数量",
+            "投注次数",
+            "投注金额",
+            "退款金额",
+            "返回金额",
+            "输赢金额"
+          ],
+          selectedMode: "single",
+          padding: 0
+        },
+        xAxis: [
+          {
+            name: "单位\n月",
+            type: "category",
+            data: xArr,
             axisPointer: {
               type: "shadow"
             }
@@ -1726,19 +1956,16 @@ export default {
       httpRequest("get", "/visual/map/china", params, "map").then(res => {
         this.chinaAllData = res.data;
         this.changeChinaDataType();
-      });
-      httpRequest("get", "/visual/map/world", params, "map").then(res => {
+
+        httpRequest("get", "/visual/map/world", params, "map").then(res => {
         this.worldAllData = res.data;
         this.changeWorldDataType();
-
-        httpRequest("get", "/visual/line/graph", params, "map").then(res => {
-          this.playerActiveData = res.data;
-          this.momentBarConfigure();
-        });
         httpRequest("get", "/visual/line/player", params, "map").then(res => {
           this.playerCountData = res.data;
           this.playerCountConfigure();
         });
+      });
+      
       });
     },
     mcRankInit() {
@@ -1797,6 +2024,35 @@ export default {
         this.pyWinloseAmount();
         this.spinShow2 = false;
       });
+    },
+    distributionInit() {
+      this.spinShow4 = true;
+      let params = {};
+      if (this.gameCode == "") {
+        params = {
+          startTime: new Date(this.defaultTime[0]).getTime(),
+          endTime: new Date(this.defaultTime[1]).getTime()
+        };
+      } else {
+        params = {
+          startTime: new Date(this.defaultTime[0]).getTime(),
+          endTime: new Date(this.defaultTime[1]).getTime(),
+          gameType: this.gameCode
+        };
+      }
+      httpRequest("get", "/visual/graph/hours", params, "map").then(res => {
+        this.houreMomentData = res.data;
+        this.spinShow4 = false;
+        this.houreMomentBarConfigure()
+      });
+      httpRequest("get", "/visual/graph/weeks", params, "map").then(res => {
+        this.weekMomentData = res.data;
+        this.weekMomentBarConfigure()
+      });
+      /* httpRequest("get", "/visual/graph/months", params, "map").then(res => {
+        this.monthMomentData = res.data;
+        this.monthMomentBarConfigure()
+      }); */
     }
   },
   computed: {
