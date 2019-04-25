@@ -107,11 +107,11 @@ export default {
           key: "suffix",
           sortable: true
         },
-        {
+        /* {
           title: "线路商账号",
           key: "uname",
           sortable: true
-        },
+        }, */
         {
           title: "线路商昵称",
           key: "displayName",

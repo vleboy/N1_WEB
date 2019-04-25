@@ -18,13 +18,13 @@
         </Col>
       </Row>
       <Row class="row">
-        <Col span="2" offset="4">商户账号</Col>
-        <Col span="4">
-        <Input v-model="username" placeholder="请输入"></Input>
-        </Col>
-        <Col span="2" >商户昵称</Col>
+        <Col span="2" offset="4">商户昵称</Col>
         <Col span="4">
         <Input v-model="displayName" placeholder="请输入"></Input>
+        </Col>
+        <Col span="2" >上级标识</Col>
+        <Col span="4">
+        <Input v-model="supSuffix" placeholder="请输入"></Input>
         </Col>
       </Row>
     </div>
@@ -91,6 +91,7 @@ import { userChangeStatus, getBill } from "@/service/index";
 export default {
   data() {
     return {
+      supSuffix: '',
       isH5:true,
       sn: "", //标识
       username: "", //
@@ -125,11 +126,6 @@ export default {
           width: 105
         },
         {
-          title: "商户账号",
-          key: "uname",
-          sortable: true
-        },
-        {
           title: "商户昵称",
           key: "displayName",
           sortable: true
@@ -142,7 +138,7 @@ export default {
         {
           title:'玩家数量',
           key:'playerCount',
-          width: 105,
+          width: 60,
           render: (h, params) => {
             return h(
               "span",
@@ -165,6 +161,7 @@ export default {
           title: "剩余点数",
           key: "balance",
           sortable: true,
+          width: 120,
           render: (h, params) => {
             let adminId = localStorage.loginId;
             return h("div", [
@@ -331,7 +328,7 @@ export default {
         {
           title: "备注",
           key: "remark",
-          
+          width:50,
           render: (h, params) => {
             let remark = params.row.remark;
             let result = Object.prototype.toString.call(remark);

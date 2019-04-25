@@ -118,7 +118,7 @@ export default {
           key: "suffix",
           sortable: true
         },
-        {
+        /* {
           title: "线路商账号",
           key: "uname",
           sortable: true,
@@ -157,7 +157,7 @@ export default {
               return h("span", params.row.uname);
             }
           }
-        },
+        }, */
         {
           title: "线路商昵称",
           key: "displayName",

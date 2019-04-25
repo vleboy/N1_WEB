@@ -94,6 +94,14 @@
         </Col>
         <Col span="12">
           <Card style="position:relative">
+            <h3 slot="title">玩家注册趋势</h3>
+            <div :style="{height:'500px',width:'100%'}" ref="playerCount"></div>
+          </Card>
+        </Col>
+      </Row>
+      <Row>
+        <Col span="24">
+          <Card style="position:relative">
             <h3 slot="title">世界地图大数据</h3>
             <RadioGroup
               v-model="worldDataType"
@@ -109,14 +117,6 @@
               <Radio label="5">输赢金额</Radio>
             </RadioGroup>
             <div :style="{height:'500px',width:'100%'}" ref="worldEchart"></div>
-          </Card>
-        </Col>
-      </Row>
-      <Row>
-        <Col span="12">
-          <Card style="position:relative">
-            <h3 slot="title">玩家注册趋势</h3>
-            <div :style="{height:'300px',width:'100%'}" ref="playerCount"></div>
           </Card>
         </Col>
       </Row>
@@ -793,11 +793,9 @@ export default {
       this.$echarts.registerMap("world", worldJson);
       let myChart = this.$echarts.init(this.$refs.worldEchart); //这里是为了获得容器所在位置
       myChart.setOption({
-        /* title: {
-          text: '世界地图大数据',
-          left: "center",
-          x: "center"
-        }, */
+        grid: {
+          left: 'middle'
+        },
         tooltip: {
           trigger: "item"
         },
@@ -821,7 +819,7 @@ export default {
             name: this.worldMapUnit,
             type: "map",
             mapType: "world",
-            zoom: 1.2,
+            zoom: 1.1,
             roam: false,
             label: {
               normal: {
@@ -1942,7 +1940,7 @@ export default {
           gameType: this.gameCode
         };
       }
-
+      // 先请求2个
       httpRequest("get", "/visual/pie/game", params, "map").then(res => {
         this.gameDtributedData = res.data;
         this.spinShow = false;
@@ -1950,22 +1948,21 @@ export default {
       });
       httpRequest("get", "/visual/line/day", params, "map").then(res => {
         this.reportData = res.data;
-        this.spinShow = false;
         this.reportConfigure();
-      });
-      httpRequest("get", "/visual/map/china", params, "map").then(res => {
-        this.chinaAllData = res.data;
-        this.changeChinaDataType();
-
-        httpRequest("get", "/visual/map/world", params, "map").then(res => {
-        this.worldAllData = res.data;
-        this.changeWorldDataType();
-        httpRequest("get", "/visual/line/player", params, "map").then(res => {
-          this.playerCountData = res.data;
-          this.playerCountConfigure();
+        // 再请求2个
+        httpRequest("get", "/visual/map/china", params, "map").then(res => {
+          this.chinaAllData = res.data;
+          this.changeChinaDataType();
         });
-      });
-      
+        httpRequest("get", "/visual/line/player", params, "map").then(res => {
+            this.playerCountData = res.data;
+            this.playerCountConfigure();
+            // 最后请求1个
+            httpRequest("get", "/visual/map/world", params, "map").then(res => {
+              this.worldAllData = res.data;
+              this.changeWorldDataType();
+            });
+        });
       });
     },
     mcRankInit() {

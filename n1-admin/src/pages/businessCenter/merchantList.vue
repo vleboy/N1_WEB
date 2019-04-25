@@ -634,7 +634,7 @@ export default {
         localStorage.removeItem('merchantList')
       }
        let query = {
-        sn: this.sn,
+        sn: this.suffix,
         uname: this.username,
         parentSuffix: this.supSuffix,
         displayName: this.displayName,
