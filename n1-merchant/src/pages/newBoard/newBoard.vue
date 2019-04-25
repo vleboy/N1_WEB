@@ -41,7 +41,6 @@
     </div>
     <Tabs type="card" @on-click="changeBoard">
       <TabPane label="趋势"></TabPane>
-      <TabPane label="商户榜单"></TabPane>
       <TabPane label="玩家榜单"></TabPane>
     </Tabs>
     <div class="echarts" v-if="initNum == 0">
@@ -126,42 +125,6 @@
         </Col>
       </Row>
       <!-- <div :style="{height:'600px',width:'100%'}" ref="dynamic"></div> -->
-    </div>
-    <div v-else-if="initNum == 1">
-      <Row>
-        <Col span="8">
-          <Card style="position:relative">
-            <h3 slot="title">商户玩家数量榜</h3>
-            <div :style="{height:'550px',width:'100%'}" ref="merchantPlayerCount"></div>
-          </Card>
-        </Col>
-        <Col span="8">
-          <Card style="position:relative">
-            <h3 slot="title">商户投注次数榜</h3>
-            <div :style="{height:'550px',width:'100%'}" ref="merchantBetCount"></div>
-          </Card>
-        </Col>
-        <Col span="8">
-          <Card style="position:relative">
-            <h3 slot="title">商户投注金额榜</h3>
-            <div :style="{height:'550px',width:'100%'}" ref="merchantBetAmount"></div>
-          </Card>
-        </Col>
-      </Row>
-      <Row>
-        <Col span="8">
-          <Card style="position:relative">
-            <h3 slot="title">商户返还金额榜</h3>
-            <div :style="{height:'550px',width:'100%'}" ref="merchantRetAmount"></div>
-          </Card>
-        </Col>
-        <Col span="8">
-          <Card style="position:relative">
-            <h3 slot="title">商户输赢金额榜</h3>
-            <div :style="{height:'550px',width:'100%'}" ref="merchantWinloseAmount"></div>
-          </Card>
-        </Col>
-      </Row>
     </div>
     <div v-else>
       <Row>
@@ -392,12 +355,7 @@ export default {
         this.$nextTick(function() {
           this.init();
         });
-      } else if (this.initNum == 1){
-        //this.rankInit();
-        this.$nextTick(function () {
-          this.mcRankInit()
-        })
-      } else {
+      }  else {
         this.pyRankInit()
       }
     },
@@ -408,9 +366,7 @@ export default {
       this.gameCode = code;
       if (this.initNum == 0) {
         this.init();
-      } else if (this.initNum == 1){
-        this.mcRankInit();
-      } else {
+      }  else {
         this.pyRankInit()
       }
     },
@@ -523,9 +479,7 @@ export default {
       
       if (this.initNum == 0) {
         this.changeBoard();
-      } else if (this.initNum == 1) {
-        this.mcRankInit()
-      }else {
+      } else {
         this.pyRankInit();
       }
       this.rankCount ++
@@ -663,18 +617,14 @@ export default {
       this.defaultTime = this.changedTime;
       if (this.initNum == 0) {
         this.init();
-      } else if (this.initNum == 1) {
-        this.mcRankInit();
-      }else {
+      } else {
         this.pyRankInit();
       }
     },
     search() {
       if (this.initNum == 0) {
         this.init();
-      } else if (this.initNum == 1) {
-        this.mcRankInit()
-      }else {
+      } else {
         this.pyRankInit()
       }
     },
@@ -694,9 +644,7 @@ export default {
 
       if (this.initNum == 0) {
         this.init();
-      } else if(this.initNum == 1) {
-        this.mcRankInit();
-      }else {
+      } else {
         this.pyRankInit();
       }
     },
@@ -1705,13 +1653,13 @@ export default {
       let params = {};
       if (this.gameCode == "") {
         params = {
-          parent: JSON.parse(localStorage.getItem('userInfo')).parent,
+          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime()
         };
       } else {
         params = {
-          parent: JSON.parse(localStorage.getItem('userInfo')).parent,
+          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime(),
           gameType: this.gameCode
@@ -1750,13 +1698,13 @@ export default {
       let params = {};
       if (this.gameCode == "") {
         params = {
-          parent: JSON.parse(localStorage.getItem('userInfo')).parent,
+          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime()
         };
       } else {
         params = {
-          parent: JSON.parse(localStorage.getItem('userInfo')).parent,
+          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime(),
           gameType: this.gameCode
@@ -1782,13 +1730,13 @@ export default {
       let params = {};
       if (this.gameCode == "") {
         params = {
-          parent: JSON.parse(localStorage.getItem('userInfo')).parent,
+          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime()
         };
       } else {
         params = {
-          parent: JSON.parse(localStorage.getItem('userInfo')).parent,
+          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime(),
           gameType: this.gameCode
