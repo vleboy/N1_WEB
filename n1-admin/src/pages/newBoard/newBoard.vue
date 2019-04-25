@@ -819,7 +819,6 @@ export default {
             name: this.worldMapUnit,
             type: "map",
             mapType: "world",
-            zoom: 1.1,
             roam: false,
             label: {
               normal: {

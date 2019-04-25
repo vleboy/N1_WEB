@@ -133,7 +133,15 @@ export default {
         {
           title: "上级线路商",
           key: "parentDisplayName",
-          sortable: true
+          sortable: true,
+          render: (h, params) => {
+            //console.log(params);
+            
+            return h(
+              "span",
+               `${params.row.parentDisplayName}(${params.row.parentSuffix})` 
+              )
+          }
         },
         {
           title:'玩家数量',
@@ -325,7 +333,7 @@ export default {
             }
           }
         },
-        {
+        /* {
           title: "备注",
           key: "remark",
           width:50,
@@ -357,7 +365,7 @@ export default {
               return h("span", "");
             }
           }
-        },
+        }, */
         {
           title: "操作",
           key: "",

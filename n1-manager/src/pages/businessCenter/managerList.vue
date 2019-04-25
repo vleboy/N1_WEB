@@ -277,7 +277,7 @@ export default {
             }
           }
         },
-        {
+        /* {
           title: "备注",
           key: "remark",
           maxWidth: 80,
@@ -309,7 +309,7 @@ export default {
               return h("span", "");
             }
           }
-        },
+        }, */
         {
           title: "操作",
           key: "",
