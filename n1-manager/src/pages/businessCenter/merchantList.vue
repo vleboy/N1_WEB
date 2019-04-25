@@ -111,7 +111,7 @@ export default {
         {
           title: "序号",
           type: "index",
-          width: 60
+          width: 45
         },
         {
           title: "商户ID",
@@ -123,16 +123,18 @@ export default {
           title: "商户标识",
           key: "sn",
           sortable: true,
-          width: 105
+          width: 95
         },
         {
           title: "商户昵称",
           key: "displayName",
-          sortable: true
+          sortable: true,
+          maxWidth:100
         },
         {
           title: "上级线路商",
           key: "parentDisplayName",
+          maxWidth:110,
           sortable: true,
           render: (h, params) => {
             //console.log(params);
@@ -146,7 +148,7 @@ export default {
         {
           title:'玩家数量',
           key:'playerCount',
-          width: 60,
+          maxWidth: 80,
           render: (h, params) => {
             return h(
               "span",
@@ -169,7 +171,7 @@ export default {
           title: "剩余点数",
           key: "balance",
           sortable: true,
-          width: 120,
+          width: 100,
           render: (h, params) => {
             let adminId = localStorage.loginId;
             return h("div", [
@@ -229,6 +231,7 @@ export default {
         {
           title: "商户游戏",
           key: "",
+          width:80,
           render: (h, params) => {
             let column = [
               {
@@ -285,7 +288,7 @@ export default {
           title: "创建时间",
           key: "createdAt",
           sortable: true,
-
+  
           render: (h, params) => {
             return h(
               "span",
@@ -297,7 +300,7 @@ export default {
           title: "最后登录时间",
           key: "loginAt",
           sortable: true,
-         
+
           render: (h, params) => {
             return h(
               "span",
@@ -309,6 +312,7 @@ export default {
           title: "状态",
           key: "status",
           sortable: true,
+          maxWidth:60,
           render: (h, params) => {
             if (params.row.status == 1) {
               return h(
@@ -369,6 +373,7 @@ export default {
         {
           title: "操作",
           key: "",
+          maxWidth:80,
           render: (h, params) => {
             let text = "";
             let status = null;

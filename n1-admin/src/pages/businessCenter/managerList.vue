@@ -111,7 +111,7 @@ export default {
         {
           title: "序号",
           type: "index",
-          maxWidth: 80
+          maxWidth: 70
         },
         {
           title: "线路商标识",
@@ -171,6 +171,7 @@ export default {
         {
           title:'商户数量',
           key:'merchantCount',
+          maxWidth:100,
           render: (h, params) => {
             console.log(params);
             
@@ -353,6 +354,7 @@ export default {
           title: "创建时间",
           key: "createdAt",
           sortable: true,
+          width: 110,
           render: (h, params) => {
             return h(
               "span",

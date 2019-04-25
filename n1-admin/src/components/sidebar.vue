@@ -135,6 +135,7 @@
                         <Icon type="gear-b"></Icon>
                         运营中心
                     </template>
+                    <MenuItem name="gameManager" v-if="permission.includes('游戏管理')">游戏管理</MenuItem>
                     <Submenu name='mysPrice' v-if="permission.includes('神秘大奖')">
                       <template slot="title">神秘大奖</template>
                       <MenuItem name="sysConfig">系统配置</MenuItem>
@@ -144,7 +145,7 @@
                         <template slot="title">电子游戏配置</template>
                         <MenuItem name="numericalControl">数值调控中心</MenuItem>
                     </Submenu>
-                        <MenuItem name="gameManager" v-if="permission.includes('游戏管理')">游戏管理</MenuItem>
+                        
                 </Submenu>
                 <Submenu name="logCenter" v-if='authorityStr.includes("日志")'>
                     <template slot="title">
