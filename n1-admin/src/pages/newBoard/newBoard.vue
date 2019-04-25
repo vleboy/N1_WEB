@@ -1,15 +1,10 @@
 <template>
   <div class="newBoard">
+    <Spin size="large" fix v-show="spinShow" style="z-index:200;">
+      <Icon type="load-c" size="100" class="demo-spin-icon-load" style></Icon>
+      <div style>加载中...</div>
+    </Spin>
     <div class="top">
-      <!--  当前用户列表--- -->
-      <!-- <RadioGroup v-model="source" class="radioGroup" type="button" style="margin-right:1rem">
-        <Radio label="0">正式</Radio>
-        <Radio label="1">测试</Radio>
-        <Radio label="2">全部</Radio>
-      </RadioGroup>-->
-      <!-- 1553356800000, 1555948799999-->
-      <!-- 155586240000, 1555948799999-->
-
       <Select style="width:200px;" ref="resetSelect" clearable v-model="model1">
         <Option
           v-for="(item, index) in gameType"
@@ -62,13 +57,13 @@
               <Radio label="3">退款金额</Radio>
               <Radio label="4">返还金额</Radio>
             </RadioGroup>
-            <div :style="{height:'300px',width:'100%'}" ref="gameDtributed"></div>
+            <div :style="{height:'400px',width:'100%'}" ref="gameDtributed"></div>
           </Card>
         </Col>
         <Col span="12">
           <Card>
             <h3 slot="title">平台每日趋势</h3>
-            <div :style="{height:'300px',width:'100%'}" ref="report"></div>
+            <div :style="{height:'400px',width:'100%'}" ref="report"></div>
           </Card>
         </Col>
       </Row>
@@ -124,19 +119,19 @@
     </div>
     <div v-else-if="initNum == 1">
       <Row>
-        <Col span="12">
+        <Col span="8">
           <Card style="position:relative">
             <h3 slot="title">时刻比例分布(小时)</h3>
-            <div :style="{height:'500px',width:'100%'}" ref="houreMomentBar"></div>  
-          </Card>  
-        </Col>  
-        <Col span="12">
+            <div :style="{height:'550px',width:'100%'}" ref="houreMomentBar"></div>
+          </Card>
+        </Col>
+        <Col span="8">
           <Card style="position:relative">
             <h3 slot="title">时刻比例分布(周)</h3>
-            <div :style="{height:'500px',width:'100%'}" ref="weekMomentBar"></div>    
-          </Card>  
-        </Col>  
-      </Row> 
+            <div :style="{height:'550px',width:'100%'}" ref="weekMomentBar"></div>
+          </Card>
+        </Col>
+      </Row>
       <!-- <Row>
         <Col span="24">
           <Card style="position:relative">
@@ -144,8 +139,8 @@
             <div :style="{height:'500px',width:'100%'}" ref="monthMomentBar"></div>    
           </Card>  
         </Col>  
-      </Row>   -->
-    </div> 
+      </Row>-->
+    </div>
     <div v-else-if="initNum == 2">
       <Row>
         <Col span="8">
@@ -212,23 +207,6 @@
         </Col>
       </Row>
     </div>
-
-    <Spin size="large" fix v-show="spinShow" style="z-index:200;margin-top:-350px">
-      <Icon type="load-c" size="18" class="demo-spin-icon-load" style=""></Icon>
-      <div style="">加载中...</div>
-    </Spin>
-    <Spin size="large" fix v-show="spinShow1" style="z-index:200;margin-top:-350px">
-      <Icon type="load-c" size="18" class="demo-spin-icon-load" style=""></Icon>
-      <div style="">加载中...</div>
-    </Spin>
-    <Spin size="large" fix v-show="spinShow2" style="z-index:200;margin-top:-150px">
-      <Icon type="load-c" size="18" class="demo-spin-icon-load" style=""></Icon>
-      <div style="">加载中...</div>
-    </Spin>
-    <Spin size="large" fix v-show="spinShow4" style="z-index:200;margin-top:-400px">
-      <Icon type="load-c" size="18" class="demo-spin-icon-load" style=""></Icon>
-      <div style="">加载中...</div>
-    </Spin>
   </div>
 </template>
 
@@ -248,9 +226,6 @@ export default {
     return {
       source: "0",
       initNum: "0",
-      spinShow1: false,
-      spinShow2: false,
-      spinShow4: false,
       rankCount: 0,
       options: {
         shortcuts: [
@@ -405,11 +380,11 @@ export default {
   },
   methods: {
     changeBoard(val) {
-      this.initNum = val
+      this.initNum = val;
       if (this.initNum == undefined) {
-        this.initNum = '0'
+        this.initNum = "0";
       } else {
-        this.initNum = val
+        this.initNum = val;
       }
 
       console.log(this.initNum);
@@ -418,16 +393,16 @@ export default {
           this.init();
         });
       } else if (this.initNum == 1) {
-        this.$nextTick(function () {
-          this.distributionInit()
-        })
-      } else if (this.initNum == 2){
+        this.$nextTick(function() {
+          this.distributionInit();
+        });
+      } else if (this.initNum == 2) {
         //this.rankInit();
-        this.$nextTick(function () {
-          this.mcRankInit()
-        })
+        this.$nextTick(function() {
+          this.mcRankInit();
+        });
       } else {
-        this.pyRankInit()
+        this.pyRankInit();
       }
     },
     getGameList() {
@@ -437,16 +412,15 @@ export default {
       this.gameCode = code;
       if (this.initNum == 0) {
         this.init();
-      } else if (this.initNum == 1){
+      } else if (this.initNum == 1) {
         this.distributionInit();
-      } else if (this.initNum == 2){
+      } else if (this.initNum == 2) {
         this.mcRankInit();
       } else {
-        this.pyRankInit()
+        this.pyRankInit();
       }
     },
     changeDate(val) {
-      
       if (val == undefined) {
         val = this.dateType;
       }
@@ -455,12 +429,7 @@ export default {
       switch (val) {
         case "0":
           this.defaultTime.push(
-            new Date(nowDate.getTime() - 24 * 3600 * 1000).setHours(
-              0,
-              0,
-              0,
-              0
-            )
+            new Date(nowDate.getTime() - 24 * 3600 * 1000).setHours(0, 0, 0, 0)
           );
           this.defaultTime.push(
             new Date(nowDate.getTime() - 24 * 3600 * 1000).setHours(
@@ -475,17 +444,10 @@ export default {
           break;
         case "4":
           this.defaultTime.push(
-            new Date(nowDate.getTime()).setHours(
-              0,
-              0,
-              0,
-              0
-            )
+            new Date(nowDate.getTime()).setHours(0, 0, 0, 0)
           );
-          this.defaultTime.push(
-            new Date(nowDate.getTime() - 3 * 60 * 1000)
-          );
-          break;  
+          this.defaultTime.push(new Date(nowDate.getTime() - 3 * 60 * 1000));
+          break;
         case "1":
           this.defaultTime.push(
             new Date(nowDate.getTime() - 24 * 3600 * 1000).setHours(
@@ -551,17 +513,17 @@ export default {
           break;
       }
       console.log(this.initNum);
-      
+
       if (this.initNum == 0) {
         this.changeBoard();
       } else if (this.initNum == 1) {
-        this.distributionInit()
+        this.distributionInit();
       } else if (this.initNum == 2) {
-        this.mcRankInit()
+        this.mcRankInit();
       } else {
         this.pyRankInit();
       }
-      this.rankCount ++
+      this.rankCount++;
     },
     changeChinaDataType(val) {
       if (val == undefined) {
@@ -708,11 +670,11 @@ export default {
       if (this.initNum == 0) {
         this.init();
       } else if (this.initNum == 1) {
-        this.distributionInit()
+        this.distributionInit();
       } else if (this.initNum == 2) {
-        this.mcRankInit()
+        this.mcRankInit();
       } else {
-        this.pyRankInit()
+        this.pyRankInit();
       }
     },
     reset() {
@@ -731,9 +693,9 @@ export default {
 
       if (this.initNum == 0) {
         this.init();
-      } else if(this.initNum == 1) {
+      } else if (this.initNum == 1) {
         this.distributionInit();
-      } else if(this.initNum == 2) {
+      } else if (this.initNum == 2) {
         this.mcRankInit();
       } else {
         this.pyRankInit();
@@ -742,275 +704,281 @@ export default {
     chinaConfigure() {
       this.$echarts.registerMap("china", chinaJson);
       let myChart = this.$echarts.init(this.$refs.chinaEchart); //这里是为了获得容器所在位置
-      myChart.setOption({
-        backgroundColor: "#FFFFFF",
-        /* title: {
+      myChart.setOption(
+        {
+          backgroundColor: "#FFFFFF",
+          /* title: {
           text: "全国地图大数据",
           subtext: "",
           x: "center"
         }, */
-        tooltip: {
-          trigger: "item"
-        },
+          tooltip: {
+            trigger: "item"
+          },
 
-        //左侧小导航图标
-        visualMap: {
-          show: true,
-          x: "left",
-          y: "bottom",
-          splitList: this.chinaSplitList,
-          color: [
-            "#E3170D",
-            "#FF8000",
-            "yellowgreen",
-            "#FFD700",
-            "#FFFFCD",
-            "#ccc"
+          //左侧小导航图标
+          visualMap: {
+            show: true,
+            x: "left",
+            y: "bottom",
+            splitList: this.chinaSplitList,
+            color: [
+              "#E3170D",
+              "#FF8000",
+              "yellowgreen",
+              "#FFD700",
+              "#FFFFCD",
+              "#ccc"
+            ]
+          },
+          //配置属性
+          series: [
+            {
+              name: this.chinaMapUnit,
+              type: "map",
+              mapType: "china",
+              zoom: 1.2,
+              roam: false,
+              label: {
+                normal: {
+                  show: true //省份名称
+                },
+                emphasis: {
+                  show: false
+                }
+              },
+              data: this.chinaData //数据
+            }
           ]
         },
-        //配置属性
-        series: [
-          {
-            name: this.chinaMapUnit,
-            type: "map",
-            mapType: "china",
-            zoom: 1.2,
-            roam: false,
-            label: {
-              normal: {
-                show: true //省份名称
-              },
-              emphasis: {
-                show: false
-              }
-            },
-            data: this.chinaData //数据
-          }
-        ]
-      });
+        true
+      );
     },
     worldConfigure() {
       this.$echarts.registerMap("world", worldJson);
       let myChart = this.$echarts.init(this.$refs.worldEchart); //这里是为了获得容器所在位置
-      myChart.setOption({
-        grid: {
-          left: 'middle'
-        },
-        tooltip: {
-          trigger: "item"
-        },
-        visualMap: {
-          type: "piecewise",
-          show: true,
-          x: "left",
-          y: "bottom",
-          splitList: this.worldSplitList,
-          color: [
-            "#E3170D",
-            "#FF8000",
-            "yellowgreen",
-            "#FFD700",
-            "#FFFFCD",
-            "#ccc"
+      myChart.setOption(
+        {
+          grid: {
+            left: "middle"
+          },
+          tooltip: {
+            trigger: "item"
+          },
+          visualMap: {
+            type: "piecewise",
+            show: true,
+            x: "left",
+            y: "bottom",
+            splitList: this.worldSplitList,
+            color: [
+              "#E3170D",
+              "#FF8000",
+              "yellowgreen",
+              "#FFD700",
+              "#FFFFCD",
+              "#ccc"
+            ]
+          },
+          series: [
+            {
+              name: this.worldMapUnit,
+              type: "map",
+              mapType: "world",
+              roam: false,
+              label: {
+                normal: {
+                  show: false
+                },
+                emphasis: {
+                  show: false
+                }
+              },
+              nameMap: {
+                Afghanistan: "阿富汗",
+                Angola: "安哥拉",
+                Albania: "阿尔巴尼亚",
+                "United Arab Emirates": "阿拉伯联合酋长国",
+                Argentina: "阿根廷",
+                Armenia: "亚美尼亚",
+                "French Southern and Antarctic Lands": "法属南部领地",
+                Australia: "澳大利亚",
+                Austria: "奥地利",
+                Azerbaijan: "阿塞拜疆",
+                Burundi: "布隆迪",
+                Belgium: "比利时",
+                Benin: "贝宁",
+                "Burkina Faso": "布基纳法索",
+                Bangladesh: "孟加拉国",
+                Bulgaria: "保加利亚",
+                "The Bahamas": "巴哈马",
+                "Bosnia and Herzegovina": "波斯尼亚和黑塞哥维那",
+                Belarus: "白俄罗斯",
+                Belize: "伯利兹",
+                Bermuda: "百慕大群岛",
+                Bolivia: "玻利维亚",
+                Brazil: "巴西",
+                Brunei: "文莱",
+                Bhutan: "不丹",
+                Botswana: "博茨瓦纳",
+                "Central African Republic": "中非共和国",
+                Canada: "加拿大",
+                Switzerland: "瑞士",
+                Chile: "智利",
+                China: "中国",
+                "Ivory Coast": "象牙海岸",
+                Cameroon: "喀麦隆",
+                "Democratic Republic of the Congo": "民主刚果",
+                "Republic of the Congo": "刚果",
+                Colombia: "哥伦比亚",
+                "Costa Rica": "哥斯达黎加",
+                Cuba: "古巴",
+                "Northern Cyprus": "北塞浦路斯",
+                Cyprus: "塞浦路斯",
+                "Czech Republic": "捷克共和国",
+                Germany: "德国",
+                Djibouti: "吉布提",
+                Denmark: "丹麦",
+                "Dominican Republic": "多米尼加共和国",
+                Algeria: "阿尔及利亚",
+                Ecuador: "厄瓜多尔",
+                Egypt: "埃及",
+                Eritrea: "厄立特里亚",
+                Spain: "西班牙",
+                Estonia: "爱沙尼亚",
+                Ethiopia: "埃塞俄比亚",
+                Finland: "芬兰",
+                Fiji: "斐济",
+                "Falkland Islands": "福克兰群岛",
+                France: "法国",
+                Gabon: "加蓬",
+                "United Kingdom": "英国",
+                Georgia: "佐治亚州",
+                Ghana: "迦纳",
+                Guinea: "几内亚",
+                Gambia: "冈比亚",
+                "Guinea Bissau": "几内亚比绍",
+                "Equatorial Guinea": "赤道几内亚",
+                Greece: "希腊",
+                Greenland: "格陵兰",
+                Guatemala: "危地马拉",
+                "French Guiana": "法属圭亚那",
+                Guyana: "圭亚那",
+                Honduras: "洪都拉斯",
+                Croatia: "克罗地亚",
+                Haiti: "海地",
+                Hungary: "匈牙利",
+                Indonesia: "印度尼西亚",
+                India: "印度",
+                Ireland: "爱尔兰",
+                Iran: "伊朗",
+                Iraq: "伊拉克",
+                Iceland: "冰岛",
+                Israel: "以色列",
+                Italy: "意大利",
+                Jamaica: "牙买加",
+                Jordan: "约旦",
+                Japan: "日本",
+                Kazakhstan: "哈萨克斯坦",
+                Kenya: "肯尼亚",
+                Kyrgyzstan: "吉尔吉斯斯坦",
+                Cambodia: "柬埔寨",
+                "South Korea": "韩国",
+                Kosovo: "科索沃",
+                Kuwait: "科威特",
+                Laos: "老挝",
+                Lebanon: "黎巴嫩",
+                Liberia: "利比里亚",
+                Libya: "利比亚",
+                "Sri Lanka": "斯里兰卡",
+                Lesotho: "莱索托",
+                Lithuania: "立陶宛",
+                Luxembourg: "卢森堡",
+                Latvia: "拉脱维亚",
+                Morocco: "摩洛哥",
+                Moldova: "摩尔多瓦",
+                Madagascar: "马达加斯加",
+                Mexico: "墨西哥",
+                Macedonia: "马其顿",
+                Mali: "马里",
+                Myanmar: "缅甸",
+                Montenegro: "黑山",
+                Mongolia: "蒙古",
+                Mozambique: "莫桑比克",
+                Mauritania: "毛里塔尼亚",
+                Malawi: "马拉维",
+                Malaysia: "马来西亚",
+                Namibia: "纳米比亚",
+                "New Caledonia": "新喀里多尼亚",
+                Niger: "尼日尔",
+                Nigeria: "尼日利亚",
+                Nicaragua: "尼加拉瓜",
+                Netherlands: "荷兰",
+                Norway: "挪威",
+                Nepal: "尼泊尔",
+                "New Zealand": "新西兰",
+                Oman: "阿曼",
+                Pakistan: "巴基斯坦",
+                Panama: "巴拿马",
+                Peru: "秘鲁",
+                Philippines: "菲律宾",
+                "Papua New Guinea": "巴布亚新几内亚",
+                Poland: "波兰",
+                "Puerto Rico": "波多黎各",
+                "North Korea": "朝鲜",
+                Portugal: "葡萄牙",
+                Paraguay: "巴拉圭",
+                Qatar: "卡塔尔",
+                Romania: "罗马尼亚",
+                Russia: "俄罗斯",
+                Rwanda: "卢旺达",
+                "Western Sahara": "西撒哈拉",
+                "Saudi Arabia": "沙特阿拉伯",
+                Sudan: "苏丹",
+                "South Sudan": "南苏丹",
+                Senegal: "塞内加尔",
+                "Solomon Islands": "所罗门群岛",
+                "Sierra Leone": "塞拉利昂",
+                "El Salvador": "萨尔瓦多",
+                Somaliland: "索马里兰",
+                Somalia: "索马利亚",
+                "Republic of Serbia": "塞尔维亚共和国",
+                Suriname: "苏里南",
+                Slovakia: "斯洛伐克",
+                Slovenia: "斯洛文尼亚",
+                Sweden: "瑞典",
+                Swaziland: "斯威士兰",
+                Syria: "叙利亚",
+                Chad: "乍得",
+                Togo: "多哥",
+                Thailand: "泰国",
+                Tajikistan: "塔吉克斯坦",
+                Turkmenistan: "土库曼斯坦",
+                "East Timor": "东帝汶",
+                "Trinidad and Tobago": "特立尼达和多巴哥",
+                Tunisia: "突尼斯",
+                Turkey: "土耳其",
+                "United Republic of Tanzania": "坦桑尼亚联合共和国",
+                Uganda: "乌干达",
+                Ukraine: "乌克兰",
+                Uruguay: "乌拉圭",
+                "United States": "美国",
+                Uzbekistan: "乌兹别克斯坦",
+                Venezuela: "委内瑞拉",
+                Vietnam: "越南",
+                Vanuatu: "瓦努阿图",
+                "West Bank": "约旦河西岸",
+                Yemen: "也门",
+                "South Africa": "南非",
+                Zambia: "赞比亚",
+                Zimbabwe: "津巴布韦"
+              },
+              data: this.worldData
+            }
           ]
         },
-        series: [
-          {
-            name: this.worldMapUnit,
-            type: "map",
-            mapType: "world",
-            roam: false,
-            label: {
-              normal: {
-                show: false
-              },
-              emphasis: {
-                show: false
-              }
-            },
-            nameMap: {
-              Afghanistan: "阿富汗",
-              Angola: "安哥拉",
-              Albania: "阿尔巴尼亚",
-              "United Arab Emirates": "阿拉伯联合酋长国",
-              Argentina: "阿根廷",
-              Armenia: "亚美尼亚",
-              "French Southern and Antarctic Lands": "法属南部领地",
-              Australia: "澳大利亚",
-              Austria: "奥地利",
-              Azerbaijan: "阿塞拜疆",
-              Burundi: "布隆迪",
-              Belgium: "比利时",
-              Benin: "贝宁",
-              "Burkina Faso": "布基纳法索",
-              Bangladesh: "孟加拉国",
-              Bulgaria: "保加利亚",
-              "The Bahamas": "巴哈马",
-              "Bosnia and Herzegovina": "波斯尼亚和黑塞哥维那",
-              Belarus: "白俄罗斯",
-              Belize: "伯利兹",
-              Bermuda: "百慕大群岛",
-              Bolivia: "玻利维亚",
-              Brazil: "巴西",
-              Brunei: "文莱",
-              Bhutan: "不丹",
-              Botswana: "博茨瓦纳",
-              "Central African Republic": "中非共和国",
-              Canada: "加拿大",
-              Switzerland: "瑞士",
-              Chile: "智利",
-              China: "中国",
-              "Ivory Coast": "象牙海岸",
-              Cameroon: "喀麦隆",
-              "Democratic Republic of the Congo": "民主刚果",
-              "Republic of the Congo": "刚果",
-              Colombia: "哥伦比亚",
-              "Costa Rica": "哥斯达黎加",
-              Cuba: "古巴",
-              "Northern Cyprus": "北塞浦路斯",
-              Cyprus: "塞浦路斯",
-              "Czech Republic": "捷克共和国",
-              Germany: "德国",
-              Djibouti: "吉布提",
-              Denmark: "丹麦",
-              "Dominican Republic": "多米尼加共和国",
-              Algeria: "阿尔及利亚",
-              Ecuador: "厄瓜多尔",
-              Egypt: "埃及",
-              Eritrea: "厄立特里亚",
-              Spain: "西班牙",
-              Estonia: "爱沙尼亚",
-              Ethiopia: "埃塞俄比亚",
-              Finland: "芬兰",
-              Fiji: "斐济",
-              "Falkland Islands": "福克兰群岛",
-              France: "法国",
-              Gabon: "加蓬",
-              "United Kingdom": "英国",
-              Georgia: "佐治亚州",
-              Ghana: "迦纳",
-              Guinea: "几内亚",
-              Gambia: "冈比亚",
-              "Guinea Bissau": "几内亚比绍",
-              "Equatorial Guinea": "赤道几内亚",
-              Greece: "希腊",
-              Greenland: "格陵兰",
-              Guatemala: "危地马拉",
-              "French Guiana": "法属圭亚那",
-              Guyana: "圭亚那",
-              Honduras: "洪都拉斯",
-              Croatia: "克罗地亚",
-              Haiti: "海地",
-              Hungary: "匈牙利",
-              Indonesia: "印度尼西亚",
-              India: "印度",
-              Ireland: "爱尔兰",
-              Iran: "伊朗",
-              Iraq: "伊拉克",
-              Iceland: "冰岛",
-              Israel: "以色列",
-              Italy: "意大利",
-              Jamaica: "牙买加",
-              Jordan: "约旦",
-              Japan: "日本",
-              Kazakhstan: "哈萨克斯坦",
-              Kenya: "肯尼亚",
-              Kyrgyzstan: "吉尔吉斯斯坦",
-              Cambodia: "柬埔寨",
-              "South Korea": "韩国",
-              Kosovo: "科索沃",
-              Kuwait: "科威特",
-              Laos: "老挝",
-              Lebanon: "黎巴嫩",
-              Liberia: "利比里亚",
-              Libya: "利比亚",
-              "Sri Lanka": "斯里兰卡",
-              Lesotho: "莱索托",
-              Lithuania: "立陶宛",
-              Luxembourg: "卢森堡",
-              Latvia: "拉脱维亚",
-              Morocco: "摩洛哥",
-              Moldova: "摩尔多瓦",
-              Madagascar: "马达加斯加",
-              Mexico: "墨西哥",
-              Macedonia: "马其顿",
-              Mali: "马里",
-              Myanmar: "缅甸",
-              Montenegro: "黑山",
-              Mongolia: "蒙古",
-              Mozambique: "莫桑比克",
-              Mauritania: "毛里塔尼亚",
-              Malawi: "马拉维",
-              Malaysia: "马来西亚",
-              Namibia: "纳米比亚",
-              "New Caledonia": "新喀里多尼亚",
-              Niger: "尼日尔",
-              Nigeria: "尼日利亚",
-              Nicaragua: "尼加拉瓜",
-              Netherlands: "荷兰",
-              Norway: "挪威",
-              Nepal: "尼泊尔",
-              "New Zealand": "新西兰",
-              Oman: "阿曼",
-              Pakistan: "巴基斯坦",
-              Panama: "巴拿马",
-              Peru: "秘鲁",
-              Philippines: "菲律宾",
-              "Papua New Guinea": "巴布亚新几内亚",
-              Poland: "波兰",
-              "Puerto Rico": "波多黎各",
-              "North Korea": "朝鲜",
-              Portugal: "葡萄牙",
-              Paraguay: "巴拉圭",
-              Qatar: "卡塔尔",
-              Romania: "罗马尼亚",
-              Russia: "俄罗斯",
-              Rwanda: "卢旺达",
-              "Western Sahara": "西撒哈拉",
-              "Saudi Arabia": "沙特阿拉伯",
-              Sudan: "苏丹",
-              "South Sudan": "南苏丹",
-              Senegal: "塞内加尔",
-              "Solomon Islands": "所罗门群岛",
-              "Sierra Leone": "塞拉利昂",
-              "El Salvador": "萨尔瓦多",
-              Somaliland: "索马里兰",
-              Somalia: "索马利亚",
-              "Republic of Serbia": "塞尔维亚共和国",
-              Suriname: "苏里南",
-              Slovakia: "斯洛伐克",
-              Slovenia: "斯洛文尼亚",
-              Sweden: "瑞典",
-              Swaziland: "斯威士兰",
-              Syria: "叙利亚",
-              Chad: "乍得",
-              Togo: "多哥",
-              Thailand: "泰国",
-              Tajikistan: "塔吉克斯坦",
-              Turkmenistan: "土库曼斯坦",
-              "East Timor": "东帝汶",
-              "Trinidad and Tobago": "特立尼达和多巴哥",
-              Tunisia: "突尼斯",
-              Turkey: "土耳其",
-              "United Republic of Tanzania": "坦桑尼亚联合共和国",
-              Uganda: "乌干达",
-              Ukraine: "乌克兰",
-              Uruguay: "乌拉圭",
-              "United States": "美国",
-              Uzbekistan: "乌兹别克斯坦",
-              Venezuela: "委内瑞拉",
-              Vietnam: "越南",
-              Vanuatu: "瓦努阿图",
-              "West Bank": "约旦河西岸",
-              Yemen: "也门",
-              "South Africa": "南非",
-              Zambia: "赞比亚",
-              Zimbabwe: "津巴布韦"
-            },
-            data: this.worldData
-          }
-        ]
-      });
+        true
+      );
     },
     reportConfigure() {
       let betAmount = this.reportData.betAmount.map(item => {
@@ -1037,163 +1005,172 @@ export default {
 
       let myChart = this.$echarts.init(this.$refs.report);
       // 绘制图表
-      myChart.setOption({
-        xAxis: {
-          name: "单位\n日期",
-          type: "category",
-          data: reportArr
-        },
-        tooltip: {
-          trigger: "axis"
-        },
-        yAxis: {
-          type: "value"
-        },
-        grid: {
-          bottom: "6%"
-        },
-        legend: {
-          data: [
-            "玩家数量",
-            "投注次数",
-            "投注金额",
-            "退款金额",
-            "返回金额",
-            "输赢金额"
-          ],
-          selectedMode: "single"
-        },
-        series: [
-          {
-            name: "玩家数量",
-            type: "line",
-            data: playerCount
+      myChart.setOption(
+        {
+          xAxis: {
+            name: "单位\n日期",
+            type: "category",
+            data: reportArr
           },
-          {
-            name: "投注次数",
-            type: "line",
-            data: betCount
+          tooltip: {
+            trigger: "axis"
           },
-          {
-            name: "投注金额",
-            type: "line",
-            data: betAmount
+          yAxis: {
+            type: "value"
           },
-          {
-            name: "退款金额",
-            type: "line",
-            data: refundAmount
+          grid: {
+            bottom: "6%"
           },
-          {
-            name: "返回金额",
-            type: "line",
-            data: retAmount
+          legend: {
+            data: [
+              "玩家数量",
+              "投注次数",
+              "投注金额",
+              "退款金额",
+              "返回金额",
+              "输赢金额"
+            ],
+            selectedMode: "single"
           },
-          {
-            name: "输赢金额",
-            type: "line",
-            data: winloseAmount
-          }
-        ]
-      });
+          series: [
+            {
+              name: "玩家数量",
+              type: "line",
+              data: playerCount
+            },
+            {
+              name: "投注次数",
+              type: "line",
+              data: betCount
+            },
+            {
+              name: "投注金额",
+              type: "line",
+              data: betAmount
+            },
+            {
+              name: "退款金额",
+              type: "line",
+              data: refundAmount
+            },
+            {
+              name: "返回金额",
+              type: "line",
+              data: retAmount
+            },
+            {
+              name: "输赢金额",
+              type: "line",
+              data: winloseAmount
+            }
+          ]
+        },
+        true
+      );
     },
     playerCountConfigure() {
       let myChart = this.$echarts.init(this.$refs.playerCount);
-      myChart.setOption({
-        /* title: {
+      myChart.setOption(
+        {
+          /* title: {
           text: '动态数据 + 时间坐标轴'
         }, */
-        tooltip: {
-          trigger: "axis",
+          tooltip: {
+            trigger: "axis",
 
-          axisPointer: {
-            animation: false
-          }
-        },
-        xAxis: {
-          type: "time",
-          splitLine: {
-            show: false
+            axisPointer: {
+              animation: false
+            }
           },
-          name: "单位\n日期"
-        },
-        yAxis: {
-          type: "value",
-          splitLine: {
-            show: false
-          }
-        },
-        grid: {
-          bottom: "6%"
-        },
-        legend: {
-          //orient: 'vertical',
-          top: "top",
-          data: ["每日注册人数", "累计注册人数"],
-          selectedMode: "single",
-          padding: 10
-        },
-        series: [
-          {
-            name: "每日注册人数",
-            type: "line",
-            showSymbol: false,
-            hoverAnimation: false,
-            smooth: true,
-            symbolSize: 3,
-            data: this.playerCountData.everyDay
+          xAxis: {
+            type: "time",
+            splitLine: {
+              show: false
+            },
+            name: "单位\n日期"
           },
-          {
-            name: "累计注册人数",
-            type: "line",
-            showSymbol: false,
-            hoverAnimation: false,
-            smooth: true,
-            symbolSize: 3,
-            data: this.playerCountData.sumDay
-          }
-        ]
-      });
+          yAxis: {
+            type: "value",
+            splitLine: {
+              show: false
+            }
+          },
+          grid: {
+            bottom: "6%"
+          },
+          legend: {
+            //orient: 'vertical',
+            top: "top",
+            data: ["每日注册人数", "累计注册人数"],
+            selectedMode: "single",
+            padding: 10
+          },
+          series: [
+            {
+              name: "每日注册人数",
+              type: "line",
+              showSymbol: false,
+              hoverAnimation: false,
+              smooth: true,
+              symbolSize: 3,
+              data: this.playerCountData.everyDay
+            },
+            {
+              name: "累计注册人数",
+              type: "line",
+              showSymbol: false,
+              hoverAnimation: false,
+              smooth: true,
+              symbolSize: 3,
+              data: this.playerCountData.sumDay
+            }
+          ]
+        },
+        true
+      );
     },
     realTimeDynamicConfigure() {
       let myChart = this.$echarts.init(this.$refs.dynamic);
-      myChart.setOption({
-        title: {
-          text: "动态数据 + 时间坐标轴"
-        },
-        tooltip: {
-          trigger: "axis",
+      myChart.setOption(
+        {
+          title: {
+            text: "动态数据 + 时间坐标轴"
+          },
+          tooltip: {
+            trigger: "axis",
 
-          axisPointer: {
-            animation: false
-          }
+            axisPointer: {
+              animation: false
+            }
+          },
+          xAxis: {
+            type: "time",
+            splitLine: {
+              show: false
+            }
+          },
+          yAxis: {
+            type: "value",
+            boundaryGap: [0, "100%"],
+            splitLine: {
+              show: false
+            }
+          },
+          series: [
+            {
+              name: "模拟数据",
+              type: "line",
+              showSymbol: false,
+              hoverAnimation: false,
+              symbol: "circle",
+              smooth: true,
+              symbolSize: 3,
+              data: this.dynamicData
+            }
+          ]
         },
-        xAxis: {
-          type: "time",
-          splitLine: {
-            show: false
-          }
-        },
-        yAxis: {
-          type: "value",
-          boundaryGap: [0, "100%"],
-          splitLine: {
-            show: false
-          }
-        },
-        series: [
-          {
-            name: "模拟数据",
-            type: "line",
-            showSymbol: false,
-            hoverAnimation: false,
-            symbol: "circle",
-            smooth: true,
-            symbolSize: 3,
-            data: this.dynamicData
-          }
-        ]
-      });
+        true
+      );
     },
     houreMomentBarConfigure() {
       let myChart = this.$echarts.init(this.$refs.houreMomentBar);
@@ -1218,88 +1195,91 @@ export default {
       let xArr = this.houreMomentData.betAmount.map(item => {
         return item.x;
       });
-      myChart.setOption({
-        /* title: {
+      myChart.setOption(
+        {
+          /* title: {
           text: "时刻分布柱状图",
           subtext: "",
           x: "left"
         }, */
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "cross",
-            crossStyle: {
-              color: "#999"
-            }
-          }
-        },
-        grid: {
-          left: "15%",
-          bottom: "6%"
-        },
-        legend: {
-          //orient: 'vertical',
-          top: "top",
-          left: 'center',
-          data: [
-            "玩家数量",
-            "投注次数",
-            "投注金额",
-            "退款金额",
-            "返回金额",
-            "输赢金额"
-          ],
-          selectedMode: "single",
-          padding: 0
-        },
-        xAxis: [
-          {
-            name: "单位\n小时",
-            type: "category",
-            data: xArr,
+          tooltip: {
+            trigger: "axis",
             axisPointer: {
-              type: "shadow"
+              type: "cross",
+              crossStyle: {
+                color: "#999"
+              }
             }
-          }
-        ],
-        yAxis: [
-          {
-            type: "value"
-          }
-        ],
-        series: [
-          {
-            name: "玩家数量",
-            type: "bar",
-            data: playerCount
           },
-          {
-            name: "投注次数",
-            type: "bar",
-            data: betCount
+          grid: {
+            left: "15%",
+            bottom: "6%"
           },
-          {
-            name: "投注金额",
-            type: "bar",
-            data: betAmount
+          legend: {
+            //orient: 'vertical',
+            top: "top",
+            left: "center",
+            data: [
+              "玩家数量",
+              "投注次数",
+              "投注金额",
+              "退款金额",
+              "返回金额",
+              "输赢金额"
+            ],
+            selectedMode: "single",
+            padding: 0
           },
-          {
-            name: "退款金额",
-            type: "bar",
-            data: refundAmount
-          },
-          {
-            name: "返回金额",
-            type: "bar",
-            data: retAmount
-          },
-          {
-            name: "输赢金额",
-            type: "bar",
-            data: winloseAmount
-          }
-        ]
-      });
+          xAxis: [
+            {
+              name: "单位\n小时",
+              type: "category",
+              data: xArr,
+              axisPointer: {
+                type: "shadow"
+              }
+            }
+          ],
+          yAxis: [
+            {
+              type: "value"
+            }
+          ],
+          series: [
+            {
+              name: "玩家数量",
+              type: "bar",
+              data: playerCount
+            },
+            {
+              name: "投注次数",
+              type: "bar",
+              data: betCount
+            },
+            {
+              name: "投注金额",
+              type: "bar",
+              data: betAmount
+            },
+            {
+              name: "退款金额",
+              type: "bar",
+              data: refundAmount
+            },
+            {
+              name: "返回金额",
+              type: "bar",
+              data: retAmount
+            },
+            {
+              name: "输赢金额",
+              type: "bar",
+              data: winloseAmount
+            }
+          ]
+        },
+        true
+      );
     },
     weekMomentBarConfigure() {
       let myChart = this.$echarts.init(this.$refs.weekMomentBar);
@@ -1324,88 +1304,91 @@ export default {
       let xArr = this.weekMomentData.betAmount.map(item => {
         return item.x;
       });
-      myChart.setOption({
-        /* title: {
+      myChart.setOption(
+        {
+          /* title: {
           text: "时刻分布柱状图",
           subtext: "",
           x: "left"
         }, */
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "cross",
-            crossStyle: {
-              color: "#999"
-            }
-          }
-        },
-        grid: {
-          left: "15%",
-          bottom: "6%"
-        },
-        legend: {
-          //orient: 'vertical',
-          top: "top",
-          left: 'center',
-          data: [
-            "玩家数量",
-            "投注次数",
-            "投注金额",
-            "退款金额",
-            "返回金额",
-            "输赢金额"
-          ],
-          selectedMode: "single",
-          padding: 0
-        },
-        xAxis: [
-          {
-            name: "单位\n周",
-            type: "category",
-            data: xArr,
+          tooltip: {
+            trigger: "axis",
             axisPointer: {
-              type: "shadow"
+              type: "cross",
+              crossStyle: {
+                color: "#999"
+              }
             }
-          }
-        ],
-        yAxis: [
-          {
-            type: "value"
-          }
-        ],
-        series: [
-          {
-            name: "玩家数量",
-            type: "bar",
-            data: playerCount
           },
-          {
-            name: "投注次数",
-            type: "bar",
-            data: betCount
+          grid: {
+            left: "15%",
+            bottom: "6%"
           },
-          {
-            name: "投注金额",
-            type: "bar",
-            data: betAmount
+          legend: {
+            //orient: 'vertical',
+            top: "top",
+            left: "center",
+            data: [
+              "玩家数量",
+              "投注次数",
+              "投注金额",
+              "退款金额",
+              "返回金额",
+              "输赢金额"
+            ],
+            selectedMode: "single",
+            padding: 0
           },
-          {
-            name: "退款金额",
-            type: "bar",
-            data: refundAmount
-          },
-          {
-            name: "返回金额",
-            type: "bar",
-            data: retAmount
-          },
-          {
-            name: "输赢金额",
-            type: "bar",
-            data: winloseAmount
-          }
-        ]
-      });
+          xAxis: [
+            {
+              name: "单位\n周",
+              type: "category",
+              data: xArr,
+              axisPointer: {
+                type: "shadow"
+              }
+            }
+          ],
+          yAxis: [
+            {
+              type: "value"
+            }
+          ],
+          series: [
+            {
+              name: "玩家数量",
+              type: "bar",
+              data: playerCount
+            },
+            {
+              name: "投注次数",
+              type: "bar",
+              data: betCount
+            },
+            {
+              name: "投注金额",
+              type: "bar",
+              data: betAmount
+            },
+            {
+              name: "退款金额",
+              type: "bar",
+              data: refundAmount
+            },
+            {
+              name: "返回金额",
+              type: "bar",
+              data: retAmount
+            },
+            {
+              name: "输赢金额",
+              type: "bar",
+              data: winloseAmount
+            }
+          ]
+        },
+        true
+      );
     },
     monthMomentBarConfigure() {
       let myChart = this.$echarts.init(this.$refs.monthMomentBar);
@@ -1430,123 +1413,129 @@ export default {
       let xArr = this.monthMomentData.betAmount.map(item => {
         return item.x;
       });
-      myChart.setOption({
-        /* title: {
+      myChart.setOption(
+        {
+          /* title: {
           text: "时刻分布柱状图",
           subtext: "",
           x: "left"
         }, */
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "cross",
-            crossStyle: {
-              color: "#999"
-            }
-          }
-        },
-        grid: {
-          left: "15%",
-          bottom: "6%"
-        },
-        legend: {
-          //orient: 'vertical',
-          top: "top",
-          left: 'center',
-          data: [
-            "玩家数量",
-            "投注次数",
-            "投注金额",
-            "退款金额",
-            "返回金额",
-            "输赢金额"
-          ],
-          selectedMode: "single",
-          padding: 0
-        },
-        xAxis: [
-          {
-            name: "单位\n月",
-            type: "category",
-            data: xArr,
+          tooltip: {
+            trigger: "axis",
             axisPointer: {
-              type: "shadow"
+              type: "cross",
+              crossStyle: {
+                color: "#999"
+              }
             }
-          }
-        ],
-        yAxis: [
-          {
-            type: "value"
-          }
-        ],
-        series: [
-          {
-            name: "玩家数量",
-            type: "bar",
-            data: playerCount
           },
-          {
-            name: "投注次数",
-            type: "bar",
-            data: betCount
+          grid: {
+            left: "15%",
+            bottom: "6%"
           },
-          {
-            name: "投注金额",
-            type: "bar",
-            data: betAmount
+          legend: {
+            //orient: 'vertical',
+            top: "top",
+            left: "center",
+            data: [
+              "玩家数量",
+              "投注次数",
+              "投注金额",
+              "退款金额",
+              "返回金额",
+              "输赢金额"
+            ],
+            selectedMode: "single",
+            padding: 0
           },
-          {
-            name: "退款金额",
-            type: "bar",
-            data: refundAmount
-          },
-          {
-            name: "返回金额",
-            type: "bar",
-            data: retAmount
-          },
-          {
-            name: "输赢金额",
-            type: "bar",
-            data: winloseAmount
-          }
-        ]
-      });
+          xAxis: [
+            {
+              name: "单位\n月",
+              type: "category",
+              data: xArr,
+              axisPointer: {
+                type: "shadow"
+              }
+            }
+          ],
+          yAxis: [
+            {
+              type: "value"
+            }
+          ],
+          series: [
+            {
+              name: "玩家数量",
+              type: "bar",
+              data: playerCount
+            },
+            {
+              name: "投注次数",
+              type: "bar",
+              data: betCount
+            },
+            {
+              name: "投注金额",
+              type: "bar",
+              data: betAmount
+            },
+            {
+              name: "退款金额",
+              type: "bar",
+              data: refundAmount
+            },
+            {
+              name: "返回金额",
+              type: "bar",
+              data: retAmount
+            },
+            {
+              name: "输赢金额",
+              type: "bar",
+              data: winloseAmount
+            }
+          ]
+        },
+        true
+      );
     },
     gameDtributedConfigure() {
       let myChart = this.$echarts.init(this.$refs.gameDtributed);
-      myChart.setOption({
-        /* title : {
+      myChart.setOption(
+        {
+          /* title : {
           text: '游戏分布比例',
           subtext: '纯属虚构',
           x:'center'
         }, */
-        tooltip: {
-          trigger: "item",
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-        legend: {
-          orient: "vertical",
-          left: "left",
-          data: this.valueTP
-        },
-        series: [
-          {
-            name: this.gameUnit,
-            type: "pie",
-            radius: "55%",
-            center: ["50%", "60%"],
-            data: this.valueGD,
-            itemStyle: {
-              emphasis: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: "rgba(0, 0, 0, 0.5)"
+          tooltip: {
+            trigger: "item",
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+          },
+          legend: {
+            orient: "vertical",
+            left: "left",
+            data: this.valueTP
+          },
+          series: [
+            {
+              name: this.gameUnit,
+              type: "pie",
+              radius: "55%",
+              center: ["50%", "60%"],
+              data: this.valueGD,
+              itemStyle: {
+                emphasis: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: "rgba(0, 0, 0, 0.5)"
+                }
               }
             }
-          }
-        ]
-      });
+          ]
+        },
+        true
+      );
     },
     realChange() {
       let params = {};
@@ -1582,36 +1571,39 @@ export default {
       let datas = this.mcPlayerCountData.map(item => {
         return item.y;
       });
-      myChart.setOption({
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow"
+      myChart.setOption(
+        {
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "shadow"
+            },
+            formatter: "{b0}</br>{c0} 人"
           },
-          formatter: "{b0}</br>{c0} 人"
+          xAxis: {
+            name: "单位\n人",
+            type: "value"
+          },
+          yAxis: {
+            type: "category",
+            data: merchant,
+            nameGap: 60
+          },
+          grid: {
+            left: "18%",
+            right: "12%",
+            top: "0",
+            bottom: "5%"
+          },
+          series: [
+            {
+              type: "bar",
+              data: datas
+            }
+          ]
         },
-        xAxis: {
-          name: "单位\n人",
-          type: "value"
-        },
-        yAxis: {
-          type: "category",
-          data: merchant,
-          nameGap: 60
-        },
-        grid: {
-          left: "18%",
-          right: "12%",
-          top: "0",
-          bottom: "5%"
-        },
-        series: [
-          {
-            type: "bar",
-            data: datas
-          }
-        ]
-      });
+        true
+      );
     },
     mcBetCount() {
       let myChart = this.$echarts.init(this.$refs.merchantBetCount);
@@ -1621,35 +1613,38 @@ export default {
       let datas = this.mcBetCountData.map(item => {
         return item.y / 10000;
       });
-      myChart.setOption({
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow"
+      myChart.setOption(
+        {
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "shadow"
+            },
+            formatter: "{b0}</br>{c0} 万次"
           },
-          formatter: "{b0}</br>{c0} 万次"
+          xAxis: {
+            name: "单位\n万次",
+            type: "value"
+          },
+          yAxis: {
+            type: "category",
+            data: merchant
+          },
+          grid: {
+            left: "18%",
+            right: "12%",
+            top: "0",
+            bottom: "5%"
+          },
+          series: [
+            {
+              type: "bar",
+              data: datas
+            }
+          ]
         },
-        xAxis: {
-          name: "单位\n万次",
-          type: "value"
-        },
-        yAxis: {
-          type: "category",
-          data: merchant
-        },
-        grid: {
-          left: "18%",
-          right: "12%",
-          top: "0",
-          bottom: "5%"
-        },
-        series: [
-          {
-            type: "bar",
-            data: datas
-          }
-        ]
-      });
+        true
+      );
     },
     mcBetAmount() {
       let myChart = this.$echarts.init(this.$refs.merchantBetAmount);
@@ -1659,35 +1654,38 @@ export default {
       let datas = this.mcBetAmountData.map(item => {
         return (item.y / 10000).toFixed(2);
       });
-      myChart.setOption({
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow"
+      myChart.setOption(
+        {
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "shadow"
+            },
+            formatter: "{b0}</br>{c0} 万元"
           },
-          formatter: "{b0}</br>{c0} 万元"
+          xAxis: {
+            name: "单位\n万元",
+            type: "value"
+          },
+          yAxis: {
+            type: "category",
+            data: merchant
+          },
+          grid: {
+            left: "18%",
+            right: "12%",
+            top: "0",
+            bottom: "5%"
+          },
+          series: [
+            {
+              type: "bar",
+              data: datas
+            }
+          ]
         },
-        xAxis: {
-          name: "单位\n万元",
-          type: "value"
-        },
-        yAxis: {
-          type: "category",
-          data: merchant
-        },
-        grid: {
-          left: "18%",
-          right: "12%",
-          top: "0",
-          bottom: "5%"
-        },
-        series: [
-          {
-            type: "bar",
-            data: datas
-          }
-        ]
-      });
+        true
+      );
     },
     mcRetAmount() {
       let myChart = this.$echarts.init(this.$refs.merchantRetAmount);
@@ -1697,35 +1695,38 @@ export default {
       let datas = this.mcRetAmountData.map(item => {
         return (item.y / 10000).toFixed(2);
       });
-      myChart.setOption({
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow"
+      myChart.setOption(
+        {
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "shadow"
+            },
+            formatter: "{b0}</br>{c0} 万元"
           },
-          formatter: "{b0}</br>{c0} 万元"
+          xAxis: {
+            name: "单位\n万元",
+            type: "value"
+          },
+          yAxis: {
+            type: "category",
+            data: merchant
+          },
+          grid: {
+            left: "18%",
+            right: "12%",
+            top: "0",
+            bottom: "5%"
+          },
+          series: [
+            {
+              type: "bar",
+              data: datas
+            }
+          ]
         },
-        xAxis: {
-          name: "单位\n万元",
-          type: "value"
-        },
-        yAxis: {
-          type: "category",
-          data: merchant
-        },
-        grid: {
-          left: "18%",
-          right: "12%",
-          top: "0",
-          bottom: "5%"
-        },
-        series: [
-          {
-            type: "bar",
-            data: datas
-          }
-        ]
-      });
+        true
+      );
     },
     mcWinloseAmount() {
       let myChart = this.$echarts.init(this.$refs.merchantWinloseAmount);
@@ -1735,35 +1736,38 @@ export default {
       let datas = this.mcWinloseAmountData.map(item => {
         return (item.y / 10000).toFixed(2);
       });
-      myChart.setOption({
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow"
+      myChart.setOption(
+        {
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "shadow"
+            },
+            formatter: "{b0}</br>{c0} 万元"
           },
-          formatter: "{b0}</br>{c0} 万元"
+          xAxis: {
+            name: "单位\n万元",
+            type: "value"
+          },
+          yAxis: {
+            type: "category",
+            data: merchant
+          },
+          grid: {
+            left: "18%",
+            right: "12%",
+            top: "0",
+            bottom: "5%"
+          },
+          series: [
+            {
+              type: "bar",
+              data: datas
+            }
+          ]
         },
-        xAxis: {
-          name: "单位\n万元",
-          type: "value"
-        },
-        yAxis: {
-          type: "category",
-          data: merchant
-        },
-        grid: {
-          left: "18%",
-          right: "12%",
-          top: "0",
-          bottom: "5%"
-        },
-        series: [
-          {
-            type: "bar",
-            data: datas
-          }
-        ]
-      });
+        true
+      );
     },
     //玩家排行榜柱状图
     pyBetCount() {
@@ -1774,36 +1778,39 @@ export default {
       let datas = this.pyBetCountData.map(item => {
         return item.y / 10000;
       });
-      myChart.setOption({
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow"
+      myChart.setOption(
+        {
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "shadow"
+            },
+            formatter: "{b0}</br>{c0} 万次"
           },
-          formatter: "{b0}</br>{c0} 万次"
+          xAxis: {
+            name: "单位\n万次",
+            type: "value"
+          },
+          yAxis: {
+            type: "category",
+            data: merchant,
+            nameGap: 60
+          },
+          grid: {
+            left: "25%",
+            right: "12%",
+            top: "0",
+            bottom: "5%"
+          },
+          series: [
+            {
+              type: "bar",
+              data: datas
+            }
+          ]
         },
-        xAxis: {
-          name: "单位\n万次",
-          type: "value"
-        },
-        yAxis: {
-          type: "category",
-          data: merchant,
-          nameGap: 60
-        },
-        grid: {
-          left: "35%",
-          right: "12%",
-          top: "0",
-          bottom: "5%"
-        },
-        series: [
-          {
-            type: "bar",
-            data: datas
-          }
-        ]
-      });
+        true
+      );
     },
     pyBetAmount() {
       let myChart = this.$echarts.init(this.$refs.playerBetAmount);
@@ -1813,36 +1820,39 @@ export default {
       let datas = this.pyBetAmountData.map(item => {
         return (item.y / 10000).toFixed(2);
       });
-      myChart.setOption({
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow"
+      myChart.setOption(
+        {
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "shadow"
+            },
+            formatter: "{b0}</br>{c0} 万元"
           },
-          formatter: "{b0}</br>{c0} 万元"
+          xAxis: {
+            name: "单位\n万元",
+            type: "value"
+          },
+          yAxis: {
+            type: "category",
+            data: merchant,
+            nameGap: 60
+          },
+          grid: {
+            left: "25%",
+            right: "12%",
+            top: "0",
+            bottom: "5%"
+          },
+          series: [
+            {
+              type: "bar",
+              data: datas
+            }
+          ]
         },
-        xAxis: {
-          name: "单位\n万元",
-          type: "value"
-        },
-        yAxis: {
-          type: "category",
-          data: merchant,
-          nameGap: 60
-        },
-        grid: {
-          left: "35%",
-          right: "12%",
-          top: "0",
-          bottom: "5%"
-        },
-        series: [
-          {
-            type: "bar",
-            data: datas
-          }
-        ]
-      });
+        true
+      );
     },
     pyRetAmount() {
       let myChart = this.$echarts.init(this.$refs.playerRetAmount);
@@ -1852,36 +1862,39 @@ export default {
       let datas = this.pyRetAmountData.map(item => {
         return (item.y / 10000).toFixed(2);
       });
-      myChart.setOption({
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow"
+      myChart.setOption(
+        {
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "shadow"
+            },
+            formatter: "{b0}</br>{c0} 万元"
           },
-          formatter: "{b0}</br>{c0} 万元"
+          xAxis: {
+            name: "单位\n万元",
+            type: "value"
+          },
+          yAxis: {
+            type: "category",
+            data: merchant,
+            nameGap: 60
+          },
+          grid: {
+            left: "25%",
+            right: "12%",
+            top: "0",
+            bottom: "5%"
+          },
+          series: [
+            {
+              type: "bar",
+              data: datas
+            }
+          ]
         },
-        xAxis: {
-          name: "单位\n万元",
-          type: "value"
-        },
-        yAxis: {
-          type: "category",
-          data: merchant,
-          nameGap: 60
-        },
-        grid: {
-          left: "35%",
-          right: "12%",
-          top: "0",
-          bottom: "5%"
-        },
-        series: [
-          {
-            type: "bar",
-            data: datas
-          }
-        ]
-      });
+        true
+      );
     },
     pyWinloseAmount() {
       let myChart = this.$echarts.init(this.$refs.playerWinloseAmount);
@@ -1892,36 +1905,39 @@ export default {
         return (item.y / 10000).toFixed(2);
       });
 
-      myChart.setOption({
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow"
+      myChart.setOption(
+        {
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "shadow"
+            },
+            formatter: "{b0}</br>{c0} 万元"
           },
-          formatter: "{b0}</br>{c0} 万元"
+          xAxis: {
+            name: "单位\n万元",
+            type: "value"
+          },
+          grid: {
+            left: "25%",
+            right: "12%",
+            top: "0",
+            bottom: "5%"
+          },
+          yAxis: {
+            type: "category",
+            data: merchant,
+            nameGap: 60
+          },
+          series: [
+            {
+              type: "bar",
+              data: datas
+            }
+          ]
         },
-        xAxis: {
-          name: "单位\n万元",
-          type: "value"
-        },
-        grid: {
-          left: "35%",
-          right: "12%",
-          top: "0",
-          bottom: "5%"
-        },
-        yAxis: {
-          type: "category",
-          data: merchant,
-          nameGap: 60
-        },
-        series: [
-          {
-            type: "bar",
-            data: datas
-          }
-        ]
-      });
+        true
+      );
     },
 
     init() {
@@ -1954,13 +1970,13 @@ export default {
           this.changeChinaDataType();
         });
         httpRequest("get", "/visual/line/player", params, "map").then(res => {
-            this.playerCountData = res.data;
-            this.playerCountConfigure();
-            // 最后请求1个
-            httpRequest("get", "/visual/map/world", params, "map").then(res => {
-              this.worldAllData = res.data;
-              this.changeWorldDataType();
-            });
+          this.playerCountData = res.data;
+          this.playerCountConfigure();
+          // 最后请求1个
+          httpRequest("get", "/visual/map/world", params, "map").then(res => {
+            this.worldAllData = res.data;
+            this.changeWorldDataType();
+          });
         });
       });
     },
@@ -1979,7 +1995,7 @@ export default {
         };
       }
       //榜单
-      this.spinShow1 = true;
+      this.spinShow = true;
       httpRequest("get", "/visual/rank/merchant", params, "map").then(res => {
         this.mcPlayerCountData = res.data.playerCount.reverse();
         this.mcBetCountData = res.data.betCount.reverse();
@@ -1991,7 +2007,7 @@ export default {
         this.mcBetAmount();
         this.mcRetAmount();
         this.mcWinloseAmount();
-        this.spinShow1 = false;
+        this.spinShow = false;
       });
     },
     pyRankInit() {
@@ -2008,7 +2024,7 @@ export default {
           gameType: this.gameCode
         };
       }
-      this.spinShow2 = true;
+      this.spinShow = true;
       httpRequest("get", "/visual/rank/player", params, "map").then(res => {
         this.pyBetCountData = res.data.betCount.reverse();
         this.pyBetAmountData = res.data.betAmount.reverse();
@@ -2018,11 +2034,11 @@ export default {
         this.pyBetAmount();
         this.pyRetAmount();
         this.pyWinloseAmount();
-        this.spinShow2 = false;
+        this.spinShow = false;
       });
     },
     distributionInit() {
-      this.spinShow4 = true;
+      this.spinShow = true;
       let params = {};
       if (this.gameCode == "") {
         params = {
@@ -2038,12 +2054,12 @@ export default {
       }
       httpRequest("get", "/visual/graph/hours", params, "map").then(res => {
         this.houreMomentData = res.data;
-        this.spinShow4 = false;
-        this.houreMomentBarConfigure()
+        this.spinShow = false;
+        this.houreMomentBarConfigure();
       });
       httpRequest("get", "/visual/graph/weeks", params, "map").then(res => {
         this.weekMomentData = res.data;
-        this.weekMomentBarConfigure()
+        this.weekMomentBarConfigure();
       });
       /* httpRequest("get", "/visual/graph/months", params, "map").then(res => {
         this.monthMomentData = res.data;
