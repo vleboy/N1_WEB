@@ -111,31 +111,32 @@ export default {
         {
           title: "序号",
           type: "index",
-          width: 45
+          maxWidth: 40,
+          align: 'center'
         },
         {
           title: "商户ID",
           key: "displayId",
           sortable: true,
-          width: 95,
+          align: 'center'
         },
         {
           title: "商户标识",
           key: "sn",
           sortable: true,
-          width: 95
+          align: 'center'
         },
         {
           title: "商户昵称",
           key: "displayName",
           sortable: true,
-          maxWidth:100
+          align: 'center'
         },
         {
           title: "上级线路商",
           key: "parentDisplayName",
-          maxWidth:110,
           sortable: true,
+          align: 'center',
           render: (h, params) => {
             //console.log(params);
             
@@ -148,7 +149,7 @@ export default {
         {
           title:'玩家数量',
           key:'playerCount',
-          maxWidth: 80,
+          align: 'center',
           render: (h, params) => {
             return h(
               "span",
@@ -171,7 +172,7 @@ export default {
           title: "剩余点数",
           key: "balance",
           sortable: true,
-          width: 100,
+          align: 'center',
           render: (h, params) => {
             let adminId = localStorage.loginId;
             return h("div", [
@@ -231,7 +232,7 @@ export default {
         {
           title: "商户游戏",
           key: "",
-          width:80,
+          align: 'center',
           render: (h, params) => {
             let column = [
               {
@@ -288,11 +289,11 @@ export default {
           title: "创建时间",
           key: "createdAt",
           sortable: true,
-  
+          align: 'center',
           render: (h, params) => {
             return h(
               "span",
-              dayjs(params.row.createdAt).format("YYYY-MM-DD HH:mm:ss")
+              dayjs(params.row.createdAt).format("YYYY-MM-DD")
             );
           }
         },
@@ -300,11 +301,11 @@ export default {
           title: "最后登录时间",
           key: "loginAt",
           sortable: true,
-
+          align: 'center',
           render: (h, params) => {
             return h(
               "span",
-              dayjs(params.row.loginAt).format("YYYY-MM-DD HH:mm:ss")
+              dayjs(params.row.loginAt).format("YYYY-MM-DD")
             );
           }
         },
@@ -312,7 +313,7 @@ export default {
           title: "状态",
           key: "status",
           sortable: true,
-          maxWidth:60,
+          align: 'center',
           render: (h, params) => {
             if (params.row.status == 1) {
               return h(
@@ -373,7 +374,7 @@ export default {
         {
           title: "操作",
           key: "",
-          maxWidth:80,
+          align: 'center',
           render: (h, params) => {
             let text = "";
             let status = null;
@@ -606,4 +607,7 @@ export default {
 .demo-spin-icon-load {
     animation: ani-demo-spin 1s linear infinite;
   }
+/deep/ .ivu-table-cell {
+  padding: 0
+}   
 </style>

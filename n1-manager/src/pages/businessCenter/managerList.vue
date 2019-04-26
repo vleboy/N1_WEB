@@ -100,11 +100,13 @@ export default {
         {
           title: "序号",
           type: "index",
-          maxWidth: 80
+          align: 'center',
+          maxWidth: 40
         },
         {
           title: "线路商标识",
           key: "suffix",
+          align: 'center',
           sortable: true
         },
         /* {
@@ -115,16 +117,19 @@ export default {
         {
           title: "线路商昵称",
           key: "displayName",
+          align: 'center',
           sortable: true
         },
         {
           title: "上级线路商",
           key: "parentDisplayName",
+          align: 'center',
           sortable: true
         },
         {
           title: "剩余点数",
           key: "balance",
+          align: 'center',
           sortable: true,
           render: (h, params) => {
             let adminId = localStorage.loginId;
@@ -185,6 +190,7 @@ export default {
         {
           title: "线路商游戏",
           key: "gameList",
+          align: 'center',
           render: (h, params) => {
             let column = [
               {
@@ -241,17 +247,18 @@ export default {
           title: "创建时间",
           key: "createdAt",
           sortable: true,
-          minWidth: 100,
+          align: 'center',
           render: (h, params) => {
             return h(
               "span",
-              dayjs(params.row.createdAt).format("YYYY-MM-DD HH:mm:ss")
+              dayjs(params.row.createdAt).format("YYYY-MM-DD")
             );
           }
         },
         {
           title: "状态",
           key: "status",
+          align: 'center',
           sortable: true,
           render: (h, params) => {
             if (params.row.status == 1) {
@@ -313,6 +320,7 @@ export default {
         {
           title: "操作",
           key: "",
+          align: 'center',
           render: (h, params) => {
             let text = "";
             let status = null;
@@ -532,4 +540,7 @@ export default {
 .demo-spin-icon-load {
     animation: ani-demo-spin 1s linear infinite;
   }
+/deep/ .ivu-table-cell {
+  padding: 0
+}    
 </style>

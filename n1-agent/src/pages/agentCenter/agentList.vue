@@ -608,6 +608,7 @@ export default {
         {
           title: "代理账号",
           key: "username",
+          align: 'center',
           sortable: true,
           render: (h, params) => {
             let currentId = localStorage.userId;
@@ -679,6 +680,7 @@ export default {
         {
           title: "代理昵称",
           key: "displayName",
+          align: 'center',
           sortable: true,
           render: (h, params) => {
             if (params.row.isTest == 1) {
@@ -719,6 +721,7 @@ export default {
         {
           title: "上级代理",
           key: "parentDisplayName",
+          align: 'center',
           sortable: true,
           render: (h, params) => {
             if (params.row.parent == "00") {
@@ -731,6 +734,7 @@ export default {
         {
           title: "代理游戏",
           key: "",
+          align: 'center',
           render: (h, params) => {
             if (params.row.parent == "00") {
               return h("span", "");
@@ -789,14 +793,17 @@ export default {
         },
         {
           title: "下级代理数量",
+          align: 'center',
           key: "agentCount"
         },
         {
           title: "玩家数量",
+          align: 'center',
           key: "playerCount"
         },
         {
           title: "代理成数",
+          align: 'center',
           key: "rate",
           sortable: true,
           render: (h, params) => {
@@ -806,6 +813,7 @@ export default {
         {
           title: "剩余点数",
           key: "balance",
+          align: 'center',
           sortable: true,
           render: (h, params) => {
             let currentId = localStorage.userId;
@@ -909,17 +917,19 @@ export default {
         {
           title: "创建时间",
           key: "createdAt",
+          align: 'center',
           sortable: true,
           render: (h, params) => {
             return h(
               "span",
-              dayjs(params.row.createdAt).format("YYYY-MM-DD HH:mm:ss")
+              dayjs(params.row.createdAt).format("YYYY-MM-DD")
             );
           }
         },
         {
           title: "状态",
           key: "status",
+          align: 'center',
           sortable: true,
           render: (h, params) => {
             if (params.row.parent == "00") {
@@ -951,41 +961,9 @@ export default {
             }
           }
         },
-        // {
-        //   title: "备注",
-        //   key: "remark",
-        //   maxWidth: 80,
-        //   render: (h, params) => {
-        //     let remark = params.row.remark;
-        //     let result = Object.prototype.toString.call(remark);
-        //     if (result.includes("String")) {
-        //       if (remark != "NULL!") {
-        //         return h(
-        //           "Tooltip",
-        //           {
-        //             props: {
-        //               content: remark
-        //             }
-        //           },
-        //           [
-        //             h("Icon", {
-        //               props: {
-        //                 type: "search",
-        //                 color: "#20a0ff"
-        //               }
-        //             })
-        //           ]
-        //         );
-        //       } else {
-        //         return h("span", "");
-        //       }
-        //     } else {
-        //       return h("span", "");
-        //     }
-        //   }
-        // },
         {
           title: "操作",
+          align: 'center',
           key: "",
           render: (h, params) => {
             if (params.row.current == true) {

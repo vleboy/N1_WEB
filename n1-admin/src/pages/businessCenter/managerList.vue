@@ -111,67 +111,32 @@ export default {
         {
           title: "序号",
           type: "index",
-          maxWidth: 70
+          maxWidth: 40,
+          align: 'center'
         },
         {
           title: "线路商标识",
           key: "suffix",
-          sortable: true
-        },
-        /* {
-          title: "线路商账号",
-          key: "uname",
           sortable: true,
-          render: (h, params) => {
-            if (params.row.isTest == 1) {
-              return h("div", [
-                h(
-                  "span",
-                  {
-                    style: {
-                      color: "#ff9900"
-                    }
-                  },
-                  params.row.uname
-                ),
-                h(
-                  "Tooltip",
-                  {
-                    props: {
-                      content: "测试帐号，在看板和报表统计中可选显示"
-                    }
-                  },
-                  [
-                    h("Icon", {
-                      props: {
-                        type: "help-circled"
-                      },
-                      style: {
-                        paddingLeft: "8px"
-                      }
-                    })
-                  ]
-                )
-              ]);
-            } else {
-              return h("span", params.row.uname);
-            }
-          }
-        }, */
+          align: 'center'
+        },
         {
           title: "线路商昵称",
           key: "displayName",
-          sortable: true
+          sortable: true,
+          align: 'center',
         },
         {
           title: "上级线路商",
           key: "parentDisplayName",
-          sortable: true
+          sortable: true,
+          align: 'center',
         },
         {
           title:'商户数量',
           key:'merchantCount',
-          maxWidth:100,
+          align: 'center',
+  
           render: (h, params) => {
             console.log(params);
             
@@ -204,6 +169,7 @@ export default {
           title: "剩余点数",
           key: "balance",
           sortable: true,
+          align: 'center',
           render: (h, params) => {
             let admininfo = JSON.parse(localStorage.getItem("userInfo"));
             let admin = admininfo.uname;
@@ -298,6 +264,7 @@ export default {
         {
           title: "线路商游戏",
           key: "gameList",
+          align: 'center',
           render: (h, params) => {
             let column = [
               {
@@ -353,12 +320,12 @@ export default {
         {
           title: "创建时间",
           key: "createdAt",
+          align: 'center',
           sortable: true,
-          width: 110,
           render: (h, params) => {
             return h(
               "span",
-              dayjs(params.row.createdAt).format("YYYY-MM-DD HH:mm:ss")
+              dayjs(params.row.createdAt).format("YYYY-MM-DD")
             );
           }
         },
@@ -366,6 +333,7 @@ export default {
           title: "状态",
           key: "status",
           sortable: true,
+          align: 'center',
           render: (h, params) => {
             if (params.row.status == 1) {
               return h(
@@ -390,42 +358,10 @@ export default {
             }
           }
         },
-        // {
-        //   title: "备注",
-        //   key: "remark",
-        //   maxWidth: 80,
-        //   render: (h, params) => {
-        //     let remark = params.row.remark;
-        //     let result = Object.prototype.toString.call(remark);
-        //     if (result.includes("String")) {
-        //       if (result != "NULL!") {
-        //         return h(
-        //           "Tooltip",
-        //           {
-        //             props: {
-        //               content: remark
-        //             }
-        //           },
-        //           [
-        //             h("Icon", {
-        //               props: {
-        //                 type: "search",
-        //                 color: "#20a0ff"
-        //               }
-        //             })
-        //           ]
-        //         );
-        //       } else {
-        //         return h("span", "");
-        //       }
-        //     } else {
-        //       return h("span", "");
-        //     }
-        //   }
-        // },
         {
           title: "操作",
           key: "",
+          align: 'center',
           render: (h, params) => {
             let text = "";
             let status = null;
@@ -713,4 +649,7 @@ export default {
 .demo-spin-icon-load {
     animation: ani-demo-spin 1s linear infinite;
   }
+/deep/ .ivu-table-cell {
+  padding: 0
+}    
 </style>
