@@ -112,6 +112,13 @@
                     </template>
                     <MenuItem name="opreateLog">操作日志</MenuItem>
                 </Submenu> -->
+                <Submenu name="operationCentert" >
+                    <template slot="title">
+                        <Icon type="social-usd"></Icon>
+                        运营中心
+                    </template>
+                    <MenuItem name="prizeList">神秘大奖记录</MenuItem>
+                </Submenu>
                  <Submenu name="noTransfer" >
                     <template slot="title">
                         <Icon type="social-usd"></Icon>

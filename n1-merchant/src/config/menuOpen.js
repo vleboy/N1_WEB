@@ -42,16 +42,22 @@ export const menuOpen = function(name) {
     openName = ['logCenter']
   } else if (name == 'playList') {
     openName = ['playerCenter']
-  } else if (name == 'boothList' || name == 'gameMailList' || name == 'horseRaceLampList' || name == 'gameNoticeList') {
-    openName = ['operation']
-  } else if (name == 'board') {
-    openName = ['board']
-  } else if (name == 'newBoard') {
-    openName = ['newBoard']
-  } else if (name == 'flow' || name == 'noTransferReport') {
-    openName = ['noTransfer']
-  } else if (name == 'dayMerchant') {
-    openName = ['dayReport']
-  }
+  } else if (
+           name == 'boothList' ||
+           name == 'gameMailList' ||
+           name == 'horseRaceLampList' ||
+           name == 'gameNoticeList' ||
+           name == 'prizeList'
+         ) {
+          openName = ['operationCentert']
+         } else if (name == 'board') {
+           openName = ['board']
+         } else if (name == 'newBoard') {
+           openName = ['newBoard']
+         } else if (name == 'flow' || name == 'noTransferReport') {
+           openName = ['noTransfer']
+         } else if (name == 'dayMerchant') {
+           openName = ['dayReport']
+         }
   return openName
 }

@@ -36,6 +36,8 @@ import pngVideo from '@/pages/reports/pngVideo'
 import natruehfive from '@/pages/reports/naTrueHfive'
 import kyChess from '@/pages/reports/kyChess'
 
+import prizeList from '@/pages/operation/prize/prizeList'
+
 //day
 import dayMerchant from '@/pages/day/dayMerchant'
 
@@ -94,12 +96,12 @@ export const appRouter = [
            children: [{ path: 'board', title: '看板', name: 'board', component: board }]
          }, */
          {
-          path: '/newBoard',
-          title: '看板',
-          name: 'newBoard',
-          component: main,
-          children: [{ path: 'newBoard', title: '看板', name: 'newBoard', component: newBoard }]
-        },
+           path: '/newBoard',
+           title: '看板',
+           name: 'newBoard',
+           component: main,
+           children: [{ path: 'newBoard', title: '看板', name: 'newBoard', component: newBoard }]
+         },
          {
            path: '/allreport',
            title: '公司输赢总报表',
@@ -260,10 +262,11 @@ export const appRouter = [
            name: 'operation',
            component: main,
            children: [
-             { path: 'gameNoticeList', title: '游戏公告列表', name: 'gameNoticeList', component: gameNoticeList },
+             { path: 'prizeList', title: '神秘大奖记录', name: 'prizeList', component: prizeList }
+             /* { path: 'gameNoticeList', title: '游戏公告列表', name: 'gameNoticeList', component: gameNoticeList },
              { path: 'gameMailList', title: '游戏邮件列表', name: 'gameMailList', component: gameMailList },
              { path: 'horseRaceLampList', title: '跑马灯列表', name: 'horseRaceLampList', component: horseRaceLampList },
-             { path: 'boothList', title: '展位列表', name: 'boothList', component: boothList }
+             { path: 'boothList', title: '展位列表', name: 'boothList', component: boothList } */
            ]
          }
        ]
