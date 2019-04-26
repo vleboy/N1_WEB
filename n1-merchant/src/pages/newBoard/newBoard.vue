@@ -178,7 +178,9 @@ import "echarts/map/js/china.js"; // 引入中国地图数据
 import chinaJson from "echarts/map/json/china.json";
 import "echarts/map/js/world.js"; // 引入世界地图数据
 import worldJson from "echarts/map/json/world.json";
-
+import { hourFormatBarData } from "@/config/format";
+import { formatBarData } from "@/config/format";
+import { formatMapData } from "@/config/format";
 import { httpRequest } from "@/service/index";
 import { getDefaultTime } from "@/config/getDefaultTime";
 import _ from "lodash";
@@ -297,11 +299,23 @@ export default {
       ],
       //defaultTime: getDefaultTime(),
       defaultTime: "",
-      mcPlayerCountData: [],
-      mcBetCountData: [],
-      mcBetAmountData: [],
-      mcRetAmountData: [],
-      mcWinloseAmountData: [],
+      splitColor: [
+        "#E3170D",
+        "#FF8000",
+        "yellowgreen",
+        "#FFD700",
+        "#FFFFCD",
+        "#ccc"
+      ],
+      woSplitColor: [
+        "#E3170D",
+        "#FF8000",
+        "yellowgreen",
+        "#FFD700",
+        "#FFFFCD",
+        "#ccc"
+      ],
+    
       pyBetCountData: [],
       pyBetAmountData: [],
       pyRetAmountData: [],
@@ -350,16 +364,15 @@ export default {
         this.initNum = val;
       }
 
-    
       if (this.initNum == 0) {
         /* this.$nextTick(function() {
           }); */
-          this.init();
+        this.init();
       } else if (this.initNum == 1) {
         /* this.$nextTick(function() {
           }); */
-          this.distributionInit();
-      } else {
+        this.distributionInit();
+      }  else {
         this.pyRankInit();
       }
     },
@@ -372,7 +385,7 @@ export default {
         this.init();
       } else if (this.initNum == 1) {
         this.distributionInit();
-      } else {
+      }  else {
         this.pyRankInit();
       }
     },
@@ -468,13 +481,12 @@ export default {
           );
           break;
       }
-      
 
       if (this.initNum == 0) {
         this.changeBoard();
       } else if (this.initNum == 1) {
         this.distributionInit();
-      }  else {
+      } else {
         this.pyRankInit();
       }
       this.rankCount++;
@@ -483,6 +495,20 @@ export default {
       if (val == undefined) {
         val = this.chinaDataType;
       }
+
+      if (val == 5) {
+        this.splitColor = ["yellowgreen","#ededed","red"];
+      } else {
+        this.splitColor = [
+          "#E3170D",
+          "#FF8000",
+          "yellowgreen",
+          "#FFD700",
+          "#FFFFCD",
+          "#ccc"
+        ];
+      }
+
       switch (val) {
         case "0":
           this.chinaMapUnit = "玩家数量";
@@ -492,27 +518,27 @@ export default {
         case "1":
           this.chinaMapUnit = "投注金额";
           this.chinaSplitList = this.chinaAllData.betAmount[1];
-          this.chinaData = this.chinaAllData.betAmount[0];
+          this.chinaData = this.chinaAllData.betAmount[0]
           break;
         case "2":
           this.chinaMapUnit = "投注次数";
-          this.chinaSplitList = this.chinaAllData.betCount[1];
-          this.chinaData = this.chinaAllData.betCount[0];
+          this.chinaSplitList = this.chinaAllData.betCount[1]
+          this.chinaData = this.chinaAllData.betCount[0]
           break;
         case "3":
           this.chinaMapUnit = "退款金额";
-          this.chinaSplitList = this.chinaAllData.refundAmount[1];
-          this.chinaData = this.chinaAllData.refundAmount[0];
+          this.chinaSplitList = this.chinaAllData.refundAmount[1]
+          this.chinaData = this.chinaAllData.refundAmount[0]
           break;
         case "4":
           this.chinaMapUnit = "返还金额";
-          this.chinaSplitList = this.chinaAllData.retAmount[1];
-          this.chinaData = this.chinaAllData.retAmount[0];
+          this.chinaSplitList = this.chinaAllData.retAmount[1]
+          this.chinaData = this.chinaAllData.retAmount[0]
           break;
         case "5":
           this.chinaMapUnit = "输赢金额";
-          this.chinaSplitList = this.chinaAllData.winloseAmount[1];
-          this.chinaData = this.chinaAllData.winloseAmount[0];
+          this.chinaSplitList = this.chinaAllData.winloseAmount[1]        
+          this.chinaData = this.chinaAllData.winloseAmount[0]
           break;
       }
       this.chinaConfigure();
@@ -520,6 +546,18 @@ export default {
     changeWorldDataType(val) {
       if (val == undefined) {
         val = this.worldDataType;
+      }
+      if (val == 5) {
+        this.woSplitColor = ["#ededed","red"]
+      } else {
+        this.woSplitColor = [
+          "#E3170D",
+          "#FF8000",
+          "yellowgreen",
+          "#FFD700",
+          "#FFFFCD",
+          "#ccc"
+        ]
       }
       switch (val) {
         case "0":
@@ -529,35 +567,35 @@ export default {
           break;
         case "1":
           this.worldMapUnit = "投注金额";
-          this.worldSplitList = this.worldAllData.betAmount[1];
-          this.worldData = this.worldAllData.betAmount[0];
+          this.worldSplitList = this.worldAllData.betAmount[1]
+          this.worldData = this.worldAllData.betAmount[0]
           break;
         case "2":
           this.worldMapUnit = "投注次数";
-          this.worldSplitList = this.worldAllData.betCount[1];
-          this.worldData = this.worldAllData.betCount[0];
+          this.worldSplitList = this.worldAllData.betCount[1]
+          this.worldData = this.worldAllData.betCount[0]
           break;
         case "3":
           this.worldMapUnit = "退款金额";
-          this.worldSplitList = this.worldAllData.refundAmount[1];
-          this.worldData = this.worldAllData.refundAmount[0];
+          this.worldSplitList = this.worldAllData.refundAmount[1]
+          this.worldData = this.worldAllData.refundAmount[0]
           break;
         case "4":
           this.worldMapUnit = "返还金额";
-          this.worldSplitList = this.worldAllData.retAmount[1];
-          this.worldData = this.worldAllData.retAmount[0];
+          this.worldSplitList = this.worldAllData.retAmount[1]
+          this.worldData = this.worldAllData.retAmount[0]
           break;
         case "5":
           this.worldMapUnit = "输赢金额";
-          this.worldSplitList = this.worldAllData.winloseAmount[1];
-          this.worldData = this.worldAllData.winloseAmount[0];
+          this.worldSplitList = this.worldAllData.winloseAmount[1]
+          this.worldData = this.worldAllData.winloseAmount[0]
           break;
       }
       this.worldConfigure();
     },
     changeGameDtributedDataType(val) {
       if (val == undefined) {
-        val = this.chinaDataType;
+        val = this.gameDtributedDataType;
       }
       switch (val) {
         case "0":
@@ -572,7 +610,10 @@ export default {
         case "1":
           this.gameUnit = "投注金额";
           this.valueGD = this.gameDtributedData.betAmount.map(item => {
-            return item;
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
           });
           this.valueTP = this.gameDtributedData.betAmount.map(item => {
             return item.name;
@@ -581,7 +622,10 @@ export default {
         case "2":
           this.gameUnit = "投注次数";
           this.valueGD = this.gameDtributedData.betCount.map(item => {
-            return item;
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
           });
           this.valueTP = this.gameDtributedData.betCount.map(item => {
             return item.name;
@@ -590,7 +634,10 @@ export default {
         case "3":
           this.gameUnit = "退款金额";
           this.valueGD = this.gameDtributedData.refundAmount.map(item => {
-            return item;
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
           });
           this.valueTP = this.gameDtributedData.refundAmount.map(item => {
             return item.name;
@@ -599,7 +646,10 @@ export default {
         case "4":
           this.gameUnit = "返还金额";
           this.valueGD = this.gameDtributedData.retAmount.map(item => {
-            return item;
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
           });
           this.valueTP = this.gameDtributedData.retAmount.map(item => {
             return item.name;
@@ -649,19 +699,17 @@ export default {
         this.pyRankInit();
       }
     },
+
+    //趋势
     chinaConfigure() {
       this.$echarts.registerMap("china", chinaJson);
       let myChart = this.$echarts.init(this.$refs.chinaEchart); //这里是为了获得容器所在位置
       myChart.setOption(
         {
           backgroundColor: "#FFFFFF",
-          /* title: {
-          text: "全国地图大数据",
-          subtext: "",
-          x: "center"
-        }, */
           tooltip: {
-            trigger: "item"
+            trigger: "item",
+            formatter: formatMapData
           },
 
           //左侧小导航图标
@@ -669,15 +717,9 @@ export default {
             show: true,
             x: "left",
             y: "bottom",
-            splitList: this.chinaSplitList,
-            color: [
-              "#E3170D",
-              "#FF8000",
-              "yellowgreen",
-              "#FFD700",
-              "#FFFFCD",
-              "#ccc"
-            ]
+            //splitList: this.chinaSplitList,
+            pieces: this.chinaSplitList,
+            color: this.splitColor
           },
           //配置属性
           series: [
@@ -711,7 +753,8 @@ export default {
             left: "middle"
           },
           tooltip: {
-            trigger: "item"
+            trigger: "item",
+            formatter: formatMapData
           },
           visualMap: {
             type: "piecewise",
@@ -719,14 +762,7 @@ export default {
             x: "left",
             y: "bottom",
             splitList: this.worldSplitList,
-            color: [
-              "#E3170D",
-              "#FF8000",
-              "yellowgreen",
-              "#FFD700",
-              "#FFFFCD",
-              "#ccc"
-            ]
+            color: this.woSplitColor
           },
           series: [
             {
@@ -930,22 +966,22 @@ export default {
     },
     reportConfigure() {
       let betAmount = this.reportData.betAmount.map(item => {
-        return item.y;
+        return (item.y / 10000).toFixed(2);
       });
       let betCount = this.reportData.betCount.map(item => {
-        return item.y;
+        return (item.y / 10000).toFixed(2);
       });
       let playerCount = this.reportData.playerCount.map(item => {
         return item.y;
       });
       let refundAmount = this.reportData.refundAmount.map(item => {
-        return item.y;
+        return (item.y / 10000).toFixed(2);
       });
       let retAmount = this.reportData.retAmount.map(item => {
-        return item.y;
+        return (item.y / 10000).toFixed(2);
       });
       let winloseAmount = this.reportData.winloseAmount.map(item => {
-        return item.y;
+        return (item.y / 10000).toFixed(2);
       });
       let reportArr = this.reportData.playerCount.map(item => {
         return item.x;
@@ -961,7 +997,8 @@ export default {
             data: reportArr
           },
           tooltip: {
-            trigger: "axis"
+            trigger: "axis",
+            formatter: formatBarData
           },
           yAxis: {
             type: "value"
@@ -1020,9 +1057,6 @@ export default {
       let myChart = this.$echarts.init(this.$refs.playerCount);
       myChart.setOption(
         {
-          /* title: {
-          text: '动态数据 + 时间坐标轴'
-        }, */
           tooltip: {
             trigger: "axis",
 
@@ -1077,68 +1111,60 @@ export default {
         true
       );
     },
-    realTimeDynamicConfigure() {
-      let myChart = this.$echarts.init(this.$refs.dynamic);
+    gameDtributedConfigure() {
+      let myChart = this.$echarts.init(this.$refs.gameDtributed);
       myChart.setOption(
         {
-          title: {
-            text: "动态数据 + 时间坐标轴"
-          },
           tooltip: {
-            trigger: "axis",
-
-            axisPointer: {
-              animation: false
-            }
+            trigger: "item",
+            formatter: formatMapData
           },
-          xAxis: {
-            type: "time",
-            splitLine: {
-              show: false
-            }
-          },
-          yAxis: {
-            type: "value",
-            boundaryGap: [0, "100%"],
-            splitLine: {
-              show: false
-            }
+          legend: {
+            orient: "vertical",
+            left: "left",
+            data: this.valueTP
           },
           series: [
             {
-              name: "模拟数据",
-              type: "line",
-              showSymbol: false,
-              hoverAnimation: false,
-              symbol: "circle",
-              smooth: true,
-              symbolSize: 3,
-              data: this.dynamicData
+              name: this.gameUnit,
+              type: "pie",
+              radius: "55%",
+              center: ["50%", "60%"],
+              data: this.valueGD,
+              itemStyle: {
+                emphasis: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: "rgba(0, 0, 0, 0.5)"
+                }
+              }
             }
           ]
         },
         true
       );
     },
+
+    //分布
     houreMomentBarConfigure() {
       let myChart = this.$echarts.init(this.$refs.houreMomentBar);
       let betAmount = this.houreMomentData.betAmount.map(item => {
-        return item.y;
+        return (item.y / 10000).toFixed(2);
       });
       let betCount = this.houreMomentData.betCount.map(item => {
-        return item.y;
+        return (item.y / 10000).toFixed(2);
       });
       let playerCount = this.houreMomentData.playerCount.map(item => {
         return item.y;
       });
       let refundAmount = this.houreMomentData.refundAmount.map(item => {
-        return item.y;
+        return (item.y / 10000).toFixed(2);
       });
       let retAmount = this.houreMomentData.retAmount.map(item => {
-        return item.y;
+        return (item.y / 10000).toFixed(2);
       });
       let winloseAmount = this.houreMomentData.winloseAmount.map(item => {
-        return item.y;
+        return (item.y / 10000).toFixed(2);
       });
       let xArr = this.houreMomentData.betAmount.map(item => {
         return item.x;
@@ -1157,7 +1183,8 @@ export default {
               crossStyle: {
                 color: "#999"
               }
-            }
+            },
+            formatter: hourFormatBarData
           },
           grid: {
             left: "15%",
@@ -1232,33 +1259,28 @@ export default {
     weekMomentBarConfigure() {
       let myChart = this.$echarts.init(this.$refs.weekMomentBar);
       let betAmount = this.weekMomentData.betAmount.map(item => {
-        return item.y;
+        return (item.y / 10000).toFixed(2);
       });
       let betCount = this.weekMomentData.betCount.map(item => {
-        return item.y;
+        return (item.y / 10000).toFixed(2);
       });
       let playerCount = this.weekMomentData.playerCount.map(item => {
         return item.y;
       });
       let refundAmount = this.weekMomentData.refundAmount.map(item => {
-        return item.y;
+        return (item.y / 10000).toFixed(2);
       });
       let retAmount = this.weekMomentData.retAmount.map(item => {
-        return item.y;
+        return (item.y / 10000).toFixed(2);
       });
       let winloseAmount = this.weekMomentData.winloseAmount.map(item => {
-        return item.y;
+        return (item.y / 10000).toFixed(2);
       });
       let xArr = this.weekMomentData.betAmount.map(item => {
         return item.x;
       });
       myChart.setOption(
         {
-          /* title: {
-          text: "时刻分布柱状图",
-          subtext: "",
-          x: "left"
-        }, */
           tooltip: {
             trigger: "axis",
             axisPointer: {
@@ -1266,7 +1288,8 @@ export default {
               crossStyle: {
                 color: "#999"
               }
-            }
+            },
+            formatter: formatBarData
           },
           grid: {
             left: "15%",
@@ -1338,387 +1361,8 @@ export default {
         true
       );
     },
-    monthMomentBarConfigure() {
-      let myChart = this.$echarts.init(this.$refs.monthMomentBar);
-      let betAmount = this.monthMomentData.betAmount.map(item => {
-        return item.y;
-      });
-      let betCount = this.monthMomentData.betCount.map(item => {
-        return item.y;
-      });
-      let playerCount = this.monthMomentData.playerCount.map(item => {
-        return item.y;
-      });
-      let refundAmount = this.monthMomentData.refundAmount.map(item => {
-        return item.y;
-      });
-      let retAmount = this.monthMomentData.retAmount.map(item => {
-        return item.y;
-      });
-      let winloseAmount = this.monthMomentData.winloseAmount.map(item => {
-        return item.y;
-      });
-      let xArr = this.monthMomentData.betAmount.map(item => {
-        return item.x;
-      });
-      myChart.setOption(
-        {
-          /* title: {
-          text: "时刻分布柱状图",
-          subtext: "",
-          x: "left"
-        }, */
-          tooltip: {
-            trigger: "axis",
-            axisPointer: {
-              type: "cross",
-              crossStyle: {
-                color: "#999"
-              }
-            }
-          },
-          grid: {
-            left: "15%",
-            bottom: "6%"
-          },
-          legend: {
-            //orient: 'vertical',
-            top: "top",
-            left: "center",
-            data: [
-              "玩家数量",
-              "投注次数",
-              "投注金额",
-              "退款金额",
-              "返回金额",
-              "输赢金额"
-            ],
-            selectedMode: "single",
-            padding: 0
-          },
-          xAxis: [
-            {
-              name: "单位\n月",
-              type: "category",
-              data: xArr,
-              axisPointer: {
-                type: "shadow"
-              }
-            }
-          ],
-          yAxis: [
-            {
-              type: "value"
-            }
-          ],
-          series: [
-            {
-              name: "玩家数量",
-              type: "bar",
-              data: playerCount
-            },
-            {
-              name: "投注次数",
-              type: "bar",
-              data: betCount
-            },
-            {
-              name: "投注金额",
-              type: "bar",
-              data: betAmount
-            },
-            {
-              name: "退款金额",
-              type: "bar",
-              data: refundAmount
-            },
-            {
-              name: "返回金额",
-              type: "bar",
-              data: retAmount
-            },
-            {
-              name: "输赢金额",
-              type: "bar",
-              data: winloseAmount
-            }
-          ]
-        },
-        true
-      );
-    },
-    gameDtributedConfigure() {
-      let myChart = this.$echarts.init(this.$refs.gameDtributed);
-      myChart.setOption(
-        {
-          /* title : {
-          text: '游戏分布比例',
-          subtext: '纯属虚构',
-          x:'center'
-        }, */
-          tooltip: {
-            trigger: "item",
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
-          },
-          legend: {
-            orient: "vertical",
-            left: "left",
-            data: this.valueTP
-          },
-          series: [
-            {
-              name: this.gameUnit,
-              type: "pie",
-              radius: "55%",
-              center: ["50%", "60%"],
-              data: this.valueGD,
-              itemStyle: {
-                emphasis: {
-                  shadowBlur: 10,
-                  shadowOffsetX: 0,
-                  shadowColor: "rgba(0, 0, 0, 0.5)"
-                }
-              }
-            }
-          ]
-        },
-        true
-      );
-    },
-    realChange() {
-      let params = {};
-      if (this.gameCode == "") {
-        params = {
-          parent: JSON.parse(localStorage.getItem('userInfo')).parent,
-          startTime: new Date(this.defaultTime[0]).getTime(),
-          endTime: new Date(this.defaultTime[1]).getTime()
-        };
-      } else {
-        params = {
-          parent: JSON.parse(localStorage.getItem('userInfo')).parent,
-          startTime: new Date(this.defaultTime[0]).getTime(),
-          endTime: new Date(this.defaultTime[1]).getTime(),
-          gameType: this.gameCode
-        };
-      }
 
-      this.hander = setInterval(() => {
-        httpRequest("get", "/visual/line/winloseAmount", params, "map").then(
-          res => {
-            this.dynamicData = res.data;
-            this.realTimeDynamicConfigure();
-          }
-        );
-      }, 1000);
-    },
-
-    //商户排行榜柱状图
-    mcPlayerCount() {
-      let myChart = this.$echarts.init(this.$refs.merchantPlayerCount);
-      let merchant = this.mcPlayerCountData.map(item => {
-        return item.x;
-      });
-      let datas = this.mcPlayerCountData.map(item => {
-        return item.y;
-      });
-      myChart.setOption(
-        {
-          tooltip: {
-            trigger: "axis",
-            axisPointer: {
-              type: "shadow"
-            },
-            formatter: "{b0}</br>{c0} 人"
-          },
-          xAxis: {
-            name: "单位\n人",
-            type: "value"
-          },
-          yAxis: {
-            type: "category",
-            data: merchant,
-            nameGap: 60
-          },
-          grid: {
-            left: "18%",
-            right: "12%",
-            top: "0",
-            bottom: "5%"
-          },
-          series: [
-            {
-              type: "bar",
-              data: datas
-            }
-          ]
-        },
-        true
-      );
-    },
-    mcBetCount() {
-      let myChart = this.$echarts.init(this.$refs.merchantBetCount);
-      let merchant = this.mcBetCountData.map(item => {
-        return item.x;
-      });
-      let datas = this.mcBetCountData.map(item => {
-        return item.y / 10000;
-      });
-      myChart.setOption(
-        {
-          tooltip: {
-            trigger: "axis",
-            axisPointer: {
-              type: "shadow"
-            },
-            formatter: "{b0}</br>{c0} 万次"
-          },
-          xAxis: {
-            name: "单位\n万次",
-            type: "value"
-          },
-          yAxis: {
-            type: "category",
-            data: merchant
-          },
-          grid: {
-            left: "18%",
-            right: "12%",
-            top: "0",
-            bottom: "5%"
-          },
-          series: [
-            {
-              type: "bar",
-              data: datas
-            }
-          ]
-        },
-        true
-      );
-    },
-    mcBetAmount() {
-      let myChart = this.$echarts.init(this.$refs.merchantBetAmount);
-      let merchant = this.mcBetAmountData.map(item => {
-        return item.x;
-      });
-      let datas = this.mcBetAmountData.map(item => {
-        return (item.y / 10000).toFixed(2);
-      });
-      myChart.setOption(
-        {
-          tooltip: {
-            trigger: "axis",
-            axisPointer: {
-              type: "shadow"
-            },
-            formatter: "{b0}</br>{c0} 万元"
-          },
-          xAxis: {
-            name: "单位\n万元",
-            type: "value"
-          },
-          yAxis: {
-            type: "category",
-            data: merchant
-          },
-          grid: {
-            left: "18%",
-            right: "12%",
-            top: "0",
-            bottom: "5%"
-          },
-          series: [
-            {
-              type: "bar",
-              data: datas
-            }
-          ]
-        },
-        true
-      );
-    },
-    mcRetAmount() {
-      let myChart = this.$echarts.init(this.$refs.merchantRetAmount);
-      let merchant = this.mcRetAmountData.map(item => {
-        return item.x;
-      });
-      let datas = this.mcRetAmountData.map(item => {
-        return (item.y / 10000).toFixed(2);
-      });
-      myChart.setOption(
-        {
-          tooltip: {
-            trigger: "axis",
-            axisPointer: {
-              type: "shadow"
-            },
-            formatter: "{b0}</br>{c0} 万元"
-          },
-          xAxis: {
-            name: "单位\n万元",
-            type: "value"
-          },
-          yAxis: {
-            type: "category",
-            data: merchant
-          },
-          grid: {
-            left: "18%",
-            right: "12%",
-            top: "0",
-            bottom: "5%"
-          },
-          series: [
-            {
-              type: "bar",
-              data: datas
-            }
-          ]
-        },
-        true
-      );
-    },
-    mcWinloseAmount() {
-      let myChart = this.$echarts.init(this.$refs.merchantWinloseAmount);
-      let merchant = this.mcWinloseAmountData.map(item => {
-        return item.x;
-      });
-      let datas = this.mcWinloseAmountData.map(item => {
-        return (item.y / 10000).toFixed(2);
-      });
-      myChart.setOption(
-        {
-          tooltip: {
-            trigger: "axis",
-            axisPointer: {
-              type: "shadow"
-            },
-            formatter: "{b0}</br>{c0} 万元"
-          },
-          xAxis: {
-            name: "单位\n万元",
-            type: "value"
-          },
-          yAxis: {
-            type: "category",
-            data: merchant
-          },
-          grid: {
-            left: "18%",
-            right: "12%",
-            top: "0",
-            bottom: "5%"
-          },
-          series: [
-            {
-              type: "bar",
-              data: datas
-            }
-          ]
-        },
-        true
-      );
-    },
+   
     //玩家排行榜柱状图
     pyBetCount() {
       let myChart = this.$echarts.init(this.$refs.playerBetCount);
@@ -1895,13 +1539,11 @@ export default {
       let params = {};
       if (this.gameCode == "") {
         params = {
-          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime()
         };
       } else {
         params = {
-          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime(),
           gameType: this.gameCode
@@ -1932,49 +1574,16 @@ export default {
         });
       });
     },
-    mcRankInit() {
-      let params = {};
-      if (this.gameCode == "") {
-        params = {
-          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
-          startTime: new Date(this.defaultTime[0]).getTime(),
-          endTime: new Date(this.defaultTime[1]).getTime()
-        };
-      } else {
-        params = {
-          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
-          startTime: new Date(this.defaultTime[0]).getTime(),
-          endTime: new Date(this.defaultTime[1]).getTime(),
-          gameType: this.gameCode
-        };
-      }
-      //榜单
-      this.spinShow = true;
-      httpRequest("get", "/visual/rank/merchant", params, "map").then(res => {
-        this.mcPlayerCountData = res.data.playerCount.reverse();
-        this.mcBetCountData = res.data.betCount.reverse();
-        this.mcBetAmountData = res.data.betAmount.reverse();
-        this.mcRetAmountData = res.data.retAmount.reverse();
-        this.mcWinloseAmountData = res.data.winloseAmount.reverse();
-        this.mcPlayerCount();
-        this.mcBetCount();
-        this.mcBetAmount();
-        this.mcRetAmount();
-        this.mcWinloseAmount();
-        this.spinShow = false;
-      });
-    },
+ 
     pyRankInit() {
       let params = {};
       if (this.gameCode == "") {
         params = {
-          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime()
         };
       } else {
         params = {
-          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime(),
           gameType: this.gameCode
@@ -1998,13 +1607,11 @@ export default {
       let params = {};
       if (this.gameCode == "") {
         params = {
-          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime()
         };
       } else {
         params = {
-          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime(),
           gameType: this.gameCode
