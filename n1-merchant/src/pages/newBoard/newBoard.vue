@@ -350,7 +350,7 @@ export default {
         this.initNum = val;
       }
 
-      console.log(this.initNum);
+    
       if (this.initNum == 0) {
         /* this.$nextTick(function() {
           }); */
@@ -468,7 +468,7 @@ export default {
           );
           break;
       }
-      console.log(this.initNum);
+      
 
       if (this.initNum == 0) {
         this.changeBoard();

@@ -391,7 +391,6 @@ export default {
         this.initNum = val;
       }
 
-
       if (this.initNum == 0) {
         /* this.$nextTick(function() {
           }); */
@@ -516,7 +515,6 @@ export default {
           );
           break;
       }
-    
 
       if (this.initNum == 0) {
         this.changeBoard();
@@ -542,61 +540,76 @@ export default {
         case "1":
           this.chinaMapUnit = "投注金额";
           this.chinaSplitList = this.chinaAllData.betAmount[1].map(item => {
-            item.start = Math.round(item.start / 10000);
-            item.end = item.end > 0 ? Math.round(item.end / 10000) + 1 : 0;
-            return item;
-          })
+            return {
+              start: Math.round(item.start / 10000),
+              end: item.end > 0 ? Math.round(item.end / 10000) + 1 : 0
+            };
+          });
           this.chinaData = this.chinaAllData.betAmount[0].map(item => {
-            item.value = parseFloat((item.value / 10000).toFixed(2));
-            return item;
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
           });
           break;
         case "2":
           this.chinaMapUnit = "投注次数";
           this.chinaSplitList = this.chinaAllData.betCount[1].map(item => {
-            item.start = Math.round(item.start / 10000);
-            item.end = item.end > 0 ? Math.round(item.end / 10000) + 1 : 0;
-            return item;
-          })
+            return {
+              start: Math.round(item.start / 10000),
+              end: item.end > 0 ? Math.round(item.end / 10000) + 1 : 0
+            };
+          });
           this.chinaData = this.chinaAllData.betCount[0].map(item => {
-            item.value = parseFloat((item.value / 10000).toFixed(2));
-            return item;
-          })
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
+          });
           break;
         case "3":
           this.chinaMapUnit = "退款金额";
           this.chinaSplitList = this.chinaAllData.refundAmount[1].map(item => {
-            item.start = Math.round(item.start / 10000);
-            item.end = item.end > 0 ? Math.round(item.end / 10000) + 1 : 0;
-            return item;
-          })
+            return {
+              start: Math.round(item.start / 10000),
+              end: item.end > 0 ? Math.round(item.end / 10000) + 1 : 0
+            };
+          });
           this.chinaData = this.chinaAllData.refundAmount[0].map(item => {
-            item.value = parseFloat((item.value / 10000).toFixed(2));
-            return item;
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
           });
           break;
         case "4":
           this.chinaMapUnit = "返还金额";
           this.chinaSplitList = this.chinaAllData.retAmount[1].map(item => {
-            item.start = Math.round(item.start / 10000);
-            item.end = item.end > 0 ? Math.round(item.end / 10000) + 1 : 0;
-            return item;
-          })
+            return {
+              start: Math.round(item.start / 10000),
+              end: item.end > 0 ? Math.round(item.end / 10000) + 1 : 0
+            };
+          });
           this.chinaData = this.chinaAllData.retAmount[0].map(item => {
-            item.value = parseFloat((item.value / 10000).toFixed(2));
-            return item;
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
           });
           break;
         case "5":
           this.chinaMapUnit = "输赢金额";
           this.chinaSplitList = this.chinaAllData.winloseAmount[1].map(item => {
-            item.start = Math.round(item.start / 10000);
-            item.end = item.end > 0 ? Math.round(item.end / 10000) + 1 : 0;
-            return item;
-          })
+            return {
+              start: Math.round(item.start / 10000),
+              end: item.end > 0 ? Math.round(item.end / 10000) + 1 : 0
+            };
+          });
           this.chinaData = this.chinaAllData.winloseAmount[0].map(item => {
-            item.value = parseFloat((item.value / 10000).toFixed(2));
-            return item;
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
           });
           break;
       }
@@ -615,61 +628,76 @@ export default {
         case "1":
           this.worldMapUnit = "投注金额";
           this.worldSplitList = this.worldAllData.betAmount[1].map(item => {
-            item.start = Math.round(item.start / 10000);
-            item.end = item.end > 0 ? Math.round(item.end / 10000) + 1 : 0;
-            return item;
-          })
+            return {
+              start: Math.round(item.start / 10000),
+              end: item.end > 0 ? Math.round(item.end / 10000) + 1 : 0
+            };
+          });
           this.worldData = this.worldAllData.betAmount[0].map(item => {
-            item.value = parseFloat((item.value / 10000).toFixed(2));
-            return item;
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
           });
           break;
         case "2":
           this.worldMapUnit = "投注次数";
           this.worldSplitList = this.worldAllData.betCount[1].map(item => {
-            item.start = Math.round(item.start / 10000);
-            item.end = item.end > 0 ? Math.round(item.end / 10000) + 1 : 0;
-            return item;
-          })
+            return {
+              start: Math.round(item.start / 10000),
+              end: item.end > 0 ? Math.round(item.end / 10000) + 1 : 0
+            };
+          });
           this.worldData = this.worldAllData.betCount[0].map(item => {
-            item.value = parseFloat((item.value / 10000).toFixed(2));
-            return item;
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
           });
           break;
         case "3":
           this.worldMapUnit = "退款金额";
           this.worldSplitList = this.worldAllData.refundAmount[1].map(item => {
-            item.start = Math.round(item.start / 10000);
-            item.end = item.end > 0 ? Math.round(item.end / 10000) + 1 : 0;
-            return item;
-          })
+            return {
+              start: Math.round(item.start / 10000),
+              end: item.end > 0 ? Math.round(item.end / 10000) + 1 : 0
+            };
+          });
           this.worldData = this.worldAllData.refundAmount[0].map(item => {
-            item.value = parseFloat((item.value / 10000).toFixed(2));
-            return item;
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
           });
           break;
         case "4":
           this.worldMapUnit = "返还金额";
           this.worldSplitList = this.worldAllData.retAmount[1].map(item => {
-            item.start = Math.round(item.start / 10000);
-            item.end = item.end > 0 ? Math.round(item.end / 10000) + 1 : 0;
-            return item;
-          })
+            return {
+              start: Math.round(item.start / 10000),
+              end: item.end > 0 ? Math.round(item.end / 10000) + 1 : 0
+            };
+          });
           this.worldData = this.worldAllData.retAmount[0].map(item => {
-            item.value = parseFloat((item.value / 10000).toFixed(2));
-            return item;
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
           });
           break;
         case "5":
           this.worldMapUnit = "输赢金额";
           this.worldSplitList = this.worldAllData.winloseAmount[1].map(item => {
-            item.start = Math.round(item.start / 10000);
-            item.end = item.end > 0 ? Math.round(item.end / 10000) + 1 : 0;
-            return item;
-          })
+            return {
+              start: Math.round(item.start / 10000),
+              end: item.end > 0 ? Math.round(item.end / 10000) + 1 : 0
+            };
+          });
           this.worldData = this.worldAllData.winloseAmount[0].map(item => {
-            item.value = parseFloat((item.value / 10000).toFixed(2));
-            return item;
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
           });
           break;
       }
@@ -677,7 +705,7 @@ export default {
     },
     changeGameDtributedDataType(val) {
       if (val == undefined) {
-        val = this.chinaDataType;
+        val = this.gameDtributedDataType;
       }
       switch (val) {
         case "0":
@@ -692,8 +720,10 @@ export default {
         case "1":
           this.gameUnit = "投注金额";
           this.valueGD = this.gameDtributedData.betAmount.map(item => {
-            item.value = parseFloat((item.value / 10000).toFixed(2));
-            return item;
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
           });
           this.valueTP = this.gameDtributedData.betAmount.map(item => {
             return item.name;
@@ -702,8 +732,10 @@ export default {
         case "2":
           this.gameUnit = "投注次数";
           this.valueGD = this.gameDtributedData.betCount.map(item => {
-            item.value = parseFloat((item.value / 10000).toFixed(2));
-            return item;
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
           });
           this.valueTP = this.gameDtributedData.betCount.map(item => {
             return item.name;
@@ -712,8 +744,10 @@ export default {
         case "3":
           this.gameUnit = "退款金额";
           this.valueGD = this.gameDtributedData.refundAmount.map(item => {
-            item.value = parseFloat((item.value / 10000).toFixed(2));
-            return item;
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
           });
           this.valueTP = this.gameDtributedData.refundAmount.map(item => {
             return item.name;
@@ -722,8 +756,10 @@ export default {
         case "4":
           this.gameUnit = "返还金额";
           this.valueGD = this.gameDtributedData.retAmount.map(item => {
-            item.value = parseFloat((item.value / 10000).toFixed(2));
-            return item;
+            return {
+              value: parseFloat((item.value / 10000).toFixed(2)),
+              name: item.name
+            };
           });
           this.valueTP = this.gameDtributedData.retAmount.map(item => {
             return item.name;
