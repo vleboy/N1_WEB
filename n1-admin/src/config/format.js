@@ -50,3 +50,23 @@ export const formatBarData = function (data) {
     return `${data[0].seriesName}<br/>${data[0].name}<br/>${data[0].value} 万元`
   }
 }
+
+export const formatMapData = function (data) {
+  if (data.seriesName == '玩家数量') {
+    return `${data.seriesName}<br/>${data.name}<br/>${data.value} 人`
+  } else if (data.seriesName == '投注次数') {
+    return `${data.seriesName}<br/>${data.name}<br/>${data.value} 万次`
+  } else {
+    return `${data.seriesName}<br/>${data.name}<br/>${data.value} 万元`
+  }
+}
+
+export const formatPieData = function (data) {
+  if (data.seriesName == '玩家数量') {
+    return `${data.seriesName}<br/>${data.name}<br/>${data.value} 人`
+  } else if (data.seriesName == '投注次数') {
+    return `${data.seriesName}<br/>${data.name}<br/>${data.value} 万次`
+  } else {
+    return `${data.seriesName}<br/>${data.name}<br/>${data.value} 万元`
+  }
+}

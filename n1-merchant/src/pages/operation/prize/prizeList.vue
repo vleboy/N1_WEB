@@ -169,14 +169,6 @@ export default {
           key: "gameId"
         },
         {
-          title: "初始奖池",
-          key: "initBonus"
-        },
-        {
-          title: "机器人贡献",
-          key: "robotBet"
-        },
-        {
           title: "中奖金额",
           key: "winAmount",
           render:(h,params)=>{
