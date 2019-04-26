@@ -119,13 +119,13 @@
     </div>
     <div v-else-if="initNum == 1">
       <Row>
-        <Col span="8">
+        <Col span="12">
           <Card style="position:relative">
             <h3 slot="title">时刻比例分布(小时)</h3>
             <div :style="{height:'550px',width:'100%'}" ref="houreMomentBar"></div>
           </Card>
         </Col>
-        <Col span="8">
+        <Col span="12">
           <Card style="position:relative">
             <h3 slot="title">时刻比例分布(周)</h3>
             <div :style="{height:'550px',width:'100%'}" ref="weekMomentBar"></div>
@@ -143,33 +143,35 @@
     </div>
     <div v-else-if="initNum == 2">
       <Row>
-        <Col span="8">
+        <Col span="12">
           <Card style="position:relative">
             <h3 slot="title">商户玩家数量榜</h3>
             <div :style="{height:'550px',width:'100%'}" ref="merchantPlayerCount"></div>
           </Card>
         </Col>
-        <Col span="8">
+        <Col span="12">
           <Card style="position:relative">
             <h3 slot="title">商户投注次数榜</h3>
             <div :style="{height:'550px',width:'100%'}" ref="merchantBetCount"></div>
           </Card>
         </Col>
-        <Col span="8">
+      </Row>
+      <Row>
+        <Col span="12">
           <Card style="position:relative">
             <h3 slot="title">商户投注金额榜</h3>
             <div :style="{height:'550px',width:'100%'}" ref="merchantBetAmount"></div>
           </Card>
         </Col>
-      </Row>
-      <Row>
-        <Col span="8">
+        <Col span="12">
           <Card style="position:relative">
             <h3 slot="title">商户返还金额榜</h3>
             <div :style="{height:'550px',width:'100%'}" ref="merchantRetAmount"></div>
           </Card>
         </Col>
-        <Col span="8">
+      </Row>
+      <Row>
+        <Col span="12">
           <Card style="position:relative">
             <h3 slot="title">商户输赢金额榜</h3>
             <div :style="{height:'550px',width:'100%'}" ref="merchantWinloseAmount"></div>
@@ -179,27 +181,27 @@
     </div>
     <div v-else>
       <Row>
-        <Col span="8">
+        <Col span="12">
           <Card style="position:relative">
             <h3 slot="title">玩家投注次数榜(TOP10)</h3>
             <div :style="{height:'550px',width:'100%'}" ref="playerBetCount"></div>
           </Card>
         </Col>
-        <Col span="8">
+        <Col span="12">
           <Card style="position:relative">
             <h3 slot="title">玩家投注金额榜(TOP10)</h3>
             <div :style="{height:'550px',width:'100%'}" ref="playerBetAmount"></div>
           </Card>
         </Col>
-        <Col span="8">
+      </Row>
+      <Row>
+         <Col span="12">
           <Card style="position:relative">
             <h3 slot="title">玩家返还金额榜(TOP10)</h3>
             <div :style="{height:'550px',width:'100%'}" ref="playerRetAmount"></div>
           </Card>
         </Col>
-      </Row>
-      <Row>
-        <Col span="8">
+        <Col span="12">
           <Card style="position:relative">
             <h3 slot="title">玩家输赢金额榜(TOP10 & LAST10)</h3>
             <div :style="{height:'550px',width:'100%'}" ref="playerWinloseAmount"></div>
