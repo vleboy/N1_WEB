@@ -115,14 +115,6 @@ export default {
       spin: false,
       columns1: [
         {
-          title: "所属商户",
-          key: "displayName"
-        },
-        {
-          title: "商户标识",
-          key: "sn"
-        },
-        {
           title: "玩家账号",
           key: "userName",
           render: (h, params) => {
