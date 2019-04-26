@@ -23,6 +23,7 @@
         <Col span="17" style="float: right; text-align: right">
         <Input v-model="betId" placeholder="请输入交易号" style="width: 30%;"></Input>
         <Button type="primary" @click="searchAmount">搜索</Button>
+        <Button type="ghost" @click="reset">重置</Button>
         <Button type="primary" @click="exportData">导出数据</Button>
         </Col>
         <!-- <Col span="7"> -->
@@ -247,6 +248,7 @@ export default {
           { company: "NA", code: "90000", name: "H5电子游戏-无神秘奖" }
         ],
         KY: [
+          { company: "全部", code: "", name: "全部" },
           { company: "KY", code: "1070000", name: "KY棋牌游戏" },
         ],
         TTG: [{ company: "全部", code: "", name: "全部" },{ company: "TTG", code: "1010000", name: "TTG电子游戏" }],
@@ -454,6 +456,14 @@ export default {
     //this.companySelectList();
   },
   methods: {
+    reset() {
+      this.companyInfo = '全部厂商'
+      this.selType = 'All'
+      this.startKey = ''
+      this.betId = ''
+      this.amountDate = [new Date().getTime() - 3600 * 1000 * 24 * 6, new Date()]
+      this.changeRadio()
+    },
     getNowpage(page) {
       this.nowPage = page;
       if (
@@ -503,6 +513,7 @@ export default {
       this.runningDetail = data;
     },
     changeRadio(val) {
+     this.playerDetailStartKey = ''
      this.radioInfo = val
      this.getTransactionRecord()
     },
@@ -578,33 +589,13 @@ export default {
       }); */
     }, //获取运营商列表
     changeCompany(val) {
-      /* httpRequest(
-        "post",
-        "/gameBigType",
-        {
-          companyIden: this.companyInfo == "全部厂商" ? "-1" : this.companyInfo
-        },
-        "game"
-      ).then(result => {
-        this.gameTypeList = result.payload;
-        if (this.radioInfo == "") {
-          this.initData();
-          this.getTransactionRecord();
-        }
-        this.gameTypeList.unshift({
-          code: "",
-          name: "全部"
-        });
-        console.log(this.gameTypeList);
-        
-        this.radioInfo = "";
-      }); */
+     
       this.selType = val
       
     },
     searchAmount(val) {
       this.radioInfo = val
-      this.getTransactionRecord()
+      this.changeRadio()
     },
     initTime() {
       const start = this.amountDate[0]
@@ -617,11 +608,7 @@ export default {
         start.setTime(start.getTime() - 3600 * 1000 * 24 * 6);
       this.amountDate = [start, end];
     },
-    /* resultGetPlayerDetail() {
-      this.amountDate = []; // 处理时间不更新，列表页筛选不了最新数据问题
-      this.initData();
-      this.getTransactionRecord();
-    }, */
+   
     initData() {
       this.currentPage = 1;
       this.nowPage = 1;

@@ -80,7 +80,7 @@ $
         </div>
         <div class="form-button">
           <Button type="primary" size="large" @click="searchData(true)">筛选</Button>
-          <Button type="primary" size="large" @click="searchData(false)">重置</Button>
+          <Button type="ghost" size="large" @click="searchData(false)">重置</Button>
         </div>
       </Row>
     </div>

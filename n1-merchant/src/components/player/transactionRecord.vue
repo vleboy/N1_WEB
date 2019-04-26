@@ -28,6 +28,7 @@
             placeholder="选择日期时间范围"
           ></DatePicker>
           <Button type="primary" @click="searchAmount">搜索</Button>
+          <Button type="ghost" @click="reset">重置</Button>
           <Button type="primary" @click="exportData">导出数据</Button>
         </Col>
         <!-- <Col span="7">
@@ -511,6 +512,15 @@ export default {
 
   },
   methods: {
+    reset() {
+      this.companyInfo = '全部厂商'
+      this.selType = 'All'
+      this.startKey = ''
+      this.betId = ''
+      this.radioInfo = '全部'
+      this.amountDate = [new Date().getTime() - 3600 * 1000 * 24 * 6, new Date()]
+      this.changeRadio()
+    },
     getNowpage(page) {
       this.nowPage = page;
       if (
@@ -590,7 +600,8 @@ export default {
       this.runningDetail = data;
     },
     changeRadio(val) {
-      this.radioInfo = val;
+      this.radioInfo == undefined ? '全部' : val;
+      this.playerDetailStartKey = ''
       this.getTransactionRecord();
     },
     getTransactionRecord() {
@@ -648,30 +659,12 @@ export default {
       }); */
     }, //获取运营商列表
     changeCompany(val) {
-      /* httpRequest(
-        "post",
-        "/gameBigType",
-        {
-          companyIden: this.companyInfo == "全部厂商" ? "-1" : this.companyInfo
-        },
-        "game"
-      ).then(result => {
-        this.gameTypeList = result.payload;
-        if (this.radioInfo == "") {
-          this.initData();
-          this.getTransactionRecord();
-        }
-        this.gameTypeList.unshift({
-          code: "",
-          name: "全部"
-        });
-        this.radioInfo = "";
-      }); */
+      
       this.sel = val;
     },
     searchAmount() {
       this.initData();
-      this.getTransactionRecord();
+      this.changeRadio();
     },
     initTime() {
       const start = this.amountDate[0]
@@ -687,7 +680,7 @@ export default {
     resultGetPlayerDetail() {
       this.amountDate = []; // 处理时间不更新，列表页筛选不了最新数据问题
       this.initData();
-      this.getTransactionRecord();
+      this.changeRadio();
     },
     initData() {
       this.currentPage = 1;

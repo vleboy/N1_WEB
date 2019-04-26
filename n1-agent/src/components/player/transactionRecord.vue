@@ -21,6 +21,7 @@
         <DatePicker v-model="amountDate" :options="options" type="datetimerange" :transfer='true' style="width: 300px" @on-ok="searchAmount" placeholder="选择日期时间范围">
         </DatePicker>
         <Button type="primary" @click="searchAmount">搜索</Button>
+        <Button type="ghost" @click="reset">重置</Button>
         <Button type="primary" @click="exportData">导出数据</Button>
         </Col>
         <Col span="8">
@@ -368,6 +369,14 @@ export default {
     this.companySelectList();
   },
   methods: {
+    reset() {
+      this.companyInfo = ''
+      this.getTransactionRecord()
+      this.companyInfo = '全部厂商'
+      this.betId = ''
+      this.amountDate = [new Date().getTime() - 3600 * 1000 * 24 * 6, new Date()]
+      this.companySelectList()
+    },
     getNowpage(page) {
       this.nowPage = page;
       if (

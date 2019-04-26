@@ -6,7 +6,7 @@ $
         <div class="from-search">
           <RadioGroup v-model="companyInfo" type="button" @on-change="changeCompany" size="small">
             <Radio
-              v-for="(item,index) of getGameTypeList"
+              v-for="(item,index) of companyList"
               :key="index"
               :label="item.company"
             >{{item.company}}</Radio>
@@ -15,7 +15,7 @@ $
         <div class="from-search">
           <RadioGroup v-model="radioInfo" type="button" size="small" @on-change="changeGameType">
             <Radio
-              v-for="(item,index) of gameTypeList"
+              v-for="(item,index) of getGameTypeList"
               :key="index"
               :label="item.code"
             >{{item.name}}</Radio>
@@ -39,7 +39,7 @@ $
           <div style="margin-right:1rem;width: 50rem;">
             <Input v-model="sn" placeholder="请输入流水号"></Input>
           </div>
-          <div style="margin-right:1rem;width: 50rem;">
+          <div style="margin-right:.5rem;width: 50rem;">
             <Input v-model="betId" placeholder="请输入交易号"></Input>
           </div>
           <Button @click="isShowSearch = !isShowSearch" type="text">
@@ -47,7 +47,8 @@ $
             <Icon type="arrow-down-b" v-if="!isShowSearch"></Icon>
             <Icon type="arrow-up-b" v-else></Icon>
           </Button>
-          <Button type="primary" size="large" @click="searchData(true)" style="margin-right:1rem">搜索</Button>
+          <Button type="primary" @click="searchData(true)" style="margin-right:.3rem">搜索</Button>
+          <Button type="ghost" @click="reset" style="margin-right:.3rem">重置</Button>
           <Button type="primary" @click="exportData">导出数据</Button>
         </Col>
       </Row>
@@ -217,16 +218,10 @@ export default {
         "13": "商城"
       },
       gameListItem: [],
-      selType: "All",
+      selType: "全部厂商",
       GameListEnum: {
         All: [
           { company: "全部", code: "", name: "全部" },
-          /*  { company: "NA", code: "10000", name: "NA棋牌游戏" },
-          { company: "NA", code: "30000", name: "NA真人视讯" },
-          { company: "NA", code: "40000", name: "NA电子游戏" },
-          { company: "NA", code: "50000", name: "NA街机游戏" },
-          { company: "NA", code: "60000", name: "NA捕鱼游戏" },
-          { company: "NA", code: "80000", name: "H5真人视讯" }, */
           { company: "NA", code: "70000", name: "H5电子游戏" },
           { company: "NA", code: "90000", name: "H5电子游戏-无神秘奖" },
           { company: "KY", code: "1070000", name: "KY棋牌游戏" },
@@ -246,18 +241,12 @@ export default {
           { company: "PP", code: "1160000", name: "PP电子游戏" }
         ],
         NA: [
-          // { company: 'NA', code: '3', name: 'NA商城' },
           { company: "全部", code: "", name: "全部" },
-          /* { company: "NA", code: "10000", name: "NA棋牌游戏" },
-          { company: "NA", code: "30000", name: "NA真人视讯" },
-          { company: "NA", code: "40000", name: "NA电子游戏" },
-          { company: "NA", code: "50000", name: "NA街机游戏" },
-          { company: "NA", code: "60000", name: "NA捕鱼游戏" }, */
           { company: "NA", code: "70000", name: "H5电子游戏" },
-          //{ company: "NA", code: "80000", name: "H5真人视讯" },
           { company: "NA", code: "90000", name: "H5电子游戏-无神秘奖" }
         ],
         KY: [
+          { company: "全部", code: "", name: "全部" },
           { company: "KY", code: "1070000", name: "KY棋牌游戏" },
         ],
         TTG: [
@@ -513,12 +502,23 @@ export default {
       return thousandFormatter(this.allAmount);
     },
     getGameTypeList() {
+      
       return this.GameListEnum[
         this.selType == "全部厂商" ? "All" : this.selType
       ];
     }
   },
   methods: {
+    reset() {
+      this.companyInfo = '全部厂商'
+      this.selType = 'All'
+      this.betId = ''
+      this.sn = ''
+      this.radioType = ''
+      this.radioMoney = ''
+      this.amountDate = [new Date().getTime() - 3600 * 1000 * 24 * 6, new Date()];
+      this.changeGameType()
+    },
     getNowpage(page) {
       this.nowPage = page;
       if (
@@ -599,7 +599,7 @@ export default {
         this.monthDate = "";
       }
       this.initData();
-      this.getPlayerAccount();
+      this.changeGameType();
     }, //日期改变联动
     changeMonth(date) {
       if (date && this.monthDate) {
@@ -613,6 +613,7 @@ export default {
     }, // 月份联动
     changeGameType(val) {
       this.radioInfo = val;
+      this.playerAccountListStartKey = ''
       this.getPlayerAccount();
     },
     searchData(bool) {
@@ -624,7 +625,7 @@ export default {
         this.betId = "";
       }
       this.initData();
-      this.getPlayerAccount();
+      this.changeGameType();
     }, // 重置筛选条件
     initData() {
       this.currentPage = 1;
@@ -646,44 +647,8 @@ export default {
         }&endTime=${this.amountDate ? this.endDate : ""}`
       );
     },
-    /*companySelectList() {
-       httpRequest(
-        "post",
-        "/companySelect",
-        {
-          parent: localStorage.loginRole == 1 ? "" : localStorage.loginId
-        },
-        "game"
-      ).then(result => {
-        this.companyList = result.payload || [];
-        this.companyList.unshift({
-          company: "全部厂商"
-        });
-
-        console.log(this.companyList);
-        
-        this.changeCompany();
-      }); 
-   
-      
-    }, */
     //获取运营商列表
     changeCompany(val) {
-      /* httpRequest(
-        "post",
-        "/gameBigType",
-        {
-          companyIden: this.companyInfo == "全部厂商" ? "-1" : this.companyInfo
-        },
-        "game"
-      ).then(result => {
-        this.gameTypeList = result.payload;
-        this.gameTypeList.unshift({
-          code: "",
-          name: "全部"
-        });
-        this.radioInfo = "";
-      }); */
       this.selType = val;
     },
     openModalBill(data) {
@@ -701,7 +666,7 @@ export default {
         localStorage.playerName != this.playerAccountUserName
       ) {
         this.initData();
-        this.getPlayerAccount();
+        this.changeGameType();
       }
     }
   },

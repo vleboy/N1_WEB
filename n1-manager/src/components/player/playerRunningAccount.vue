@@ -35,7 +35,8 @@ $
             <Icon type="arrow-down-b" v-if="!isShowSearch"></Icon>
             <Icon type="arrow-up-b" v-else></Icon>
           </Button>
-           <Button type="primary" size="large" @click="searchData(true)" style="margin-right:1rem">搜索</Button>
+           <Button type="primary" @click="searchData(true)" style="margin-right:.3rem">搜索</Button>
+           <Button type="ghost" @click="reset(true)" style="margin-right:.3rem">重置</Button>
           <Button type="primary" @click="exportData">导出数据</Button>
         </Col>
       </Row>
@@ -407,6 +408,17 @@ $
       }
     },
     methods: {
+      reset() {
+        this.companyInfo = '全部厂商'
+        this.sel = '全部厂商'
+        this.radioInfo = '全部'
+        this.betId = ''
+        this.sn = ''
+        this.radioType = ''
+        this.radioMoney = ''
+        this.amountDate = [new Date().getTime() - 3600 * 1000 * 24 * 6, new Date()];
+        this.changeGameType()
+      },
       getNowpage(page) {
         this.nowPage = page
         if (page == Math.ceil(this.playerAccountList.length / this.nowSize) && !this.isFetching && page != 1 && !this.isLastMessage) {
@@ -484,7 +496,7 @@ $
           this.monthDate = '';
         }
         this.initData()
-        this.getPlayerAccount()
+        this.changeGameType()
       }, //日期改变联动
       changeMonth(date) {
         if (date && this.monthDate) {
@@ -506,7 +518,7 @@ $
           this.changeCompany()
         }
         this.initData()
-        this.getPlayerAccount()
+        this.changeGameType()
       }, // 重置筛选条件
       initData() {
         this.currentPage = 1;
@@ -548,8 +560,9 @@ $
         this.sel = val;
       },
       changeGameType(val) {
-      this.radioInfo = val;
-      this.getPlayerAccount();
+        this.radioInfo == undefined ? '全部' : val;
+        this.playerAccountListStartKey = ''
+        this.getPlayerAccount();
       },
       openModalBill (data) {
         this.propChild = data;
