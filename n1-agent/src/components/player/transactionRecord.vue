@@ -369,6 +369,7 @@ export default {
     this.companySelectList();
   },
   methods: {
+    
     reset() {
       this.companyInfo = ''
       this.getTransactionRecord()
