@@ -473,17 +473,18 @@ export default {
         {
           title: "序号",
           type: "index",
-          
+          align: 'center',
         },
         {
           title: "角色名",
           key: "name",
           sortable:true,
-        
+          align: 'center',
         },
         {
           title: "权限",
           key: "",
+          align: 'center',
           render: (h, params) => {
             let tags = params.row.permissions;
             return h(
@@ -515,19 +516,20 @@ export default {
         {
           title: "创建时间",
           key: "createdAt",
+          align: 'center',
           sortable:true,
-          maxWidth: 180,
           render: (h, params) => {
             return h(
               "span",
-              dayjs(params.row.createdAt).format("YYYY-MM-DD HH:mm:ss")
+              dayjs(params.row.createdAt).format("YYYY-MM-DD")
             );
           }
         },
         {
           title: "备注",
           key: "",
-          maxWidth: 60,
+          align: 'center',
+         
           render: (h, params) => {
             let remark = params.row.remark;
             let result = Object.prototype.toString.call(remark);

@@ -187,27 +187,33 @@ export default {
       columns1: [
         {
           title: "日期",
-          key: "createdDate"
+          key: "createdDate",
+          align: 'center'
         },
         {
           title: "投注次数",
-          key: "betCount"
+          key: "betCount",
+          align: 'center'
         },
         {
           title: "投注金额",
-          key: "betAmount"
+          key: "betAmount",
+          align: 'center'
         },
         {
           title: "返还金额",
-          key: "retAmount"
+          key: "retAmount",
+          align: 'center'
         },
         {
           title: "退款金额",
-          key: "refundAmount"
+          key: "refundAmount",
+          align: 'center'
         },
         {
           title: "输赢金额",
           key: "winloseAmount",
+          align: 'center',
           render: (h, params) => {
             let count = params.row.winloseAmount;
             let color = "";

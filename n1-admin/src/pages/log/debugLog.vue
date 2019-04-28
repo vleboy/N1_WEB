@@ -61,6 +61,7 @@ export default {
       columns1: [
         {
           title: "时间",
+          align: 'center',
           key: "",
           render: (h, params) => {
             return h(
@@ -71,6 +72,7 @@ export default {
         },
         {
           title: "状态",
+          align: 'center',
           key: "",
           render: (h, params) => {
             if (params.row.ret == "Y") {
@@ -98,10 +100,12 @@ export default {
         },
         {
           title: "详情",
+          align: 'center',
           key: "detail"
         },
         {
           title: "参数",
+          align: 'center',
           key: "inparams",
           render: (h, params) => {
             return h("span", JSON.stringify(params.row.inparams));

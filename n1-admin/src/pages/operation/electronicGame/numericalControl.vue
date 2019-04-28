@@ -28,14 +28,16 @@ export default {
       columns1: [
         {
           title: "游戏系列-神秘大奖版",
+          align: 'center',
           key: "gameType",
          
         },
         {
           title: "数值配表",
           key: "option",
-          align: "center",
-         
+          align: 'center',
+          minWidth: 600,
+
           render: (h, params) => {
             return h(
               "RadioGroup",
@@ -112,7 +114,6 @@ export default {
           title: "操作",
           key: "setting",
           align: "center",
-         
           render: (h, params) =>{
            //console.log(window.selfs);
            
@@ -154,13 +155,13 @@ export default {
         {
           title: "游戏系列-无大奖版",
           key: "gameType",
-         
+          align: 'center'
         },
         {
           title: "数值配表",
           key: "option",
           align: "center",
-         
+          minWidth: 600,
           render: (h, params) => {
             return h(
               "RadioGroup",

@@ -77,26 +77,31 @@ export default {
         {
           title: "序号",
           type: "index",
+          align: 'center',
           maxWidth: 60
         },
         {
           title: "账号",
           key: "uname",
+          align: 'center',
           sortable:true
         },
         {
           title: "真实姓名",
           key: "adminName",
+          align: 'center',
           sortable:true
         },
         {
           title: "管理员角色",
           key: "subRole",
+          align: 'center',
           sortable:true
         },
         {
           title: "剩余点数",
           key: "balance",
+          align: 'center',
           sortable:true,
           render:(h,params)=>{
             return h('span',thousandFormatter(params.row.balance))
@@ -105,23 +110,26 @@ export default {
         {
           title: "创建时间",
           key: "createdAt",
+          align: 'center',
           sortable:true,
           minWidth:20,
           render: (h, params) => {
             return h(
               "span",
-              dayjs(params.row.createdAt).format("YYYY-MM-DD HH:mm:ss")
+              dayjs(params.row.createdAt).format("YYYY-MM-DD")
             );
           }
         },
         {
           title: "邮箱",
           key: "adminEmail",
+          align: 'center',
           sortable:true
         },
         {
           title: "操作",
           key: "",
+          align: 'center',
           minWidth:20,
           render: (h, params) => {
             return h("p", [

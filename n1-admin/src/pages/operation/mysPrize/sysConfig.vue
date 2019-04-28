@@ -278,36 +278,44 @@ export default {
       seriesList: [
         {
           value: "all",
+          align: 'center',
           label: "全部"
         },
         {
           value: "moneytree",
+          align: 'center',
           label: "摇钱树系列"
         }
       ],
       columns1: [
         {
           title: "游戏系列",
+          align: 'center',
           key: "gameType"
         },
         {
           title: "当前奖池金额",
+          align: 'center',
           key: "bonusPool"
         },
         {
           title: "奖池初始金额",
+          align: 'center',
           key: "bonusPoolInit"
         },
         {
           title: "奖池基础掉落金额",
+          align: 'center',
           key: "bonusHitMin"
         },
         {
           title: "奖池必掉金额",
+          align: 'center',
           key: "bonusHitMax"
         },
         {
           title: "机器人数量",
+          align: 'center',
           key: "",
           render: (h, params) => {
             let bonusRobots = params.row.bonusRobots;
@@ -316,10 +324,12 @@ export default {
         },
         {
           title: "下注抽取比例",
+          align: 'center',
           key: "bonusPoolRate"
         },
          {
           title: "中奖比例",
+          align: 'center',
           key: "bonusHitRate",
           render:(h,params)=>{
             return h('span',`1/${params.row.bonusHitRate}`)
@@ -327,14 +337,19 @@ export default {
         },
         {
           title: "机器人注入奖池金额",
-          key: "bonusRobotInput"
+          align: 'center',
+          key: "bonusRobotInput",
+          minWidth: 50
         },
         {
           title: "机器人休眠值",
+          align: 'center',
           key: "bonusRobotLimit"
         },
         {
           title: "操作",
+          minWidth: 25,
+          align: 'center',
           key: "",
           render: (h, params) => {
             return h("div", [
@@ -385,11 +400,13 @@ export default {
       columns2: [
         {
           title: "机器人ID",
+          align: 'center',
           key: "id"
         },
         {
           title: "状态",
           key: "isActive",
+          align: 'center',
           render: (h, params) => {
             let status = params.row.isActive;
             let color = status ? "#20a0ff" : "#f5141e";
@@ -407,14 +424,17 @@ export default {
         },
         {
           title: "下注金额",
+          align: 'center',
           key: "bet"
         },
         {
           title: "下注间隔(秒)",
+          align: 'center',
           key: "betInterval"
         },
         {
           title: "启用时段",
+          align: 'center',
           key: "",
           render: (h, params) => {
             let work = params.row.workTimes;
@@ -440,6 +460,7 @@ export default {
         },
         {
           title: "操作",
+          align: 'center',
           key: "",
           render: (h, params) => {
             return h("div", [
@@ -723,4 +744,7 @@ export default {
 .demo-spin-icon-load {
     animation: ani-demo-spin 1s linear infinite;
   }
+/deep/ .ivu-table-cell {
+  padding: 0;
+}  
 </style>

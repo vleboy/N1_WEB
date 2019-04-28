@@ -117,14 +117,17 @@ export default {
       columns1: [
         {
           title: "所属商户",
+          align: 'center',
           key: "displayName"
         },
         {
           title: "商户标识",
+          align: 'center',
           key: "sn"
         },
         {
           title: "玩家账号",
+          align: 'center',
           key: "userName",
           render: (h, params) => {
             let name = params.row.userName;
@@ -153,14 +156,17 @@ export default {
         },
         {
           title: "玩家ID",
+          align: 'center',
           key: "userId"
         },
         {
           title: "交易号",
+          align: 'center',
           key: "betId"
         },
         {
           title: "日期",
+          align: 'center',
           key: "",
           render: (h, params) => {
             return h(
@@ -171,22 +177,27 @@ export default {
         },
         {
           title: "游戏类型",
+          align: 'center',
           key: "gameTypeName"
         },
         {
           title: "游戏ID",
+          align: 'center',
           key: "gameId"
         },
         {
           title: "初始奖池",
+          align: 'center',
           key: "initBonus"
         },
         {
           title: "机器人贡献",
+          align: 'center',
           key: "robotBet"
         },
         {
           title: "中奖金额",
+          align: 'center',
           key: "winAmount",
           render:(h,params)=>{
             return h('span',params.row.winAmount.toFixed(2))

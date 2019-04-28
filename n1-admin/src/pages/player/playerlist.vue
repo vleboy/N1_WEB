@@ -152,17 +152,20 @@ export default {
           title: "玩家ID",
           key: "userId",
           sortable: true,
-          width: 100
+          align: "center",
+          maxWidth: 100
         },
         {
           title: "玩家账号",
           key: "userName",
+          align: "center",
           sortable: true
         },
         {
           title: "商户ID",
           key: "buId",
           sortable: true,
+          align: "center",
           render: (h, params) => {
             return h(
               "Tooltip",
@@ -192,13 +195,14 @@ export default {
         {
           title: "所属商户",
           key: "merchantName",
+          align: "center",
           sortable: true
         },
         {
           title: "玩家昵称",
           key: "nickname",
           sortable: true,
-
+          align: "center",
           render: (h, params) => {
             //console.log(params);
 
@@ -212,7 +216,7 @@ export default {
           title: "状态",
           key: "state",
           sortable: true,
-
+          align: "center",
           render: (h, params) => {
             return h(
               "Tag",
@@ -230,6 +234,7 @@ export default {
           title: "游戏状态",
           key: "gameStateName",
           sortable: true,
+          align: "center",
           render: (h, params) => {
             return h(
               "Tag",
@@ -250,6 +255,7 @@ export default {
           title: "点数",
           key: "balance",
           sortable: true,
+          align: "center",
           render: (h, params) => {
             return h("span", thousandFormatter(params.row.balance));
           }
@@ -258,10 +264,11 @@ export default {
           title: "注册时间",
           key: "createAt",
           sortable: true,
+          maxWidth: 120,
           render: (h, params) => {
             return h(
               "span",
-              dayjs(params.row.createAt).format("YYYY-MM-DD HH:mm:ss")
+              dayjs(params.row.createAt).format("YYYY-MM-DD")
             );
           }
         },

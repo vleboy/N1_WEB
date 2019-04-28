@@ -152,22 +152,24 @@ export default {
         {
           title: "顺序",
           key: "sortOrder",
-          width: 60
+          align: 'center',
+          maxWidth: 120
         },
         {
           title: "游戏名称",
           key: "gameName",
-          width: 150
+          align: 'center',
+          maxWidth: 120
         },
         {
           title: "供应商",
           key: "companyIden",
-          width: 85,
+          maxWidth: 120,
           align: "center"
         },
         {
           title: "分类",
-          width: 110,
+          maxWidth: 120,
           align: "center",
           render: (h, params) => {
             return h("span", this.getType(params.row));
@@ -177,7 +179,7 @@ export default {
           title: "游戏Id",
           key: "kindId",
           align: "center",
-          width: 100
+          maxWidth: 120,
         },
         {
           title: "游戏链接",
@@ -186,7 +188,7 @@ export default {
         },
         {
           title: "状态",
-          width: 85,
+          maxWidth: 120,
           align: "center",
           render: (h, params) => {
             return h(
@@ -204,7 +206,8 @@ export default {
         {
           title: "操作",
           key: "action",
-          width: 210,
+          align: 'center',
+          maxWidth: 250,
           render: (h, params) => {
             return h("div", [
               h(

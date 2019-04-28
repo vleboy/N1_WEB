@@ -214,49 +214,43 @@ export default {
       columns: [
         {
           title: "交易号",
-          width: 200,
+          align: 'center',
           key: "businessKey"
         },
         {
           title: "流水号",
           key: "sn",
-          width: 250
+          align: 'center',
         },
         {
           title: "接入方",
           key: "plat",
-          width: 100,
-          align: "center"
+          align: 'center',
         },
         {
           title: "玩家ID",
           key: "userId",
-          width: 100,
-          align: "center"
+          align: 'center',
         },
         {
           title: "玩家昵称",
           key: "userNick",
-          width: 100,
-          align: "center"
+          align: 'center',
         },
         {
           title: "游戏大类",
           key: "gameType",
-          width: 100,
-          align: "center"
+          align: 'center',
         },
         {
           title: "游戏ID",
           key: "gameId",
-          width: 100,
-          align: "center"
+          align: 'center',
         },
         {
           title: "帐变金额",
           key: "amount",
-          width: 100,
-          align: "center",
+          align: 'center',
           render: (h, params) => {
             let color = params.row.amount > 0 ? "#0c0" : "#f30";
             return h(
@@ -273,13 +267,12 @@ export default {
         {
           title: "余额",
           key: "balance",
-          width: 100,
-          align: "center"
+          align: 'center',
         },
         {
           title: "类型",
           key: "type",
-          width: 100,
+          align: 'center',
           render: (h, params) => {
             return h("span", this.typeList[params.row.type]);
           }
@@ -287,7 +280,7 @@ export default {
         {
           title: "状态",
           key: "status",
-          width: 100,
+          align: 'center',
           render: (h, params) => {
             let color, text;
             switch (params.row.status) {
@@ -319,7 +312,6 @@ export default {
           title: "同步时间",
           key: "createdAt",
           align: "center",
-          minWidth: 200,
           render: (h, params) => {
             return h(
               "span",
