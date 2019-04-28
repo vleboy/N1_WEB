@@ -1529,11 +1529,13 @@ export default {
       let params = {};
       if (this.gameCode == "") {
         params = {
+          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime()
         };
       } else {
         params = {
+          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime(),
           gameType: this.gameCode
@@ -1569,11 +1571,13 @@ export default {
       let params = {};
       if (this.gameCode == "") {
         params = {
+          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime()
         };
       } else {
         params = {
+          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime(),
           gameType: this.gameCode
@@ -1597,11 +1601,13 @@ export default {
       let params = {};
       if (this.gameCode == "") {
         params = {
+          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime()
         };
       } else {
         params = {
+          parent: JSON.parse(localStorage.getItem('userInfo')).userId,
           startTime: new Date(this.defaultTime[0]).getTime(),
           endTime: new Date(this.defaultTime[1]).getTime(),
           gameType: this.gameCode
