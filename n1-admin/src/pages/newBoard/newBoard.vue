@@ -547,7 +547,7 @@ export default {
       if (val == undefined) {
         val = this.chinaDataType;
       }
-
+          
       if (val == 5) {
         this.splitColor = ["yellowgreen","#ededed","red"];
       } else {
@@ -555,9 +555,9 @@ export default {
           "#E3170D",
           "#FF8000",
           "yellowgreen",
-          "#FFD700",
-          "#FFFFCD",
-          "#ccc"
+          "rgb(0, 255, 179)",
+          "rgb(152, 192, 245)", 
+          "#ededed"
         ];
       }
 
@@ -606,9 +606,9 @@ export default {
           "#E3170D",
           "#FF8000",
           "yellowgreen",
-          "#FFD700",
-          "#FFFFCD",
-          "#ccc"
+          "rgb(0, 255, 179)",
+          "rgb(152, 192, 245)", 
+          "#ededed"
         ]
       }
       switch (val) {
