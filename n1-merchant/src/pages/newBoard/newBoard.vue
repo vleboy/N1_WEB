@@ -300,20 +300,10 @@ export default {
       //defaultTime: getDefaultTime(),
       defaultTime: "",
       splitColor: [
-        "#E3170D",
-        "#FF8000",
-        "yellowgreen",
-        "#FFD700",
-        "#FFFFCD",
-        "#ccc"
+        
       ],
       woSplitColor: [
-        "#E3170D",
-        "#FF8000",
-        "yellowgreen",
-        "#FFD700",
-        "#FFFFCD",
-        "#ccc"
+        
       ],
     
       pyBetCountData: [],
@@ -503,9 +493,9 @@ export default {
           "#E3170D",
           "#FF8000",
           "yellowgreen",
-          "#FFD700",
-          "#FFFFCD",
-          "#ccc"
+          "rgb(0, 255, 179)",
+          "rgb(152, 192, 245)", 
+          "#ededed"
         ];
       }
 
@@ -548,15 +538,15 @@ export default {
         val = this.worldDataType;
       }
       if (val == 5) {
-        this.woSplitColor = ["#ededed","red"]
+        this.woSplitColor = ['yellowgreen',"#ededed","red"]
       } else {
         this.woSplitColor = [
           "#E3170D",
           "#FF8000",
           "yellowgreen",
-          "#FFD700",
-          "#FFFFCD",
-          "#ccc"
+          "rgb(0, 255, 179)",
+          "rgb(152, 192, 245)", 
+          "#ededed"
         ]
       }
       switch (val) {

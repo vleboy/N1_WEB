@@ -7,7 +7,7 @@ export let URL = type => {
         return 'n1game.na12345.com'
         break
       case 'map':
-        return 'test.cncshe.com'
+        return 'https://visual.na12345.com'
         break
       default:
         return 'n1admin.na12345.com'

@@ -20,7 +20,7 @@ export let URL = type => {
         return 'https://testgame.alimuban.cn:45557'
       // return 'http://192.168.3.200:45557'
       case 'map':
-        return 'https://visual.na12345.com'
+        return 'https://test.cncshe.com'
       default:
         return 'https://d3rqtlfdd4m9wd.cloudfront.net'
     }

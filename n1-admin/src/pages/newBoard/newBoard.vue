@@ -549,7 +549,7 @@ export default {
       }
           
       if (val == 5) {
-        this.splitColor = ["yellowgreen","#ededed","red"];
+        this.splitColor = ["#ededed","red"];
       } else {
         this.splitColor = [
           "#E3170D",
