@@ -212,48 +212,48 @@ export default {
       columns: [
         {
           title: "交易号",
-          width: 200,
+          align: 'center',
           key: "businessKey"
         },
         {
           title: "流水号",
+          align: 'center',
           key: "sn",
-          width: 250
         },
         {
           title: "接入方",
+          align: 'center',
           key: "plat",
-          width: 100,
           align: "center"
         },
         {
           title: "玩家ID",
+          align: 'center',
           key: "userId",
-          width: 100,
           align: "center"
         },
         {
           title: "玩家昵称",
+          align: 'center',
           key: "userNick",
-          width: 100,
           align: "center"
         },
         {
           title: "游戏大类",
+          align: 'center',
           key: "gameType",
-          width: 100,
           align: "center"
         },
         {
           title: "游戏ID",
+          align: 'center',
           key: "gameId",
-          width: 100,
           align: "center"
         },
         {
           title: "帐变金额",
+          align: 'center',
           key: "amount",
-          width: 100,
           align: "center",
           render: (h, params) => {
             let color = params.row.amount > 0 ? "#0c0" : "#f30";
@@ -270,22 +270,22 @@ export default {
         },
         {
           title: "余额",
+          align: 'center',
           key: "balance",
-          width: 100,
           align: "center"
         },
         {
           title: "类型",
+          align: 'center',
           key: "type",
-          width: 100,
           render: (h, params) => {
             return h("span", this.typeList[params.row.type]);
           }
         },
         {
           title: "状态",
+          align: 'center',
           key: "status",
-          width: 100,
           render: (h, params) => {
             let color, text;
             switch (params.row.status) {
@@ -315,9 +315,9 @@ export default {
         },
         {
           title: "同步时间",
+          align: 'center',
           key: "createdAt",
           align: "center",
-          minWidth: 200,
           render: (h, params) => {
             return h(
               "span",
@@ -329,43 +329,37 @@ export default {
       columns1: [
         {
           title: "交易号",
+          align: 'center',
           key: "businessKey",
-          width: 200
         },
         {
           title: "接入方",
           key: "plat",
-          width: 100,
           align: "center"
         },
         {
           title: "玩家ID",
           key: "userId",
-          width: 100,
           align: "center"
         },
         {
           title: "玩家昵称",
           key: "userNick",
-          width: 100,
           align: "center"
         },
         {
           title: "游戏大类",
           key: "gameType",
-          width: 100,
           align: "center"
         },
         {
           title: "游戏ID",
           key: "gameId",
-          width: 100,
           align: "center"
         },
         {
           title: "状态",
           key: "status",
-          width: 100,
           align: "center",
           render: (h, params) => {
             let color, text;
@@ -397,37 +391,31 @@ export default {
         {
           title: "下注金额",
           key: "betAmount",
-          width: 100,
           align: "center"
         },
         {
           title: "下注次数",
           key: "betCount",
-          width: 100,
           align: "center"
         },
         {
           title: "返奖金额",
           key: "winAmount",
-          width: 100,
           align: "center"
         },
         {
           title: "退款金额",
           key: "refundAmount",
-          width: 100,
           align: "center"
         },
         {
           title: "返还金额",
           key: "retAmount",
-          width: 100,
           align: "center"
         },
         {
           title: "输赢金额",
           key: "winloseAmount",
-          width: 100,
           align: "center",
           render: (h, params) => {
             let color = params.row.winloseAmount > 0 ? "#0c0" : "#f30";
@@ -445,7 +433,6 @@ export default {
         {
           title: "操作",
           key: "",
-          minWidth: 100,
           align: "center",
           render: (h, params) => {
             return h(
@@ -473,10 +460,12 @@ export default {
       columns2: [
         {
           title: "流水号",
+          align: 'center',
           key: "sn"
         },
         {
           title: "类型",
+          align: 'center',
           key: "type",
           render: (h, params) => {
             return h("span", this.typeList[params.row.type]);
@@ -484,10 +473,12 @@ export default {
         },
         {
           title: "帐变金额",
+          align: 'center',
           key: "amount"
         },
         {
           title: "状态",
+          align: 'center',
           key: "status",
           render: (h, params) => {
             let color, text;
@@ -518,10 +509,12 @@ export default {
         },
         {
           title: "余额",
+          align: 'center',
           key: "balance"
         },
         {
           title: "交易时间",
+          align: 'center',
           key: "createdAt",
           render: (h, params) => {
             return h(

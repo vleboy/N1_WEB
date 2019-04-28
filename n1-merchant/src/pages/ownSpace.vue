@@ -103,13 +103,14 @@ export default {
         {
           title: "序号",
           type: "index",
+          align: 'center',
           maxWidth: 60
         },
         {
           title: "交易时间",
           key: "createdAt",
           sortable: true,
-          minWidth: 45,
+          align: 'center',
           render: (h, params) => {
             return h(
               "span",
@@ -120,7 +121,8 @@ export default {
         {
           title: "交易对象",
           key: "toUser",
-          minWidth: 100,
+          align: 'center',
+          minWidth:50,
           render: (h, params) => {
             let row = params.row;
             if (row.fromLevel > row.toLevel) {
@@ -139,6 +141,8 @@ export default {
         {
           title: "交易类型",
           key: "amount",
+          align: 'center',
+          maxWidth: 120,
           sortable: true,
           render: (h, params) => {
             let row = params.row;
@@ -160,6 +164,7 @@ export default {
          {
           title: "交易前余额",
           key: "oldBalance",
+          align: 'center',
           sortable: true,
           render: (h, params) => {
             return h("span", thousandFormatter(params.row.oldBalance));
@@ -168,6 +173,7 @@ export default {
         {
           title: "交易点数",
           key: "amount",
+          align: 'center',
           sortable: true,
           render: (h, params) => {
             let color = params.row.amount < 0 ? "#f30" : "#0c0";
@@ -185,6 +191,7 @@ export default {
         {
           title: "交易后余额",
           key: "balance",
+          align: 'center',
           sortable: true,
           render: (h, params) => {
             return h("span", thousandFormatter(params.row.balance));
@@ -193,6 +200,7 @@ export default {
         {
           title: "操作人",
           key: "operator",
+          align: 'center',
           sortable: true,
           render: (h, params) => {
             return h("span", params.row.operator.split("_")[1]);
@@ -201,7 +209,8 @@ export default {
         {
           title: "备注",
           key: "remark",
-          width:60,
+          maxWidth: 60,
+          align: 'center',
           render: (h, params) => {
             if (params.row.remark == "NULL!" || params.row.remark == null) {
               return h("span", "");
@@ -406,6 +415,9 @@ export default {
 .demo-spin-icon-load {
     animation: ani-demo-spin 1s linear infinite;
   }
+/deep/ .ivu-table-cell {
+  padding: 0
+}  
 </style>
 
 

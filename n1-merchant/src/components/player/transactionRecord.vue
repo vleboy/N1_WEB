@@ -265,12 +265,13 @@ export default {
         {
           title: "交易号",
           key: "businessKey",
-          width: 200
+          align: 'center',
         },
         {
           title: "交易时间",
           key: "",
           width: 160,
+          align: 'center',
           render: (h, params) => {
             return h(
               "span",
@@ -280,10 +281,12 @@ export default {
         },
         {
           title: "游戏类型",
+          align: 'center',
           key: "typeName"
         },
         {
           title: "游戏ID",
+          align: 'center',
           key: "gameId",
           render: (h, params) => {
             return h(
@@ -299,7 +302,7 @@ export default {
         {
           title: "结算前余额",
           key: "",
-          width: 140,
+          align: 'center',
           render: (h, params) => {
             return h("span", thousandFormatter(params.row.originalAmount));
           }
@@ -307,6 +310,7 @@ export default {
         {
           title: "操作金额",
           key: "",
+          align: 'center',
           render: (h, params) => {
             return h("span", thousandFormatter(params.row.betAmount));
           }
@@ -314,6 +318,7 @@ export default {
         {
           title: "返还金额",
           key: "",
+          align: 'center',
           render: (h, params) => {
             return h("span", thousandFormatter(params.row.retAmount));
           }
@@ -337,7 +342,6 @@ export default {
         {
           title: "操作",
           key: "action",
-          width: 90,
           align: "center",
           render: (h, params) => {
             if (

@@ -116,7 +116,9 @@ export default {
       columns1: [
         {
           title: "玩家账号",
+          maxWidth:130,
           key: "userName",
+          align: 'center',
           render: (h, params) => {
             let name = params.row.userName;
             return h(
@@ -144,15 +146,20 @@ export default {
         },
         {
           title: "玩家ID",
-          key: "userId"
+          key: "userId",
+          maxWidth:130,
+          align: 'center',
         },
         {
           title: "交易号",
-          key: "betId"
+          key: "betId",
+          minWidth:100,
+          align: 'center',
         },
         {
           title: "日期",
           key: "",
+          align: 'center',
           render: (h, params) => {
             return h(
               "span",
@@ -162,15 +169,21 @@ export default {
         },
         {
           title: "游戏类型",
-          key: "gameTypeName"
+      
+          key: "gameTypeName",
+          align: 'center',
         },
         {
           title: "游戏ID",
-          key: "gameId"
+          
+          key: "gameId",
+          align: 'center',
         },
         {
           title: "中奖金额",
+          
           key: "winAmount",
+          align: 'center',
           render:(h,params)=>{
             return h('span',params.row.winAmount.toFixed(2))
           }

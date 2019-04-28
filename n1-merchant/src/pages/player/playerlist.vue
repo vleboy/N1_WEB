@@ -108,20 +108,27 @@ export default {
         {
           title: "玩家ID",
           key: "userId",
+          align: 'center',
+          maxWidth: 90,
           sortable: true
         },
         {
           title: "玩家账号",
+          align: 'center',
           key: "userName",
           sortable: true
         },
         {
           title: "商户ID",
           key: "buId",
+          
+          align: 'center',
           sortable: true
         },
         {
           title: "所属商户",
+          align: 'center',
+          minWidth:50,
           key: "merchantName",
           sortable: true
         },
@@ -129,7 +136,7 @@ export default {
           title: "玩家昵称",
           key: "nickname",
           sortable: true,
-
+          align: 'center',
           render: (h, params) => {
             return h(
               "span",
@@ -141,7 +148,8 @@ export default {
           title: "状态",
           key: "state",
           sortable: true,
-
+          maxWidth: 90,
+          align: 'center',
           render: (h, params) => {
             return h(
               "Tag",
@@ -157,6 +165,7 @@ export default {
         },
         {
           title: "游戏状态",
+          align: 'center',
           key: "gameStateName",
           sortable: true,
           render: (h, params) => {
@@ -179,6 +188,7 @@ export default {
           title: "点数",
           key: "balance",
           sortable: true,
+          align: 'center',
           render: (h, params) => {
             return h("span", thousandFormatter(params.row.balance));
           }
@@ -186,19 +196,22 @@ export default {
         {
           title: "注册时间",
           key: "createAt",
+          align: 'center',
           sortable: true,
           render: (h, params) => {
             console.log(params);
             return h(
               "span",
-              dayjs(params.row.createAt).format("YYYY-MM-DD HH:mm:ss")
+              dayjs(params.row.createAt).format("YYYY-MM-DD")
             );
           }
         },
         {
           title: "最近登录游戏时间",
+          align: 'center',
           key: "updateAt",
           sortable: true,
+          minWidth:55,
           render: (h, params) => {
             return h(
               "span",
@@ -209,6 +222,7 @@ export default {
         {
           title: "操作",
           key: "action",
+          align: 'center',
           align: "center",
           render: (h, params) => {
             return h("div", [
@@ -448,6 +462,9 @@ export default {
   }
   .demo-spin-icon-load {
     animation: ani-demo-spin 1s linear infinite;
+  }
+  /deep/ .ivu-table-cell{
+    padding: 0
   }
 }
 </style>

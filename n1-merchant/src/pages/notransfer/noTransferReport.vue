@@ -91,30 +91,37 @@ export default {
       columns: [
         {
           title: "接入方标识",
+          align: 'center',
           key: "plat"
         },
         {
           title: "下注次数",
+          align: 'center',
           key: "betCount"
         },
         {
           title: "下注金额",
+          align: 'center',
           key: "betAmount"
         },
         {
           title: "退款金额",
+          align: 'center',
           key: "refundAmount"
         },
         {
           title: "返还金额",
+          align: 'center',
           key: "retAmount"
         },
         {
           title: "返奖金额",
+          align: 'center',
           key: "winAmount"
         },
         {
           title: "输赢金额",
+          align: 'center',
           key: "winloseAmount",
           render: (h, params) => {
             let color = params.row.winloseAmount > 0 ? "#0c0" : "#f30";
@@ -131,6 +138,7 @@ export default {
         },
          {
           title: "接入商",
+          align: 'center',
           key: "",
           render: (h, params) => {
             let transferMap = params.row.transferMap["70000"];
@@ -139,6 +147,7 @@ export default {
         },
         {
           title: "历史游戏点数消耗",
+          align: 'center',
           key: "",
           render: (h, params) => {
             if (params.row.transferMap) {
@@ -201,6 +210,7 @@ export default {
       columns1: [
         {
           title: "玩家ID",
+          align: 'center',
           key: "userId",
           render: (h, params) => {
             return h(
@@ -227,30 +237,37 @@ export default {
         },
         {
           title: "玩家昵称",
+          align: 'center',
           key: "userNick"
         },
         {
           title: "下注次数",
+          align: 'center',
           key: "betCount"
         },
         {
           title: "下注金额",
+          align: 'center',
           key: "betAmount"
         },
         {
           title: "退款金额",
+          align: 'center',
           key: "refundAmount"
         },
         {
           title: "返还金额",
+          align: 'center',
           key: "retAmount"
         },
         {
           title: "返奖金额",
+          align: 'center',
           key: "winAmount"
         },
         {
           title: "输赢金额",
+          align: 'center',
           key: "winloseAmount",
           render: (h, params) => {
             let color = params.row.winloseAmount > 0 ? "#0c0" : "#f30";

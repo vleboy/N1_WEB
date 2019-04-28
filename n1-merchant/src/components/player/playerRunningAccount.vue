@@ -261,17 +261,17 @@ export default {
         {
           title: "流水号",
           key: "sn",
-          width: 140
+          align: 'center',
         },
         {
           title: "交易号",
+          align: 'center',
           key: "businessKey",
-          width: 130
         },
         {
           title: "日期",
+          align: 'center',
           key: "",
-          width: 155,
           render: (h, params) => {
             return h(
               "span",
@@ -281,10 +281,12 @@ export default {
         },
         {
           title: "游戏类型",
+          align: 'center',
           key: "gameName"
         },
         {
           title: "游戏ID",
+          align: 'center',
           key: "gameId",
           render: (h, params) => {
             return h(
@@ -299,6 +301,7 @@ export default {
         },
         {
           title: "交易类型",
+          align: 'center',
           key: "msn",
           render: (h, params) => {
             return h("span", this.typeList[params.row.type]);
@@ -306,6 +309,7 @@ export default {
         },
         {
           title: "帐变前余额",
+          align: 'center',
           key: "originalAmount",
           render: (h, params) => {
             return h("span", thousandFormatter(params.row.originalAmount));
@@ -313,6 +317,7 @@ export default {
         },
         {
           title: "帐变金额",
+          align: 'center',
           key: "",
           render: (h, params) => {
             return h(
@@ -329,6 +334,7 @@ export default {
         },
         {
           title: "帐变后金额",
+          align: 'center',
           key: "",
           render: (h, params) => {
             return h("span", thousandFormatter(params.row.balance));
@@ -337,7 +343,6 @@ export default {
         {
           title: "操作",
           key: "action",
-          width: 90,
           align: "center",
           render: (h, params) => {
             if (params.row.type == "3" && params.row.gameType == "1130000") {
