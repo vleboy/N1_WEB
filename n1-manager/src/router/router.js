@@ -246,7 +246,7 @@ export const appRouter = [
            component: main,
            children: [
              { path: 'dayCompany', title: '公司日报表', name: 'dayCompany', component: dayCompany },
-             { path: 'dayMerchant', title: '线路商日报表', name: 'dayMerchant', component: dayMerchant }
+             { path: 'dayMerchant', title: '商户日报表', name: 'dayMerchant', component: dayMerchant }
            ]
          },
          {

@@ -69,23 +69,28 @@ export default {
       columns1: [
         {
           title: "序号",
+          align: 'center',
           type: "index",
           maxWidth: 80
         },
           {
             title: "账号",
+            align: 'center',
             key: "username"
           },
         {
           title: "昵称",
+          align: 'center',
           key: "displayName"
         },
         {
           title: "最后登录IP",
+          align: 'center',
           key: "lastIP"
         },
         {
           title: "最后登录时间",
+          align: 'center',
           key: "",
           render: (h, params) => {
             return h(
@@ -96,6 +101,7 @@ export default {
         },
         {
           title: "详情",
+          align: 'center',
           key: "",
           render: (h, params) => {
             if (params.row.ret == "Y") {
@@ -123,6 +129,7 @@ export default {
         },
         {
           title: "登录状态",
+          align: 'center',
           key: "",
           render: (h, params) => {
             if (params.row.ret == "Y") {

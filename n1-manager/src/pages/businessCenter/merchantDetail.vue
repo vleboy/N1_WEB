@@ -358,14 +358,17 @@ export default {
       columns1: [
         {
           title: "公司",
-          key: "company"
+          align: 'center',
+          key: "company",
         },
         {
           title: "游戏",
+          align: 'center',
           key: "name"
         },
         {
           title: "商家占成",
+          align: 'center',
           key: "rate",
           render: (h, params) => {
             return h("span", params.row.rate + "%");
@@ -373,6 +376,7 @@ export default {
         },
         {
           title: "操作",
+          align: 'center',
           key: "opreate",
           render: (h, params) => {
             if (!this.edit) {
@@ -400,11 +404,13 @@ export default {
         {
           title: "序号",
           type: "index",
+          align: 'center',
           maxWidth: 80
         },
         {
           title: "交易时间",
           key: "createdAt",
+          align: 'center',
           minWidth: 100,
           render: (h, params) => {
             return h(
@@ -416,6 +422,7 @@ export default {
         {
           title: "交易对象",
           key: "toUser",
+          align: 'center',
           minWidth: 250,
           render: (h, params) => {
             let row = params.row;
@@ -434,6 +441,7 @@ export default {
         },
         {
           title: "交易类型",
+          align: 'center',
           key: "action",
           render: (h, params) => {
             let row = params.row;
@@ -455,12 +463,14 @@ export default {
         {
           title: "交易前余额",
           key: "oldBalance",
+          align: 'center',
           render: (h, params) => {
             return h("span", thousandFormatter(params.row.oldBalance));
           }
         },
         {
           title: "交易点数",
+          align: 'center',
           key: "amount",
           render: (h, params) => {
             let color = params.row.amount < 0 ? "#f30" : "#0c0";
@@ -478,6 +488,7 @@ export default {
         {
           title: "交易后余额",
           key: "balance",
+          align: 'center',
           render: (h, params) => {
             return h("span", thousandFormatter(params.row.balance));
           }
@@ -485,12 +496,14 @@ export default {
         {
           title: "操作人",
           key: "operator",
+          align: 'center',
           render: (h, params) => {
             return h("span", params.row.operator.split("_")[1]);
           }
         },
         {
           title: "备注",
+          align: 'center',
           key: "remark",
           maxWidth: 80,
           render: (h, params) => {

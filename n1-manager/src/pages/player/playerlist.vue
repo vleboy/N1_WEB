@@ -124,25 +124,30 @@ export default {
         {
           title: "玩家ID",
           key: "userId",
+          align: 'center',
           sortable: true
         },
         {
           title: "玩家账号",
           key: "userName",
+          align: 'center',
           sortable: true
         },
         {
           title: "商户ID",
+          align: 'center',
           key: "buId",
           sortable: true
         },
         {
           title: "所属商户",
+          align: 'center',
           key: "merchantName",
           sortable: true
         },
         {
           title: "玩家昵称",
+          align: 'center',
           key: "nickname",
           sortable: true,
 
@@ -155,6 +160,7 @@ export default {
         },
         {
           title: "状态",
+          align: 'center',
           key: "state",
           sortable: true,
 
@@ -173,6 +179,7 @@ export default {
         },
         {
           title: "游戏状态",
+          align: 'center',
           key: "gameStateName",
           sortable: true,
           render: (h, params) => {
@@ -193,6 +200,7 @@ export default {
         },
         {
           title: "点数",
+          align: 'center',
           key: "balance",
           sortable: true,
           render: (h, params) => {
@@ -201,19 +209,22 @@ export default {
         },
         {
           title: "注册时间",
+          align: 'center',
           key: "createAt",
           sortable: true,
           render: (h, params) => {
             return h(
               "span",
-              dayjs(params.row.createAt).format("YYYY-MM-DD HH:mm:ss")
+              dayjs(params.row.createAt).format("YYYY-MM-DD")
             );
           }
         },
         {
           title: "最近登录游戏时间",
+          align: 'center',
           key: "updateAt",
           sortable: true,
+          minWidth: 60,
           render: (h, params) => {
             return h(
               "span",
@@ -223,6 +234,7 @@ export default {
         },
         {
           title: "操作",
+          align: 'center',
           key: "action",
           align: "center",
           render: (h, params) => {
@@ -464,6 +476,9 @@ export default {
   }
   .demo-spin-icon-load {
     animation: ani-demo-spin 1s linear infinite;
+  }
+  /deep/ .ivu-table-cell {
+    padding: 0;
   }
 }
 </style>

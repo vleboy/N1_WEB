@@ -215,10 +215,12 @@ export default {
         {
           title: "交易号",
           width: 200,
+          align: 'center',
           key: "businessKey"
         },
         {
           title: "流水号",
+          align: 'center',
           key: "sn",
           width: 250
         },
@@ -278,6 +280,7 @@ export default {
         },
         {
           title: "类型",
+          align: 'center',
           key: "type",
           width: 100,
           render: (h, params) => {
@@ -286,6 +289,7 @@ export default {
         },
         {
           title: "状态",
+          align: 'center',
           key: "status",
           width: 100,
           render: (h, params) => {
@@ -331,6 +335,7 @@ export default {
       columns1: [
         {
           title: "交易号",
+          align: 'center',
           key: "businessKey",
           width: 200
         },
@@ -399,37 +404,31 @@ export default {
         {
           title: "下注金额",
           key: "betAmount",
-          width: 100,
           align: "center"
         },
         {
           title: "下注次数",
           key: "betCount",
-          width: 100,
           align: "center"
         },
         {
           title: "返奖金额",
           key: "winAmount",
-          width: 100,
           align: "center"
         },
         {
           title: "退款金额",
           key: "refundAmount",
-          width: 100,
           align: "center"
         },
         {
           title: "返还金额",
           key: "retAmount",
-          width: 100,
           align: "center"
         },
         {
           title: "输赢金额",
           key: "winloseAmount",
-          width: 100,
           align: "center",
           render: (h, params) => {
             let color = params.row.winloseAmount > 0 ? "#0c0" : "#f30";
@@ -475,10 +474,12 @@ export default {
       columns2: [
         {
           title: "流水号",
+          align: 'center',
           key: "sn"
         },
         {
           title: "类型",
+          align: 'center',
           key: "type",
           render: (h, params) => {
             return h("span", this.typeList[params.row.type]);
@@ -486,10 +487,12 @@ export default {
         },
         {
           title: "帐变金额",
+          align: 'center',
           key: "amount"
         },
         {
           title: "状态",
+          align: 'center',
           key: "status",
           render: (h, params) => {
             let color, text;
@@ -520,10 +523,12 @@ export default {
         },
         {
           title: "余额",
+          align: 'center',
           key: "balance"
         },
         {
           title: "交易时间",
+          align: 'center',
           key: "createdAt",
           render: (h, params) => {
             return h(
