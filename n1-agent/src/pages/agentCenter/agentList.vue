@@ -794,6 +794,7 @@ export default {
         {
           title: "下级代理数量",
           align: 'center',
+          minWidth:35,
           key: "agentCount"
         },
         {
@@ -1238,10 +1239,12 @@ export default {
       columns2: [
         {
           title: "序号",
+          align: 'center',
           type: "index"
         },
         {
           title: "用户名",
+          align: 'center',
           key: "userName",
           sortable: true,
           render: (h, params) => {
@@ -1270,6 +1273,7 @@ export default {
         },
         {
           title: "点数",
+          align: 'center',
           key: "balance",
           sortable: true,
           render: (h, params) => {
@@ -1343,11 +1347,13 @@ export default {
         },
         {
           title: "直属代理",
+          align: 'center',
           key: "parentName",
           sortable: true
         },
         {
           title: "最后登录时间",
+          align: 'center',
           key: "updateAt",
           sortable: true,
           render: (h, params) => {
@@ -1359,6 +1365,7 @@ export default {
         },
         {
           title: "状态",
+          align: 'center',
           key: "state",
           sortable: true,
           render: (h, params) => {
@@ -1389,6 +1396,7 @@ export default {
         },
         {
           title: "操作",
+          align: 'center',
           key: "",
           render: (h, params) => {
             let color = "";

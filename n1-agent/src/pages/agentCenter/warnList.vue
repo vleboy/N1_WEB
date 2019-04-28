@@ -82,12 +82,14 @@ export default {
         {
           title: "序号",
           type: "index",
+          align: 'center',
           maxWidth: 60
         },
         {
           title: "类型",
           key: "role",
           sortable: true,
+          align: 'center',
           maxWidth: 80,
           render: (h, params) => {
             return h("span", this.types(params.row.role));
@@ -95,6 +97,7 @@ export default {
         },
         {
           title: "接入商标识",
+          align: 'center',
           key: "",
           maxWidth: 100,
           render: (h, params) => {
@@ -107,6 +110,7 @@ export default {
         },
         {
           title: "接入商昵称",
+          align: 'center',
           key: "displayName",
           sortable: true,
           maxWidth: 160,
@@ -152,6 +156,7 @@ export default {
         },
         {
           title: "接入商",
+          
           key: "",
           align: 'center',
           render: (h, params) => {

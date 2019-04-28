@@ -98,13 +98,15 @@ export default {
         {
           title: "序号",
           type: "index",
-          maxWidth: 70,
+          align: 'center',
+          maxWidth: 60
         },
          {
           title: "交易时间",
+          minWidth:50,
+          align: 'center',
           key: "createdAt",
           sortable:true,
-          minWidth: 45,
           render: (h, params) => {
             return h(
               "span",
@@ -114,8 +116,9 @@ export default {
         },
         {
           title: "交易对象",
+          minWidth:50,
+          align: 'center',
           key: "toUser",
-          minWidth: 100,
           render: (h, params) => {
             let row = params.row;
             if (row.fromLevel > row.toLevel) {
@@ -133,6 +136,7 @@ export default {
         },
          {
           title: "交易类型",
+          align: 'center',
           key: "amount",
           sortable:true,
           render: (h, params) => {
@@ -146,6 +150,7 @@ export default {
         },
         {
           title: "交易前余额",
+          align: 'center',
           key: "oldBalance",
           sortable:true,
           render: (h, params) => {
@@ -154,6 +159,7 @@ export default {
         },
         {
           title: "交易点数",
+          align: 'center',
           key: "amount",
           sortable:true,
           render: (h, params) => {
@@ -171,6 +177,7 @@ export default {
         },
         {
           title: "交易后余额",
+          align: 'center',
           key: "balance",
           sortable:true,
            render: (h, params) => {
@@ -179,6 +186,7 @@ export default {
         },
         {
           title: "操作人",
+          align: 'center',
           key: "operator",
           sortable:true,
           render: (h, params) => {
@@ -187,8 +195,9 @@ export default {
         },
         {
           title: "备注",
+          align: 'center',
           key: "remark",
-          width: 60,
+          maxWidth: 60,
           render: (h, params) => {
             if (params.row.remark == "NULL!" || params.row.remark == null) {
               return h("span", "");

@@ -65,10 +65,12 @@ export default {
         {
           title: "序号",
           type: "index",
+          align: 'center',
           maxWidth: 80
         },
         {
           title: "操作人",
+          align: 'center',
           key: "username",
           render: (h, params) => {
             let name = "";
@@ -82,6 +84,7 @@ export default {
         },
         {
           title: "操作时间",
+          align: 'center',
           key: "",
           render: (h, params) => {
             return h(
@@ -92,10 +95,12 @@ export default {
         },
         {
           title: "操作",
+          align: 'center',
           key: "action"
         },
         {
           title: "操作结果",
+          align: 'center',
           key: "",
           render: (h, params) => {
             if (params.row.ret == "Y") {

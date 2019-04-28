@@ -137,23 +137,28 @@ export default {
       columns1: [
         {
           title: "序号",
+          align: 'center',
           type: "index",
           maxWidth: 80
         },
         {
           title: "账号",
+          align: 'center',
           key: "uname"
         },
         {
           title: "昵称",
+          align: 'center',
           key: "displayName"
         },
         {
           title: "管理员角色",
+          align: 'center',
           key: "subRole"
         },
         {
           title: "剩余点数",
+          align: 'center',
           key: "balance",
           render: (h, params) => {
             return h("span", thousandFormatter(params.row.balance));
@@ -161,6 +166,7 @@ export default {
         },
         {
           title: "创建时间",
+          align: 'center',
           key: "createdAt",
           minWidth: 100,
           render: (h, params) => {
@@ -172,6 +178,7 @@ export default {
         },
         {
           title: "操作",
+          align: 'center',
           key: "",
           render: (h, params) => {
             return h("p", [

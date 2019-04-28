@@ -437,17 +437,20 @@ export default {
       columns: [
         {
           title: "序号",
+          align: 'center',
           type: "index",
           
         },
         {
           title: "角色名",
+          align: 'center',
           key: "name",
           sortable: true,
          
         },
         {
           title: "权限",
+          align: 'center',
           key: "",
           render: (h, params) => {
             let tags = params.row.permissions;
@@ -479,9 +482,10 @@ export default {
         },
         {
           title: "创建时间",
+          align: 'center',
           key: "createdAt",
           sortable: true,
-          maxWidth: 180,
+       
           render: (h, params) => {
             return h(
               "span",
@@ -491,8 +495,9 @@ export default {
         },
         {
           title: "备注",
+          align: 'center',
           key: "",
-          maxWidth: 60,
+          
           render: (h, params) => {
             let remark = params.row.remark;
             let result = Object.prototype.toString.call(remark);
@@ -520,8 +525,9 @@ export default {
         },
         {
           title: "操作",
+          align: 'center',
           key: "",
-          maxWidth: 120,
+          
           render: (h, params) => {
             return h("p", [
               h(

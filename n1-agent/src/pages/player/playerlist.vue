@@ -127,14 +127,18 @@
         columns: [
           {
             title: '玩家ID',
-            key: 'userId'
+            align: 'center',
+            key: 'userId',
+            maxWidth: 80
           },
           {
             title: '玩家账号',
+            align: 'center',
             key: 'userName'
           },
           {
             title: '所属代理',
+            align: 'center',
             key: 'merchantName',
             render: (h,params)=>{
               return h('Button',{
@@ -155,6 +159,7 @@
           },
           {
             title: '玩家昵称',
+            align: 'center',
             key: 'nickname',
             render: (h,params) => {
               return h('span', params.row.nickname === 'NULL!' ? '-' : params.row.nickname)
@@ -162,7 +167,9 @@
           },
           {
             title: '状态',
+            align: 'center',
             key: 'state',
+            maxWidth: 85,
             render: (h,params) => {
               return h('Tag', {
                 props: {
@@ -174,6 +181,8 @@
           },
           {
             title: '游戏状态',
+             maxWidth: 85,
+            align: 'center',
             key: 'gameState',
             render: (h,params) => {
               return h('Tag', {
@@ -186,6 +195,7 @@
           },
           {
             title: '点数',
+            align: 'center',
             key: 'balance',
             render: (h,params) => {
               return h('span', thousandFormatter(params.row.balance))
@@ -193,17 +203,19 @@
           },
           {
             title: "注册时间",
+            align: 'center',
             key: "createAt",
             sortable: true,
             render: (h, params) => {
               return h(
                 "span",
-                dayjs(params.row.createAt).format("YYYY-MM-DD HH:mm:ss")
+                dayjs(params.row.createAt).format("YYYY-MM-DD")
               );
             }
           },
           {
             title: '最近登录时间',
+            align: 'center',
             key: '',
             render: (h, params) => {
               return h("span", dayjs(params.row.updateAt).format("YYYY-MM-DD HH:mm:ss"));
@@ -473,6 +485,9 @@
     }
     .demo-spin-icon-load{
       animation: ani-demo-spin 1s linear infinite;
+    }
+    /deep/ .ivu-table-cell {
+      padding: 0;
     }
   }
 </style>

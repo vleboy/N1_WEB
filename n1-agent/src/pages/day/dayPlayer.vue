@@ -126,26 +126,32 @@ export default {
       columns1: [
         {
           title: "日期",
+          align: 'center',
           key: "createdDate"
         },
         {
           title: "投注次数",
+          align: 'center',
           key: "betCount"
         },
         {
           title: "投注金额",
+          align: 'center',
           key: "betAmount"
         },
         {
           title: "返还金额",
+          align: 'center',
           key: "retAmount"
         },
         {
           title: "退款金额",
+          align: 'center',
           key: "refundAmount"
         },
         {
           title: "输赢金额",
+          align: 'center',
           key: "winloseAmount",
           render: (h,params) => {
            let count = params.row.winloseAmount
