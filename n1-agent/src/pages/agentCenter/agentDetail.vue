@@ -1085,7 +1085,6 @@ export default {
       }); //线路商
       let req4 = playerList({ fromUserId: userId }); //商户
       let [
-        waterfall,
         agentInfo,
         agentChild,
         agentPlayer
@@ -1109,6 +1108,10 @@ export default {
         }
       });
       this.handlePage();
+
+      console.log(this.agentDetail);
+      
+
     }
   }
 };
