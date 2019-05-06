@@ -6,7 +6,7 @@ export let URL = type => {
       case 'game':
         return 'https://n1game.na12345.com'
       case 'prize':
-        return 'https://game.jvshihui.cn:45557'
+        return 'https://game.alimuban.cn:45557'
       case 'map':
         return 'https://visual.na12345.com'
       default:
