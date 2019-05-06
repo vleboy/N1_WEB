@@ -7,7 +7,7 @@
                 <Icon type="stats-bars"></Icon>
                   <span>看板</span>
                 </MenuItem> -->
-                <MenuItem name="newBoard" v-if='permission.includes("新看板")'>
+                <MenuItem name="newBoard" v-if='permission.includes("数据看板")'>
                   <Icon type="stats-bars"></Icon>
                   <span>数据看板</span>
                 </MenuItem>

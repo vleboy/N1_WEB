@@ -56,7 +56,7 @@ export default {
             checked: false
           }, */
           {
-            title: "新看板",
+            title: "数据看板",
             checked: false
           },
           {
