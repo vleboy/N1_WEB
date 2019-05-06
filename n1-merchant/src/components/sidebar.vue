@@ -9,7 +9,7 @@
                 </MenuItem> -->
                 <MenuItem name="newBoard">
                   <Icon type="stats-bars"></Icon>
-                  <span>看板</span>
+                  <span>数据看板</span>
                 </MenuItem>
                 <MenuItem name="ownspace-index">
                   <Icon type="person"></Icon>

@@ -4,7 +4,7 @@ axios.interceptors.request.use(config => config, error => Promise.reject(error))
 axios.interceptors.response.use(response => response, error => Promise.resolve(error.response))
 
 function checkStatus(response) {
-    // console.log(response)
+
   if (response.data.code != '0') {
         Message.warning(response.data.msg);
         if(response.data.msg=='TOKEN已过期'){
