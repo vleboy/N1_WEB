@@ -178,6 +178,8 @@ export default {
           key: "submitAmount",
           render: (h, params) => {
             let gameList = params.row.gameTypeMap;
+            console.log(gameList)
+            
             let count = 0;
             for (let key in gameList) {
               if (['70000','90000'].includes(key)) {

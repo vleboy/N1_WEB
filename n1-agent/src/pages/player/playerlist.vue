@@ -216,9 +216,10 @@
           {
             title: '最近登录时间',
             align: 'center',
-            key: '',
+            key: 'joinTime',
             render: (h, params) => {
-              return h("span", dayjs(params.row.updateAt).format("YYYY-MM-DD HH:mm:ss"));
+              return h("span", 
+              params.row.joinTime ? dayjs(params.row.joinTime).format("YYYY-MM-DD HH:mm:ss") : '');
             }
           },
           // {

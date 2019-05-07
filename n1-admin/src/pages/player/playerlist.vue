@@ -274,12 +274,12 @@ export default {
         },
         {
           title: "最近登录游戏时间",
-          key: "updateAt",
+          key: "joinTime",
           sortable: true,
           render: (h, params) => {
             return h(
               "span",
-              dayjs(params.row.updateAt).format("YYYY-MM-DD HH:mm:ss")
+              params.row.joinTime ? dayjs(params.row.joinTime).format("YYYY-MM-DD HH:mm:ss") : ''
             );
           }
         },

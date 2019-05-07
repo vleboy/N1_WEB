@@ -35,7 +35,7 @@
                 <Col span="6"><span class="-span-base">余额: {{detailInfo.balance}}</span></Col>
               </Row>
               <Row>
-                <Col span="6"><span class="-span-base">上次登录游戏：{{lastTime}}</span></Col>
+                <Col span="6"><span class="-span-base">最近登录游戏：{{lastTime}}</span></Col>
               </Row>
               <Row>
                 <Col span="4" v-for="(item,index) of detailInfo.gameList" :key="index">
@@ -98,7 +98,7 @@ export default {
       return this.playerDetailInfo
     },
     lastTime () {
-      return dayjs(this.playerDetailInfo.updateAt).format("YYYY-MM-DD HH:mm:ss")
+      return this.playerDetailInfo.joinTime ? dayjs(this.playerDetailInfo.joinTime).format("YYYY-MM-DD HH:mm:ss") : ''
     },
     optionOne_label () {
       let name = localStorage.loginUsername.split('_')[1]
