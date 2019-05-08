@@ -262,13 +262,13 @@ export default {
         },
         {
           title: "注册时间",
-          key: "createAt",
+          key: "createdAt",
           sortable: true,
           maxWidth: 120,
           render: (h, params) => {
             return h(
               "span",
-              dayjs(params.row.createAt).format("YYYY-MM-DD")
+              dayjs(params.row.createdAt).format("YYYY-MM-DD")
             );
           }
         },

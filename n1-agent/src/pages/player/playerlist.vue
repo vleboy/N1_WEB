@@ -204,12 +204,12 @@
           {
             title: "注册时间",
             align: 'center',
-            key: "createAt",
+            key: "createdAt",
             sortable: true,
             render: (h, params) => {
               return h(
                 "span",
-                dayjs(params.row.createAt).format("YYYY-MM-DD")
+                dayjs(params.row.createdAt).format("YYYY-MM-DD")
               );
             }
           },
