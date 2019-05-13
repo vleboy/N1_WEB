@@ -119,7 +119,7 @@
                     </template>
                     <MenuItem name="prizeList">神秘大奖记录</MenuItem>
                 </Submenu>
-                 <Submenu name="noTransfer" >
+                 <Submenu name="noTransfer" v-if="permission">
                     <template slot="title">
                         <Icon type="social-usd"></Icon>
                         免转中心
@@ -165,6 +165,12 @@ export default {
     gameStr(){
         return this.gameList.toString()
     },
+    permission() {
+      if (JSON.parse(localStorage.getItem('userInfo')).transferURL) {
+        return true
+      }
+        return false
+    }
   },
   props: ["openName"],
   updated() {

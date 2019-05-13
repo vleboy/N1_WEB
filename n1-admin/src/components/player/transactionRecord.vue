@@ -631,7 +631,7 @@ export default {
         `${url}/player/bill/detail/download?userName=${
           localStorage.playerName
         }&company=${this.companyInfo}&gameType=${
-          this.radioInfo
+          this.radioInfo ? this.radioInfo : ''
         }&startTime=${startTime}&endTime=${endTime}`
       );
     }
