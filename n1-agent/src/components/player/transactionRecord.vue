@@ -519,8 +519,7 @@ export default {
         "/companySelect",
         {
           parent: localStorage.loginRole == 1 ? "" : localStorage.loginId
-        },
-        "game"
+        }
       ).then(result => {
         this.companyList = result.payload || [];
         this.companyList.unshift({
@@ -536,8 +535,7 @@ export default {
         "/gameBigType",
         {
           companyIden: this.companyInfo == "全部厂商" ? "-1" : this.companyInfo
-        },
-        "game"
+        }
       ).then(result => {
         this.gameTypeList = result.payload;
         if (this.radioInfo == "") {

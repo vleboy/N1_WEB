@@ -710,7 +710,7 @@
       companySelect () {
         httpRequest('post','/companySelect',{
           parent: localStorage.loginRole == 1 ? '' : localStorage.loginId
-        },'game').then(result => {
+        }).then(result => {
           this.companyList = result.payload
           this.companyList.unshift({
             company: '全部厂商'

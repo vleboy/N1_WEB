@@ -146,14 +146,9 @@ export default {
   },
   methods: {
     selectMenu(name) {
-      if (name == "jump") {
-        this.$Message.success("跳转中,如有弹窗拦截,请允许");
-        this.$store.dispatch("getGameSign", { gameType: 30000 }).then(res => {
-          window.open(res.url);
-        });
-      } else {
+      
         this.$router.push({ name: name });
-      }
+      
     }
   },
   computed: {

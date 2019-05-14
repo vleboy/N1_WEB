@@ -1,6 +1,6 @@
 import {otherRouter,appRouter,routers} from '@/router/router'
 import Util from '@/libs/util';
-import {gameSign} from '@/service/index'
+
 export const home={
     state:{
         pageOpenedList: [],
@@ -77,9 +77,5 @@ export const home={
             });
         },
     },
-    actions:{
-        getGameSign({commit},params){
-            return gameSign(params)
-        }
-    }
+
 }

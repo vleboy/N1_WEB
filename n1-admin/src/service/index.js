@@ -174,6 +174,10 @@ export async function checkExit(params) {
 export async function addUsers(params) {
   return http(post('/users', params))
 }
+//上级线路商游戏
+export async function companySelect(params) {
+  return http(post('/companySelect', params))
+}
 //随机msn
 export async function msnRandom() {
   return http(get('/msnRandom'))

@@ -83,10 +83,7 @@ export async function queryUserStat(params){
 export async function queryPlayer(params){
     return http(post('/queryPlayerStat',params))
 }
-//game/sign
-export async function gameSign(params){
-    return http(post('/game/sign',params))
-}
+
 //流水列表
 export async function getWaterfall(userId){
     return http(get(`/waterfall/${userId}`))
@@ -130,7 +127,7 @@ export async function getsbuRole(params){
 }
 //上级线路商游戏
 export async function companySelect(params){
-    return http(post('/companySelect',params,'game'))
+    return http(post('/companySelect',params))
 }
 //验证存在
 export async function checkExit(params){
@@ -138,7 +135,7 @@ export async function checkExit(params){
 }
 //gameBigType
 export async function gameBigType(params){
-    return http(post('/gameBigType',params,'game'))
+    return http(post('/gameBigType',params))
 }
 //随机msn
 export async function msnRandom(){

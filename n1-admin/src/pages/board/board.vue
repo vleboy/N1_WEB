@@ -720,18 +720,7 @@ import dayjs from 'dayjs'
         let nowDay = nowDate.getDay() || 7;
         return new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate() + 1 - nowDay);
       }, // 处理周次
-      companySelect () {
-        httpRequest('post','/companySelect',{
-          parent: localStorage.loginRole == 1 ? '' : localStorage.loginId
-        },'game').then(result => {
-          this.companyList = result.payload
-          this.companyList.unshift({
-            company: '全部厂商'
-          })
-          this.changeCompany()
-          }
-        )
-      }, //获取运营商列表
+   
       changeCompany(){
         this.getStatisticsConsume()
       },

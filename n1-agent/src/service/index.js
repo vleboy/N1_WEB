@@ -32,11 +32,7 @@ const post = (urls, datas, type) => {
       "Content-Type": "application/json; charset=utf-8",
     }
   }
-  let url=type=='game'
-    ?process.env.NODE_ENV == 'production'
-       ? 'https://n1game.na12345.com'
-       :'https://dgjmusja39cm2.cloudfront.net'
-    :httpType+ URL;
+  let url = httpType+ URL;
   return {
     method: 'post',
     url:url+ urls,
@@ -92,10 +88,6 @@ export async function queryPlayerDayStat(params) {
   return http(post('/query/playerDayStat', params))
 }
 
-//game/sign
-export async function gameSign(params){
-    return http(post('/game/sign',params))
-}
 //admin_center
 export async function agentOne(userId){
     return http(get(`/agentOne/${userId}`))
@@ -174,11 +166,11 @@ export async function availableAgents(params){
 }
 //gameBigType
 export async function gameBigType(params){
-    return http(post('/gameBigType',params,'game'))
+    return http(post('/gameBigType',params))
 }
 //上级线路商游戏
 export async function companySelect(params){
-    return http(post('/companySelect',params,'game'))
+    return http(post('/companySelect',params))
 }
 //创建代理
 export async function agentNew(params){

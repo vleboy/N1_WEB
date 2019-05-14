@@ -449,7 +449,7 @@ $
       companySelectList () {
         httpRequest('post','/companySelect',{
           parent: localStorage.loginRole == 1 ? '' : localStorage.loginId
-        },'game').then(
+        }).then(
           result => {
             this.companyList = result.payload || []
             this.companyList.unshift({
