@@ -314,8 +314,7 @@ export default {
           gameType: this.gameType,
           gameId: this.gameId,
           sortOrder: this.gameOrder
-        },
-        "game"
+        }
       ).then(res => {
         if (res.code == 0) {
           this.$Message.success("操作成功");
@@ -350,8 +349,7 @@ export default {
         {
           gameType: null,
           query: {companyIden: this.searchInfo.companyIden, gameStatus: this.searchInfo.gameStatus}
-        },
-        "game"
+        }
       )
         .then(result => {
           this.gameListData = result.payload;
@@ -397,8 +395,7 @@ export default {
       httpRequest(
         "get",
         `/gameOne/${row.gameType}/${row.gameId}`,
-        {},
-        "game"
+        {}
       ).then(data => {
         this.propChild = data.payload;
       });
@@ -440,8 +437,7 @@ export default {
               gameType: row.gameType,
               gameId: row.gameId,
               status: row.gameStatus ? 0 : 1
-            },
-            "game"
+            }
           ).then(res => {
             this.$Message.success("状态改变成功");
             this.getGameList();

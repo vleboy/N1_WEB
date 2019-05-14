@@ -311,8 +311,7 @@ export default {
          this.isSending = true
         httpRequest("post",
           `${!this.$store.state.add.isEdit ? '/games' : '/gameUpdate'}`,
-          this.managerInfo,
-          'game').then((res)=> {  
+          this.managerInfo,).then((res)=> {  
           if (res.code == 0) {
           this.$store.commit('closeEditState')
           this.$router.push({

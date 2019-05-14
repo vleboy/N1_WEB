@@ -3,8 +3,6 @@
 export let URL = type => {
   if (process.env.NODE_ENV == 'production') {
     switch (type) {
-      case 'game':
-        return 'https://n1game.na12345.com'
       case 'prize':
         return 'https://game.alimuban.cn:45557'
       case 'map':
@@ -14,8 +12,6 @@ export let URL = type => {
     }
   } else {
     switch (type) {
-      case 'game':
-        return 'https://dgjmusja39cm2.cloudfront.net'
       case 'prize':
         return 'https://testgame.alimuban.cn:45557'
       // return 'http://192.168.3.200:45557'

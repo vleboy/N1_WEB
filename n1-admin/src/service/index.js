@@ -97,10 +97,7 @@ export async function queryManagerDayStat(params) {
 export async function queryPlayerDayStat(params) {
   return http(post('/query/playerDayStat', params))
 }
-//game/sign
-export async function gameSign(params) {
-  return http(post('/game/sign', params))
-}
+
 //admin_center
 export async function adminCenter() {
   return http(get('/admin_center'))
@@ -167,18 +164,12 @@ export async function createAdmin(params) {
 export async function avalibleManager() {
   return http(get('/avalible_managers'))
 }
-//上级线路商游戏
-export async function companySelect(params) {
-  return http(post('/companySelect', params, 'game'))
-}
+
 //验证存在
 export async function checkExit(params) {
   return http(post('/checkExist', params))
 }
-//gameBigType
-export async function gameBigType(params) {
-  return http(post('/gameBigType', params, 'game'))
-}
+
 //添加线路商/商户
 export async function addUsers(params) {
   return http(post('/users', params))
