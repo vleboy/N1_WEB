@@ -1,6 +1,6 @@
 // console.log(process.env.NODE_ENV);
 // export const URL='d3rqtlfdd4m9wd.cloudfront.net'
-export const URL =process.env.NODE_ENV == 'production'?'n1agent.na12345.com':'d3prd6rbitzqm3.cloudfront.net'
+export const URL =process.env.NODE_ENV == 'production'?'n1agent.na12345.com':'testagent.cncshe.com'
 
 // console.log(URL);
 
