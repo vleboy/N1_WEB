@@ -10,7 +10,7 @@ export let URL = type => {
   } else {
     switch (type) {
       default:
-        return 'd3rqtlfdd4m9wd.cloudfront.net'
+        return 'test.cncshe.com'
         break
     }
   }
