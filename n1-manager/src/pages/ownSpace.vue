@@ -43,8 +43,8 @@
       <h2>财务信息
         <span style="color:#20a0ff;cursor:pointer;fontSize:1rem" @click="getWaterfallList">(点击查询)</span>
       </h2>
-      <Table :columns="columns1" :data="showData" size="small"></Table>
-      <Page :total="total" class="page" show-elevator :page-size='pageSize' show-total @on-change="changepage"></Page>
+      <Table :columns="columns1" :data="showWaterList" size="small"></Table>
+      <Page :total="total" class="page" :page-size='pageSize' @on-change="changepage"></Page>
     </div>
     <Modal v-model="modal" title="修改密码" :width='350' @on-ok="ok" @on-cancel='cancel'>
       <p class="modal_input">
@@ -72,7 +72,7 @@
 </template>
 <script>
 import dayjs from "dayjs";
-import { getWaterfall, oneManagers } from "@/service/index";
+import { httpRequest,getWaterfall, oneManagers } from "@/service/index";
 import { thousandFormatter } from "@/config/format";
 export default {
   data() {
@@ -86,6 +86,11 @@ export default {
       admin: {},
       waterfall: [],
       showData: [],
+      showWaterList:[],
+      totalPage: 100, //数据总量
+      pageSize: 20, //每页显示数据量
+      currentPage: 1, //当前页码
+      showNext: false, //是否显示下100条
       columns1: [
         {
           title: "序号",
@@ -354,13 +359,61 @@ export default {
     reset() {
       this.init();
     },
+    //切页
+    changepage(index) {
+      if (this.showData.length >= 100) {
+          if (index % 5 == 0 && this.showData.length <= index * 20) {
+          console.log(this.showData.length);
+          
+          this.showNext = true;
+          this.getWaterfallList();
+        }
+      }
+      
+      this.showWaterList = _.chunk(this.showData, 20)[index - 1];
+    },
+    //获取流水列表
     async getWaterfallList() {
-      let userId = localStorage.loginId ? localStorage.getItem("loginId") : "";
+      /* let userId = localStorage.loginId ? localStorage.getItem("loginId") : "";
       let req1 = getWaterfall(userId);
       this.$store.commit("updateLoading", { params: true });
       let waterfall = await this.axios.all([req1])
       this.$store.commit("updateLoading", { params: false });
-      this.showData = waterfall[0].payload
+      this.showData = waterfall[0].payload */
+      let userId = localStorage.loginId ? localStorage.getItem("loginId") : "";
+    
+      if (this.showNext) {
+        console.log(this.showData[this.showData.length - 1].oldBalance);
+        
+        let params = {
+          createdAt: this.startKey.createdAt,
+          sn: this.startKey.sn,
+          balance: this.showData[this.showData.length - 1].oldBalance
+        };
+       this.$store.commit("updateLoading", { params: true });
+        let waterfall = await httpRequest(
+          "get",
+          `/waterfall/${userId}`,
+          params
+        );
+         this.$store.commit("updateLoading", { params: false });
+        this.showData = this.showData.concat(waterfall.payload);
+        this.totalPage = this.showData.length;
+        this.startKey = waterfall.startKey;
+      } else {
+        let params = "";
+        this.$store.commit("updateLoading", { params: true });
+        let waterfall = await httpRequest(
+          "get",
+          `/waterfall/${userId}`,
+          params
+        );
+         this.$store.commit("updateLoading", { params: false });
+        this.showData = waterfall.payload;
+        this.totalPage = this.showData.length;
+        this.startKey = waterfall.startKey;
+        this.showWaterList = _.chunk(this.showData, 20)[0];
+      }
 
     },
     async init() {
