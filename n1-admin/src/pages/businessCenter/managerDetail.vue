@@ -462,6 +462,8 @@ export default {
           title: "操作(对旗下线路商操作)",
           key: "",
           render: (h, params) => {
+            console.log(params.row);
+            
             let admininfo = JSON.parse(localStorage.getItem("userInfo"));
             let admin = admininfo.username.substr(9);
             let adminId = admininfo.userId;

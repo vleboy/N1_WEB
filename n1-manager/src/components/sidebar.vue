@@ -110,18 +110,19 @@
                     </template>
                     <MenuItem name="playList">玩家列表</MenuItem>
                 </Submenu>
-                <Submenu name="logCenter">
+
+               <!--  <Submenu name="logCenter">
                     <template slot="title">
                         <Icon type="bug"></Icon>
                         日志中心
                     </template>
                     <MenuItem name="loginLog" >登录日志</MenuItem>
-                    <MenuItem name="operationLog">操作日志</MenuItem>
+                    <MenuItem name="operationLog">操作日志</MenuItem> -->
                     <!-- <MenuItem name="managerLog">线路商登录日志</MenuItem>
                     <MenuItem name="managerOpreateLog">线路商操作日志</MenuItem>
                     <MenuItem name="merchantLog">商户登录日志</MenuItem> -->
                     <!-- <MenuItem name="merchantOpreateLog">商户操作日志</MenuItem> -->
-                </Submenu>
+                <!-- </Submenu>
                 <Submenu name="noTransfer">
                     <template slot="title">
                         <Icon type="social-usd"></Icon>
@@ -129,7 +130,7 @@
                     </template>
                     <MenuItem name="noTransferReport">输赢报表</MenuItem>
                     <MenuItem name="flow">流水交易</MenuItem>
-                </Submenu>
+                </Submenu> -->
             </Menu>
         </Sider>
     </div>

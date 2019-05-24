@@ -225,7 +225,7 @@ export const appRouter = [
            component: main,
            children: [{ path: 'sport', title: 'YSB体育游戏报表', name: 'ysbSport', component: ysbSport }]
          },
-         {
+        /*  {
            path: '/log',
            title: '日志',
            name: 'log',
@@ -233,12 +233,12 @@ export const appRouter = [
            children: [
              { path: 'loginLog', title: '登录日志', name: 'loginLog', component: loginLog },
              { path: 'operationLog', title: '操作日志', name: 'operationLog', component: operationLog },
-             /* { path: 'managerOpreate', title: '线路商操作日志', name: 'managerOpreateLog', component: managerOpreateLog },
+              { path: 'managerOpreate', title: '线路商操作日志', name: 'managerOpreateLog', component: managerOpreateLog },
              { path: 'merchantOpreate', title: '商户操作日志', name: 'merchantOpreateLog', component: merchantOpreateLog },
              { path: 'manager', title: '线路商登录日志', name: 'managerLog', component: managerLog },
-             { path: 'merchant', title: '商户登录日志', name: 'merchantLog', component: merchantLog } */
+             { path: 'merchant', title: '商户登录日志', name: 'merchantLog', component: merchantLog } 
            ]
-         },
+         }, */
          {
            path: '/day',
            title: '日报表',
@@ -259,7 +259,7 @@ export const appRouter = [
              { path: 'manager', title: '线路商列表', name: 'dealerList', component: managerList }
            ]
          },
-         {
+         /* {
            path: '/transfer',
            title: '',
            name: 'transfer',
@@ -268,7 +268,7 @@ export const appRouter = [
              { path: 'flow', title: '流水交易', name: 'flow', component: flow },
              { path: 'report', title: '输赢报表', name: 'noTransferReport', component: noTransferReport }
            ]
-         },
+         }, */
          {
            path: '/play',
            title: '玩家列表',
